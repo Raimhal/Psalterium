@@ -7,18 +7,18 @@ from config.db import Session
 
 
 def get_role_by_name(db: Session, name: str) -> models.Role:
-    role =  check_role_in_use(db=db, name=name)
+    role =  get_role(db=db, name=name)
     if not role:
         CustomNotFoundException(entity=models.Role, key=nameof(name), value=name)
     return role
 
 
-def check_role_in_use(db: Session, name: str) -> models.Role:
+def get_role(db: Session, name: str) -> models.Role:
     return db.query(models.Role).filter_by(name = name).first()
 
 
 def create_role(db: Session, model: schemas.RoleCreate) -> int:
-    _ = check_role_in_use(db=db, name=model.name)
+    _ = get_role(db=db, name=model.name)
     if _:
         CustomExistException(entity=models.Role, key=nameof(model.name), value=model.name)
 
@@ -30,7 +30,7 @@ def create_role(db: Session, model: schemas.RoleCreate) -> int:
 
 
 def update_role(db: Session, role: models.Role , model: schemas.RoleCreate):
-    _ = check_role_in_use(db=db, name=model.name)
+    _ = get_role(db=db, name=model.name)
     if _:
         CustomExistException(entity=models.Role, key=nameof(model.name), value=model.name)
 

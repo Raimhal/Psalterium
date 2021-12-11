@@ -28,8 +28,8 @@ class Book(BookBase):
 class UserBase(BaseModel):
     email: str
     username: str
-    firstName: str
-    lastName: str
+    first_name: str
+    last_name: str
 
 
 class UserCreate(UserBase):
@@ -60,6 +60,17 @@ class Role(RoleBase):
 
     class Config:
         orm_mode = True
+
+
+# token
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+
+class TokenData(BaseModel):
+    email: Optional[str] = None
+
 
 
 

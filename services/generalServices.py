@@ -1,4 +1,6 @@
 from typing import List, Any
+
+import models.models
 from Exceptions import CustomNotFoundException
 from varname import nameof
 
@@ -18,3 +20,7 @@ def delete(db: Session, model: Any, id: int):
     db.delete(entity)
     db.commit()
 
+def get_data_seed(db: Session, model: Any):
+    if db.query(model).all():
+        print('seed')
+    print('grow')

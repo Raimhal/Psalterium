@@ -12,8 +12,8 @@ class User(Base):
     email = Column(String, unique=True, index=True)
     hashed_password = Column(String)
     username = Column(String, index=True)
-    firstName = Column(String)
-    lastName = Column(String)
+    first_name = Column(String)
+    last_name = Column(String)
 
     role_id = Column(Integer, ForeignKey('roles.id'))
     role = relationship('Role', back_populates='users')
