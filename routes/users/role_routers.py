@@ -4,40 +4,59 @@ from fastapi import APIRouter, Depends
 from starlette import status
 
 from config.db import Session
+from config.decorators import raise_403_if_not_admin
 from models import models
 from schemas import schemas
 from services import generalServices, roleServices
-from config.dependencies import get_db
+from config.dependencies import get_db, get_current_user
+from Exceptions import CustomAccessForbiddenException
 
 router = APIRouter(prefix='/roles', tags=['roles'])
+_admin_role_name = 'Admin'
+_model = models.Role
 
-
-@router.get('', response_model=List[schemas.Role])
-async def get_roles(skip: int=0, limit: int=10, db: Session = Depends(get_db)):
-    return generalServices.get_all(db=db, model=models.Role, skip=skip, limit=limit)
+@router.get('', response_model=List[schemas.RoleDto])
+@raise_403_if_not_admin
+async def get_roles(skip: int=0, limit: int=10, db: Session = Depends(get_db),
+                    current_user: models.User = Depends(get_current_user)):
+    return generalServices.get_all(db=db, model=models.Role, skip=skip, limit=limit, current_user=current_user, expression=True)
 
 
 @router.get('/{id:int}', response_model=schemas.Role)
-async def get_role_by_id(id: int, db: Session = Depends(get_db)):
-    return generalServices.get_by_id(db=db, model=models.Role, id=id)
+@raise_403_if_not_admin
+async def get_role_by_id(id: int, db: Session = Depends(get_db),
+                         current_user: models.User = Depends(get_current_user)):
+    expression = _model.id == id
+    return generalServices.get_by_expression(db=db, model=_model, expression=expression)
 
 
 @router.get('/name', response_model=schemas.Role)
-async def get_role_by_name(name: str, db: Session = Depends(get_db)):
-    return roleServices.get_role_by_name(db=db, name=name)
+@raise_403_if_not_admin
+async def get_role_by_name(name: str, db: Session = Depends(get_db),
+                           current_user: models.User = Depends(get_current_user)):
+    expression = _model.name == name
+    return generalServices.get_by_expression(db=db, model=_model, expression=expression)
 
 
 @router.post('', response_model=int)
-async def create_role(roleCreate: schemas.RoleCreate, db: Session = Depends(get_db)):
+@raise_403_if_not_admin
+async def create_role(roleCreate: schemas.RoleCreate, db: Session = Depends(get_db),
+                      current_user: models.User = Depends(get_current_user)):
     return roleServices.create_role(db=db, model=roleCreate)
 
 
 @router.put('/{id:int}/update', status_code=status.HTTP_204_NO_CONTENT)
-async def update_role_by_id(id: int, roleUpdate: schemas.RoleCreate, db: Session = Depends(get_db)):
-    role = generalServices.get_by_id(db=db, id=id, model=models.Role)
+@raise_403_if_not_admin
+async def update_role_by_id(id: int, roleUpdate: schemas.RoleCreate, db: Session = Depends(get_db),
+                            current_user: models.User = Depends(get_current_user)):
+    expression = _model.id == id
+    role = generalServices.get_by_expression(db=db, model=_model, expression=expression)
     roleServices.update_role(db=db, role=role, model=roleUpdate)
 
+
 @router.delete('/{id:int}/delete', status_code=status.HTTP_204_NO_CONTENT)
-async def delete_role_by_id(id: int, db: Session = Depends(get_db)):
+@raise_403_if_not_admin
+async def delete_role_by_id(id: int, db: Session = Depends(get_db),
+                            current_user: models.User = Depends(get_current_user)):
     generalServices.delete(db=db, model=models.Role, id=id)
 

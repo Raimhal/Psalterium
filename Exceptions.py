@@ -6,3 +6,6 @@ def CustomNotFoundException(entity: Any, key: str, value: Any):
 
 def CustomExistException(entity: Any, key: str, value: Any):
     raise HTTPException(status_code=400, detail=f"{entity.__name__} with {key} '{value}' already exists")
+
+def CustomAccessForbiddenException():
+    raise HTTPException(status_code=403, detail=f"Access is forbidden! You are not an admin")

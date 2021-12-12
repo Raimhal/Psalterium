@@ -8,17 +8,18 @@ class BookBase(BaseModel):
     title: str
     author: str
     content: str
-    price: str
-
+    price: float
+    count: int
 
 class BookCreate(BookBase):
     pass
 
-
-class Book(BookBase):
+class BookDto(BookBase):
     id: int
     owner_id: int
-    date_published: datetime
+    publication_date: datetime
+
+
 
     class Config:
         orm_mode = True
@@ -28,18 +29,24 @@ class Book(BookBase):
 class UserBase(BaseModel):
     email: str
     username: str
-    first_name: str
-    last_name: str
+    first_name: Optional[str] = None
+    last_name: Optional[str] = None
 
 
 class UserCreate(UserBase):
     password: str
 
 
-class User(UserBase):
+class UserDto(UserBase):
     id: int
     role_id: int = None
-    books: List[Book] = []
+
+    class Config:
+        orm_mode = True
+
+
+class User(UserDto):
+    books: List[BookDto] = []
 
     class Config:
         orm_mode = True
@@ -53,10 +60,14 @@ class RoleBase(BaseModel):
 class RoleCreate(RoleBase):
     pass
 
-
-class Role(RoleBase):
+class RoleDto(RoleBase):
     id: int
-    users: List[User] = []
+
+    class Config:
+        orm_mode = True
+
+class Role(RoleDto):
+    users: List[UserDto] = []
 
     class Config:
         orm_mode = True
@@ -71,6 +82,61 @@ class Token(BaseModel):
 class TokenData(BaseModel):
     email: Optional[str] = None
 
+
+# orders
+class OrderBase(BaseModel):
+    pass
+
+
+class OrderCreate(OrderBase):
+    pass
+
+
+class OrderDto(OrderBase):
+    id: int
+    user_id: int
+    deliver_date: datetime
+
+    class Config:
+        orm_mode = True
+
+
+class Order(OrderDto):
+    books: List[BookDto] = []
+
+    class Config:
+        orm_mode = True
+
+
+# genres
+class GenreBase(BaseModel):
+    name: str
+
+
+class GenreCreate(GenreBase):
+    pass
+
+
+class GenreDto(GenreBase):
+    id: int
+
+    class Config:
+        orm_mode = True
+
+
+class Genre(GenreDto):
+    books: List[BookDto] = []
+
+    class Config:
+        orm_mode = True
+
+
+class Book(BookDto):
+    books: List[OrderDto] = []
+    genres: List[GenreDto] = []
+
+    class Config:
+        orm_mode = True
 
 
 

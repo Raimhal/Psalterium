@@ -1,27 +1,27 @@
+
+
 from varname import nameof
 
-from Exceptions import CustomExistException, CustomNotFoundException
+from Exceptions import CustomExistException
 from models import models
 from schemas import schemas
 from config.db import Session
-from . import generalServices, roleServices, securityServices
+from . import generalServices, securityServices
 
-def get_user_by_email(db: Session, email: str) -> models.User:
-    user = check_email_in_use(db=db, email=email)
-    if not user:
-        CustomNotFoundException(entity=models.User, key=nameof(email), value=email)
-    return user
+_model = models.User
+_role_model = models.Role
 
-def check_email_in_use(db: Session, email: str) -> models.User:
-    return db.query(models.User).filter_by(email = email).first()
+def check_email_in_use(db: Session, email: str) -> _model:
+    return db.query(_model).filter_by(email = email).first()
 
 def create_user(db: Session, model: schemas.UserCreate) -> int:
     _ = check_email_in_use(db=db, email=model.email)
     if _:
-        CustomExistException(entity=models.User, key=nameof(model.email), value=model.email)
+        CustomExistException(entity=_model, key=nameof(model.email), value=model.email)
 
-    user_role = roleServices.get_role_by_name(db=db, name='User')
-    user = models.User(
+    user_role = generalServices.get_by_expression(db=db, model=_role_model, expression=_role_model.name == 'User')
+
+    user = _model(
         email=model.email,
         username=model.username,
         first_name=model.first_name,
@@ -35,12 +35,7 @@ def create_user(db: Session, model: schemas.UserCreate) -> int:
     return user.id
 
 
-def update_user(db: Session, user: models.User ,model: schemas.UserCreate):
-    _ = check_email_in_use(db=db, email=model.email)
-    if _:
-        CustomExistException(entity=models.User, key=nameof(model.email), value=model.email)
-
-    user.email = model.email
+def update_user(db: Session, user: _model ,model: schemas.UserCreate):
     user.username = model.username
     user.first_name = model.first_name
     user.last_name = model.last_name
@@ -48,7 +43,11 @@ def update_user(db: Session, user: models.User ,model: schemas.UserCreate):
     db.commit()
 
 def change_user_role(db: Session, user_id: int, role_name: str):
-    user = generalServices.get_by_id(db=db, model=models.User, id=user_id)
-    role = roleServices.get_role_by_name(db=db, name=role_name)
+    user = generalServices.get_by_expression(db=db, model=_model, expression=_model.id == user_id)
+    role = generalServices.get_by_expression(
+        db=db,
+        model=_role_model,
+        expression=_role_model.name == role_name.lower().capitalize()
+    )
     user.role = role
     db.commit()

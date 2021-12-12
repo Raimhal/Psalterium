@@ -1,30 +1,31 @@
 from datetime import timedelta, datetime
-from typing import Optional
-
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-from jose import JWTError, jwt
+from typing import Optional, Any
+from jose import jwt
 from passlib.context import CryptContext
 
 from config import SECRET_KEY, ALGORITHM
 from config.db import Session
-from . import userServices
+from models import models
+from . import generalServices
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-def verify_password(plain_password, hashed_password):
+def verify_password(plain_password, hashed_password) -> bool:
     return pwd_context.verify(plain_password, hashed_password)
 
-def get_password_hash(password):
+def get_password_hash(password) -> str:
     return pwd_context.hash(password)
 
-def authenticate_user(db: Session, email: str, password: str):
-    user = userServices.get_user_by_email(db=db, email=email)
+def authenticate_user(db: Session, email: str, password: str) -> Any:
+    model = models.User
+    expression = model.email == email
+    user = generalServices.get_by_expression(db=db, model=model, expression=expression)
     print(user.hashed_password)
     if not verify_password(password, user.hashed_password):
         return False
     return user
 
-def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
+def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -> Any:
     to_encode = data.copy()
     if expires_delta:
         expire = datetime.utcnow() + expires_delta
