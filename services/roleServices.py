@@ -19,7 +19,6 @@ def create_role(db: Session, model: schemas.RoleCreate) -> int:
     role = _model(name=model.name)
     db.add(role)
     db.commit()
-    print(role)
     return role.id
 
 

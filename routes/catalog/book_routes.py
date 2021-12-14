@@ -53,5 +53,5 @@ async def set_genres(id: int, genres: List[schemas.GenreBase], db: Session = Dep
 @router.delete('/{id}/delete', status_code=status.HTTP_204_NO_CONTENT)
 async def delete_book(id: int, db: Session = Depends(get_db),
                             current_user: models.User = Depends(get_current_user)):
-    generalServices.delete(db=db, model=models.Book, id=id)
+    bookServices.delete_book(db=db, id=id)
 

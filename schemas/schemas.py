@@ -19,10 +19,23 @@ class BookDto(BookBase):
     owner_id: int
     publication_date: datetime
 
+    class Config:
+        orm_mode = True
 
+class OrderBookBase(BaseModel):
+    count: int
+    book_id: int
+
+class OrderBookCreate(OrderBookBase):
+    pass
+
+class OrderBook(OrderBookBase):
+    id: int
+    order_id: int
 
     class Config:
         orm_mode = True
+
 
 
 # users
@@ -85,27 +98,23 @@ class TokenData(BaseModel):
 
 # orders
 class OrderBase(BaseModel):
-    pass
+    deliver_date: datetime
 
 
 class OrderCreate(OrderBase):
-    pass
+    books: List[OrderBookBase] = []
 
 
-class OrderDto(OrderBase):
+class Order(OrderBase):
     id: int
     user_id: int
-    deliver_date: datetime
+    books: List[OrderBook] = []
+
 
     class Config:
         orm_mode = True
 
 
-class Order(OrderDto):
-    books: List[BookDto] = []
-
-    class Config:
-        orm_mode = True
 
 
 # genres
@@ -132,7 +141,7 @@ class Genre(GenreDto):
 
 
 class Book(BookDto):
-    books: List[OrderDto] = []
+    books: List[Order] = []
     genres: List[GenreDto] = []
 
     class Config:

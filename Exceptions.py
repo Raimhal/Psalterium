@@ -9,3 +9,6 @@ def CustomExistException(entity: Any, key: str, value: Any):
 
 def CustomAccessForbiddenException():
     raise HTTPException(status_code=403, detail=f"Access is forbidden! You are not an admin")
+
+def CustomCountException(entity: Any, key: str, value: Any):
+    raise HTTPException(status_code=400, detail=f"Not enough {(entity.__name__).lower()}s with {key} {value} in stock")

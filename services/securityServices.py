@@ -20,7 +20,6 @@ def authenticate_user(db: Session, email: str, password: str) -> Any:
     model = models.User
     expression = model.email == email
     user = generalServices.get_by_expression(db=db, model=model, expression=expression)
-    print(user.hashed_password)
     if not verify_password(password, user.hashed_password):
         return False
     return user

@@ -28,12 +28,6 @@ class Role(Base):
 
     users = relationship('User', back_populates='role')
 
-orders_books_temporary_table = \
-    Table('orders_books', Base.metadata,
-          Column('order_id', ForeignKey('orders.id'), primary_key=True),
-          Column('book_id', ForeignKey('books.id'), primary_key=True)
-          )
-
 books_genres_temporary_table = \
     Table('books_genres', Base.metadata,
           Column('book_id', ForeignKey('books.id'), primary_key=True),
@@ -53,7 +47,7 @@ class Book(Base):
 
     owner_id = Column(Integer, ForeignKey('users.id'))
     owner = relationship('User', back_populates='books')
-    orders = relationship('Order', secondary=orders_books_temporary_table, back_populates='books', lazy=True)
+    orders = relationship('OrderBook', back_populates='book')
     genres = relationship('Genre', secondary=books_genres_temporary_table, back_populates='books', lazy=True)
 
 
@@ -63,7 +57,16 @@ class Order(Base):
     id = Column(Integer, primary_key=True, index=True)
     deliver_date = Column(DateTime)
     user_id = Column(Integer, ForeignKey('users.id'))
-    books = relationship('Book', secondary=orders_books_temporary_table, back_populates='orders', lazy=True)
+    books = relationship('OrderBook', back_populates='order')
+
+class OrderBook(Base):
+    __tablename__ = 'orders_books'
+    id = Column(Integer, primary_key=True, index=True)
+    order_id = Column(Integer, ForeignKey('orders.id'))
+    order = relationship('Order', back_populates='books')
+    book_id = Column(Integer, ForeignKey('books.id'))
+    book = relationship('Book', back_populates='orders')
+    count = Column(Integer)
 
 class Genre(Base):
     __tablename__ = 'genres'

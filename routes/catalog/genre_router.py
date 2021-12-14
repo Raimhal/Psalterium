@@ -18,7 +18,7 @@ _model = models.Genre
 @router.get('', response_model=List[schemas.GenreDto])
 async def get_genres(skip: int=0, limit: int=10, db: Session = Depends(get_db),
                     current_user: models.User = Depends(get_current_user)):
-    return generalServices.get_all(db=db, model=models.Genre, skip=skip, limit=limit, current_user=current_user, expression=True)
+    return generalServices.get_all(db=db, model=_model, skip=skip, limit=limit, current_user=current_user, expression=True)
 
 
 @router.get('/{id:int}', response_model=schemas.Genre)
@@ -55,5 +55,5 @@ async def update_genre(id: int, genreUpdate: schemas.GenreCreate, db: Session = 
 @raise_403_if_not_admin
 async def delete_genre(id: int, db: Session = Depends(get_db),
                             current_user: models.User = Depends(get_current_user)):
-    generalServices.delete(db=db, model=models.Genre, id=id)
+    generalServices.delete(db=db, model=_model, id=id)
 
