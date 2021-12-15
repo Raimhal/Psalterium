@@ -1,9 +1,12 @@
+from typing import Any
+
 from varname import nameof
 
 from Exceptions import CustomExistException
 from models import models
 from schemas import schemas
 from config.db import Session
+from services import generalServices
 from services.generalServices import check_in_use_expression
 
 _model = models.Genre
@@ -17,6 +20,7 @@ def create_genre(db: Session, model: schemas.GenreCreate) -> int:
     return genre.id
 
 
-def update_genre(db: Session, genre: models.Genre, model: schemas.GenreCreate):
+def update_genre(db: Session, model: schemas.GenreCreate, expression: bool):
+    genre = generalServices.get_by_expression(db=db, model=_model, expression=expression)
     genre.name = model.name
     db.commit()

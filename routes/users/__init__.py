@@ -1,6 +1,6 @@
 from fastapi import APIRouter
-from . import user_routers, role_routers
+from . import users, roles
 
 router = APIRouter()
-router.include_router(user_routers.router)
-router.include_router(role_routers.router)
+router.include_router(users.router)
+router.include_router(roles.router)

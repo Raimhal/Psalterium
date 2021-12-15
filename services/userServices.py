@@ -12,7 +12,7 @@ _model = models.User
 _role_model = models.Role
 
 def check_email_in_use(db: Session, email: str) -> _model:
-    return db.query(_model).filter_by(email = email).first()
+    return db.query(_model).filter(_model.email == email).first()
 
 def create_user(db: Session, model: schemas.UserCreate) -> int:
     _ = check_email_in_use(db=db, email=model.email)
@@ -35,7 +35,8 @@ def create_user(db: Session, model: schemas.UserCreate) -> int:
     return user.id
 
 
-def update_user(db: Session, user: _model ,model: schemas.UserCreate):
+def update_user(db: Session, model: schemas.UserCreate, expression: bool):
+    user = generalServices.get_by_expression(db=db, model=_model, expression=expression)
     user.username = model.username
     user.first_name = model.first_name
     user.last_name = model.last_name

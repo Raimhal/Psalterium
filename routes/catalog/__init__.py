@@ -1,7 +1,7 @@
 from fastapi import APIRouter
-from . import book_routes, genre_router, order_routers
+from . import books, genres, orders
 
 router = APIRouter(prefix='/catalog')
-router.include_router(book_routes.router)
-router.include_router(genre_router.router)
-router.include_router(order_routers.router)
+router.include_router(books.router)
+router.include_router(genres.router)
+router.include_router(orders.router)

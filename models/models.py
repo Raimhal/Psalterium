@@ -1,7 +1,7 @@
-import datetime
+from datetime import datetime
 
 from sqlalchemy import Float, Column, ForeignKey, Integer, String, DateTime, Table
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, backref
 
 from config.db import Base
 
@@ -17,7 +17,6 @@ class User(Base):
 
     role_id = Column(Integer, ForeignKey('roles.id'))
     role = relationship('Role', back_populates='users')
-
     books = relationship('Book', back_populates='owner')
 
 class Role(Base):
@@ -42,8 +41,10 @@ class Book(Base):
     author = Column(String, nullable=False)
     content = Column(String)
     price = Column(Float, nullable=False)
-    publication_date = Column(DateTime, default=datetime.datetime.utcnow)
+    publication_date = Column(DateTime, default=datetime.utcnow)
+    update_date = Column(DateTime, default=datetime.utcnow)
     count = Column(Integer)
+    image = Column(String, default='default.png')
 
     owner_id = Column(Integer, ForeignKey('users.id'))
     owner = relationship('User', back_populates='books')
@@ -56,17 +57,20 @@ class Order(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     deliver_date = Column(DateTime)
+
     user_id = Column(Integer, ForeignKey('users.id'))
     books = relationship('OrderBook', back_populates='order')
 
 class OrderBook(Base):
     __tablename__ = 'orders_books'
     id = Column(Integer, primary_key=True, index=True)
+    count = Column(Integer)
+
     order_id = Column(Integer, ForeignKey('orders.id'))
     order = relationship('Order', back_populates='books')
     book_id = Column(Integer, ForeignKey('books.id'))
     book = relationship('Book', back_populates='orders')
-    count = Column(Integer)
+
 
 class Genre(Base):
     __tablename__ = 'genres'
@@ -75,5 +79,4 @@ class Genre(Base):
     name = Column(String, unique=True, index=True, nullable=False)
 
     books = relationship('Book', secondary=books_genres_temporary_table, back_populates='genres', lazy=True)
-
 

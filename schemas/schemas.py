@@ -10,18 +10,23 @@ class BookBase(BaseModel):
     content: str
     price: float
     count: int
+    publication_date: datetime
 
 class BookCreate(BookBase):
     pass
 
+
 class BookDto(BookBase):
     id: int
     owner_id: int
-    publication_date: datetime
+    image: str
+    update_date: datetime
 
     class Config:
         orm_mode = True
 
+
+# order book
 class OrderBookBase(BaseModel):
     count: int
     book_id: int
@@ -110,7 +115,6 @@ class Order(OrderBase):
     user_id: int
     books: List[OrderBook] = []
 
-
     class Config:
         orm_mode = True
 
@@ -141,11 +145,12 @@ class Genre(GenreDto):
 
 
 class Book(BookDto):
-    books: List[Order] = []
+    orders: List[OrderBook] = []
     genres: List[GenreDto] = []
 
     class Config:
         orm_mode = True
+
 
 
 

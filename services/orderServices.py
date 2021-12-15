@@ -32,7 +32,8 @@ def create_order(db: Session, model: schemas.OrderCreate, current_user: models.U
 
 def delete_order(db: Session, id: int):
     order = generalServices.get_by_expression(db=db, model=_model, expression=_model.id == id)
-    order_books = db.query(_model_book).filter(_model_book.order == order).all()
+    expression = _model_book.order == order
+    order_books = generalServices.get_all_without_limit(db=db, model=_model_book, expression=expression)
     for order_book in order_books:
         book = generalServices.get_by_expression(db=db, model=models.Book, expression=models.Book.id == order_book.book_id)
         book.count += order_book.count
