@@ -10,7 +10,7 @@ class User(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     email = Column(String, unique=True, index=True, nullable=False)
-    hashed_password = Column(String, nullable=False)
+    password = Column(String, nullable=False)
     username = Column(String, index=True, nullable=False)
     first_name = Column(String)
     last_name = Column(String)
@@ -37,7 +37,7 @@ class Book(Base):
     __tablename__ = 'books'
 
     id = Column(Integer, primary_key=True, index=True)
-    title = Column(String, nullable=False)
+    name = Column(String, nullable=False)
     author = Column(String, nullable=False)
     content = Column(String)
     price = Column(Float, nullable=False)
@@ -45,6 +45,7 @@ class Book(Base):
     update_date = Column(DateTime, default=datetime.utcnow)
     count = Column(Integer)
     image = Column(String, default='default.png')
+    ISBN = Column(String, unique=True,index=True, nullable=False)
 
     owner_id = Column(Integer, ForeignKey('users.id'))
     owner = relationship('User', back_populates='books')

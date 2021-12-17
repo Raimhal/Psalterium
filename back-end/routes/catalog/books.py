@@ -13,9 +13,23 @@ router = APIRouter(prefix='/books', tags=['books'])
 
 _model = models.Book
 
+
 @router.get('', response_model=List[schemas.BookDto])
 async def get_books(skip: int=0, limit: int=10, db: Session = Depends(get_db)):
     return generalServices.get_all(db=db, model=_model, skip=skip, limit=limit)
+
+
+@router.get('/search', response_model=List[schemas.BookDto])
+async def get_books(select: str, skip: int=0, limit: int=10, db: Session = Depends(get_db)):
+    expression = _model.name.contains(select.lower())
+    return generalServices.get_all_with_expression(db=db, model=_model, skip=skip, limit=limit, expression=expression)
+
+
+@router.get('/my', response_model=List[schemas.BookDto])
+async def get_books(skip: int=0, limit: int=10, db: Session = Depends(get_db),
+                    current_user: models.User = Depends(get_current_user)):
+    expression = _model.owner == current_user
+    return generalServices.get_all_with_expression(db=db, model=_model, skip=skip, limit=limit, expression=expression)
 
 
 @router.get('/{id:int}', response_model=schemas.Book)

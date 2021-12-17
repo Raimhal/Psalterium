@@ -1,30 +1,55 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+  <navbar></navbar>
+  <div class="app">
+    <router-view></router-view>
   </div>
-  <router-view/>
 </template>
+<script>
+export default {
+  mounted() {
+    console.log('show')
+    console.log()
+    if (Date.now() >= localStorage.getItem('tokenExp') * 1000) {
+      this.$store.dispatch('logout')
+      this.$store.errors.push('Token expired')
+    }
+    else if(JSON.parse(localStorage.getItem('isAuth'))){
+      this.$store.commit('setToken', localStorage.getItem('accessToken'))
+      this.$store.commit('setAuth', JSON.parse(localStorage.getItem('isAuth')))
+      this.$store.commit('setAdmin', JSON.parse(localStorage.getItem('isAdmin')))
+      this.$store.commit('setExp', JSON.parse(localStorage.getItem('tokenExp')))
+    }
+  },
+}
+</script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'M PLUS 1', sans-serif;
+  font-weight: 400;
+}
+body{
+  background-color: rgba(0, 0, 0, 0.92);
 }
 
-#nav {
-  padding: 30px;
+.app{
+  padding: 20px;
+}
+.user__form{
+  color: rgb(255, 153, 0);
+}
+.error{
+  color: rgba(255, 0, 0, 0.94);
+  font-size: 14px;
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+.link{
+  text-decoration: none;
 }
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+.link:hover{
+  text-decoration: underline;
 }
 </style>

@@ -9,6 +9,9 @@ from config.db import Session
 def get_all(db: Session, model: Any, skip: int, limit: int) -> List[Any]:
     return db.query(model).offset(skip).limit(limit).all()
 
+def get_all_with_expression(db: Session, model: Any, skip: int, limit: int, expression: bool) -> List[Any]:
+    return db.query(model).filter(expression).offset(skip).limit(limit).all()
+
 def get_all_without_limit(db: Session, model: Any, expression: Any) -> List[Any]:
     return db.query(model).filter(expression).all()
 
@@ -21,14 +24,16 @@ def get_by_expression(db: Session, model: Any, expression: Any) -> Any:
     return entity
 
 def delete(db: Session, model: Any, id: int):
-    entity = get_by_expression(db=db, model=model, expression= model.id == id)
+    entity = get_by_expression(db=db, model=model, expression=model.id == id)
     db.delete(entity)
     db.commit()
 
-def check_in_use_expression(db: Session, model: Any, entity: Any, expression: Any):
+def check_in_use_expression(db: Session, model: Any, expression: Any):
     _ = db.query(model).filter(expression).first()
     if _:
-        CustomExistException(entity=model, key=nameof(entity.name), value=entity.name)
+        key = expression.left.key
+        value = expression.right.value
+        CustomExistException(entity=model, key=key, value=value)
 
 def check_in_warehouse(db: Session, model: Any,  id: int, count: int):
     expression = model.id == id

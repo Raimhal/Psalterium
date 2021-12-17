@@ -24,7 +24,7 @@ def create_database():
     if 'Admin' not in [user.role.name for user in db.query(models.User).all()]:
         admin = models.User(
             email='admin@bookstore.com',
-            hashed_password=securityServices.get_password_hash('admin'),
+            password=securityServices.get_password_hash('admin'),
             username='Admin',
             role_id=1
         )

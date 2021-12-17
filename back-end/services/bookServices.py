@@ -13,14 +13,17 @@ from . import generalServices, fileService
 _model = models.Book
 
 def create_book(db: Session, model: schemas.BookCreate, current_user: models.User) -> int:
+    expression = _model.ISBN == model.ISBN
+    generalServices.check_in_use_expression(db=db, model=_model, expression=expression)
     book = _model(
-        title=model.title,
+        name=model.name,
         author=model.author,
         content=model.content,
         price=model.price,
         owner=current_user,
         count=model.count,
-        publication_date=model.publication_date
+        publication_date=model.publication_date,
+        ISBN=model.ISBN
     )
     db.add(book)
     db.commit()
@@ -31,12 +34,17 @@ def update_book(db: Session, model: schemas.BookCreate, expression: Any):
 
     book = generalServices.get_by_expression(db=db, model=model, expression=expression)
 
-    book.title = model.title
+    book.name = model.name
     book.author = model.author
     book.content = model.content
     book.price = model.price
     book.count = model.count
     book.update_date = datetime.utcnow()
+    if not book.ISBN == model.ISBN:
+        expression = _model.ISBN == model.ISBN
+        generalServices.check_in_use_expression(db=db, model=_model, expression=expression)
+        book.ISBN = model.ISBN
+
 
     db.commit()
 
@@ -64,6 +72,7 @@ def change_image(db: Session, image: UploadFile, expression: Any):
     book = generalServices.get_by_expression(db=db, model=_model, expression=expression)
     if image:
         print(book.image)
+        fileService.delete_file(book.image)
         book.image = fileService.save_file(image)
         db.commit()
 

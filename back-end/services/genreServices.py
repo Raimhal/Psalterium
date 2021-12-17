@@ -13,7 +13,7 @@ _model = models.Genre
 
 def create_genre(db: Session, model: schemas.GenreCreate) -> int:
     expression = _model.name == model.name
-    check_in_use_expression(db=db, entity=model, model=_model, expression=expression)
+    check_in_use_expression(db=db, model=_model, expression=expression)
     genre = _model(name = model.name)
     db.add(genre)
     db.commit()

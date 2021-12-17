@@ -5,12 +5,13 @@ from pydantic import BaseModel
 
 # books
 class BookBase(BaseModel):
-    title: str
+    name: str
     author: str
     content: str
     price: float
     count: int
     publication_date: datetime
+    ISBN: str
 
 class BookCreate(BookBase):
     pass

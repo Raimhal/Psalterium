@@ -26,7 +26,7 @@ def create_user(db: Session, model: schemas.UserCreate) -> int:
         username=model.username,
         first_name=model.first_name,
         last_name=model.last_name,
-        hashed_password=securityServices.get_password_hash(model.password),
+        password=securityServices.get_password_hash(model.password),
         role = user_role
     )
 
@@ -40,7 +40,8 @@ def update_user(db: Session, model: schemas.UserCreate, expression: bool):
     user.username = model.username
     user.first_name = model.first_name
     user.last_name = model.last_name
-    user.hashed_password = securityServices.get_password_hash(model.password)
+    if model.password:
+        user.password = securityServices.get_password_hash(model.password)
     db.commit()
 
 def change_user_role(db: Session, user_id: int, role_name: str):
