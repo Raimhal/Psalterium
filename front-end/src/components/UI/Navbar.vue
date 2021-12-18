@@ -1,6 +1,6 @@
 <template>
   <div class="navbar">
-    <div @click="$router.push('/')"><div class="logo">PSALT<span>ERIUM</span></div></div>
+    <div @click="$router.push('/')"><div class="logo"><span>P</span>SALT<span>ERIUM</span></div></div>
     <div class="navbar__btns">
       <div v-if="!isAuth">
         <router-link to="/login"><my-button>Log in</my-button></router-link>

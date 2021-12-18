@@ -4,31 +4,7 @@
     <list default="true" id="017aacaf-aca6-46c5-a5ef-0b10e42e24de" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database.config" beforeDir="false" afterPath="$PROJECT_DIR$/database.config" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/catalog/books.py" beforeDir="false" afterPath="$PROJECT_DIR$/routes/catalog/books.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schemas/schemas.py" beforeDir="false" afterPath="$PROJECT_DIR$/schemas/schemas.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/bookServices.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/bookServices.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/public/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/components/AllowedExtensionList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/AllowedExtensionList.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/components/FileTypeForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/FileTypeForm.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/components/HelloWorld.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/components/UI/MyButton.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/UI/MyButton.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/components/UI/MyTitle.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/UI/MyTitle.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/components/UI/Navbar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/UI/Navbar.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/components/UserForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/UserForm.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/components/UserList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/UserList.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/directives/VIntersection.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/directives/VIntersection.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/pages/AdminPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/pages/AdminPage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/pages/Home.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/pages/LoginPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/pages/LoginPage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/router/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/router/router.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/store/fileModule.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/store/fileModule.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/store/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/store/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/views/About.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/views/Home.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,6 +48,8 @@
       <workItem from="1639753896853" duration="3047000" />
       <workItem from="1639757745848" duration="7215000" />
       <workItem from="1639829074177" duration="9462000" />
+      <workItem from="1639859386121" duration="83000" />
+      <workItem from="1639859486362" duration="627000" />
     </task>
     <servers />
   </component>

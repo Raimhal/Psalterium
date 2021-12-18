@@ -25,7 +25,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-print(app.middleware_stack.__dict__['app'].__dict__)
+
 class SimpleASGIMiddleware:
     def __init__(self, app: ASGIApp):
         self.app = app

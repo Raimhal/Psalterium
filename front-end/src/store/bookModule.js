@@ -15,7 +15,7 @@ export const bookModule = {
             ISBN: ""
         },
         isLoading: false,
-        selectedSort: '',
+        selectedSort: 'name',
         searchQuery: '',
         page: 0,
         limit: 10,
@@ -23,6 +23,8 @@ export const bookModule = {
         sortOptions: [
             {value: 'name', name: 'By name'},
             {value: 'author', name: 'By author'},
+            {value: 'price', name: 'By price'},
+            {value: 'publication_date', name: 'By date'},
         ],
     }),
     getters: {
