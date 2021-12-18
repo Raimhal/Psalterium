@@ -1,5 +1,5 @@
 <template>
-  <h2 class="my__title"><slot></slot></h2>
+  <h2 class="title"><slot></slot></h2>
 </template>
 
 <script>
@@ -9,9 +9,8 @@ export default {
 </script>
 
 <style scoped>
-.my__title{
-  background: rgba(109, 165, 252, 0.9);
-  color: azure;
-  padding: 10px;
+.title{
+  color: #7072F7;
+
 }
 </style>

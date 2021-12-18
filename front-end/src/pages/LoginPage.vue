@@ -88,7 +88,5 @@ export default {
 </script>
 
 <style scoped>
-.title{
-  margin-bottom: 20px;
-}
+
 </style>

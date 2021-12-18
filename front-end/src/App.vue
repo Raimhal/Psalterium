@@ -24,32 +24,63 @@ export default {
 </script>
 
 <style>
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'M PLUS 1', sans-serif;
-  font-weight: 400;
+  font-family: 'Merriweather', serif;
+  font-weight: 300;
+  color: white;
 }
-body{
-  background-color: rgba(0, 0, 0, 0.92);
-}
-
 .app{
   padding: 20px;
 }
-.user__form{
-  color: rgb(255, 153, 0);
+body{
+  background-color: rgb(23, 28, 33);
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
 }
-.error{
-  color: rgba(255, 0, 0, 0.94);
-  font-size: 14px;
+
+.form{
+  display: flex;
+  flex-direction: column;
+}
+
+.input {
+  padding: 10px 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: #292a5c;
+}
+
+.user__page{
+  display: flex;
+  justify-content: center;
+}
+
+.user__form{
+  width: 400px;
+}
+
+.observer{
+  height: 30px;
+}
+
+.app__btns{
+  margin: 15px 0;
+  display: flex;
+  justify-content:space-between;
+
+}
+
+.page{
+  margin: auto;
+  width: 70vw;
 }
 
 .link{
+  color: #7072F7;
   text-decoration: none;
-}
-.link:hover{
-  text-decoration: underline;
 }
 </style>

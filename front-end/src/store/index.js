@@ -1,6 +1,7 @@
 import {createStore} from 'vuex'
 import {userModule} from "./userModele"
 import {fileModule} from "./fileModule"
+import {bookModule} from "./bookModule";
 
 export default createStore({
   state: {
@@ -52,6 +53,7 @@ export default createStore({
 
   modules: {
     user: userModule,
-    file: fileModule
+    file: fileModule,
+    book: bookModule
   }
 })

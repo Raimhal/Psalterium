@@ -14,7 +14,7 @@ export const fileModule = {
         textBlobs: [],
         isLoading: false,
         defaultRoot: 'file-settings/types',
-        defaultEventRoot: 'events'
+        defaultEventRoot: 'books'
     }),
     getters: {
         getAllowedFileTypes(state) {

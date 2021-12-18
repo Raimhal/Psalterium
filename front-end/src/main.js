@@ -19,8 +19,8 @@ app
     .use(router)
     .use(store)
     .mount('#app')
-
-app.config.errorHandler = function(err, vm, info) {
-    console.log(`Error: ${err.message.toString()}\nInfo: ${info}`);
-}
+//
+// app.config.errorHandler = function(err, vm, info) {
+//     console.log(`Error: ${err.message.toString()}\nInfo: ${info}`);
+// }
 

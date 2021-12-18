@@ -36,8 +36,7 @@ export default {
       modified: false,
       length: 1,
       id: null,
-      reportType: 'next-month-report',
-      root: 'events'
+      root: 'books'
     }
   },
   mounted() {
@@ -88,25 +87,5 @@ export default {
 </script>
 
 <style scoped>
-.users, types{
-  height: fit-content;
-  max-height: 80vh;
-  overflow-y: auto;
-}
 
-.btns{
-  display: flex;
-  justify-content: space-between;
-}
-
-.main {
-  display: flex;
-  white-space: nowrap;
-  gap: 20px;
-}
-.page{
-  display: flex;
-  flex-direction: column;
-  gap: 30px
-}
 </style>

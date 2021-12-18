@@ -1,6 +1,6 @@
 <template>
   <div class="navbar">
-    <div class="logo" @click="$router.push('/')"><p>Psalt</p><p class="main">erium</p></div>
+    <div @click="$router.push('/')"><div class="logo">PSALT<span>ERIUM</span></div></div>
     <div class="navbar__btns">
       <div v-if="!isAuth">
         <router-link to="/login"><my-button>Log in</my-button></router-link>
@@ -32,13 +32,21 @@ export default {
 </script>
 
 <style scoped>
+.logo{
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+}
+.logo>span{
+  color: #7072F7;
+}
 .navbar{
-  height: 60px;
-  background-color: rgba(0, 0, 0, 0.9);
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.78);
+  height: 50px;
   display: flex;
   align-items: center;
   padding: 0 15px;
+  margin-top: 10px;
 }
 
 .navbar__btns{
@@ -47,16 +55,5 @@ export default {
 .navbar__btns, .navbar__btns>div{
   display: flex;
   gap: 10px;
-}
-
-.logo{
-  color: rgb(255, 111, 0);
-  font-size: 20px;
-  font-weight: 400;
-  cursor: pointer;
-  display: flex;
-}
-.main{
-  color: #f30000;
 }
 </style>

@@ -2,6 +2,7 @@ import datetime
 from typing import List, Any
 
 from fastapi import UploadFile
+from fastapi.responses import FileResponse
 
 from models import models
 from schemas import schemas
@@ -62,10 +63,14 @@ def set_genres(db: Session, genres: List[schemas.GenreBase], expression: Any):
     db.commit()
 
 
-def get_image(db: Session, id: int):
+def get_image(db: Session, id: int) -> FileResponse:
     book = generalServices.get_by_expression(db=db, model=_model, expression=_model.id == id)
     print(book.image)
     return fileService.get_file(book.image)
+
+
+def get_image_by_name(name: str) -> FileResponse:
+    return fileService.get_file(name)
 
 
 def change_image(db: Session, image: UploadFile, expression: Any):

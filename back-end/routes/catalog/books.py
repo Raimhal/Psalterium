@@ -44,6 +44,11 @@ async def get_image(id: int, db: Session = Depends(get_db)):
     return bookServices.get_image(db=db, id=id)
 
 
+@router.get("/image", status_code=status.HTTP_200_OK)
+async def get_image(name: str):
+    return bookServices.get_image_by_name(name)
+
+
 @router.post('', response_model=int)
 async def create_book(bookCreate: schemas.BookCreate,db: Session = Depends(get_db),
                       current_user: models.User = Depends(get_current_user)):

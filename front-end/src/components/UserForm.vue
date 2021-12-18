@@ -1,6 +1,6 @@
 <template>
   <Form v-slot="{ handleSubmit }" :validation-schema="schema" as="div" class="user__form">
-    <h2 class="title"><slot name="header"></slot></h2>
+    <my-title><slot name="header"></slot></my-title>
     <my-error-list :errors="errors"></my-error-list>
     <form @submit="handleSubmit($event, action)" method="post" class="form">
       Email : <my-field
@@ -48,10 +48,12 @@ import * as yup from 'yup'
 import MyField from "@/components/UI/MyField";
 import MyErrorMessage from "@/components/UI/MyErrorMessage";
 import MyErrorList from "./UI/MyErrorList";
+import MyTitle from "./UI/MyTitle";
 
 export default {
   name: "UserForm",
   components: {
+    MyTitle,
     MyErrorList,
     Form, MyField, MyErrorMessage
   },
@@ -100,7 +102,4 @@ export default {
 
 <style scoped>
 
-.title{
-  margin-bottom: 20px;
-}
 </style>

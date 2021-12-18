@@ -155,6 +155,7 @@ export const userModule = {
         async updateUser({state, rootState, rootGetters}){
             const path = `${state.defaultRoot}/${state.user.id}/update`
             rootState.errors = []
+            console.log(state.user)
             await instance
                 .put(path, state.user, {headers: rootGetters.getHeaders})
                 .catch(error => {

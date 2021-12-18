@@ -59,9 +59,5 @@ export default {
 </script>
 
 <style scoped>
-.type__form{
-  padding: 10px;
-  border: 2px solid #0c20a1;
-  border-radius: 5px;
-}
+
 </style>
