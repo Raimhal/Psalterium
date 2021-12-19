@@ -13,7 +13,7 @@
     </div>
   </div>
   <div  v-else class="empty__list">
-    <h3 style="color: rgba(109, 165, 252, 0.9)">
+    <h3 style="color: #7072F7">
       List is empty
     </h3>
   </div>

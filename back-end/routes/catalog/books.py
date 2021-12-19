@@ -20,8 +20,8 @@ async def get_books(skip: int=0, limit: int=10, db: Session = Depends(get_db)):
 
 
 @router.get('/search', response_model=List[schemas.BookDto])
-async def get_books(select: str, skip: int=0, limit: int=10, db: Session = Depends(get_db)):
-    expression = _model.name.contains(select.lower())
+async def get_books(query: str, skip: int=0, limit: int=10, db: Session = Depends(get_db)):
+    expression = _model.name.contains(query.lower())
     return generalServices.get_all_with_expression(db=db, model=_model, skip=skip, limit=limit, expression=expression)
 
 

@@ -4,7 +4,30 @@
     <list default="true" id="017aacaf-aca6-46c5-a5ef-0b10e42e24de" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database.config" beforeDir="false" afterPath="$PROJECT_DIR$/database.config" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/catalog/books.py" beforeDir="false" afterPath="$PROJECT_DIR$/routes/catalog/books.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/bookServices.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/bookServices.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/fileService.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/fileService.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/files/03b0e56d-2e65-45ff-839f-798d55f9d79f.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/files/1629bca7-f1b8-4c5d-96b4-66ff3312ae6a.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/files/24514087-f828-46ec-a564-f6a767c0cccf.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/files/2c460354-a523-4fdf-abcd-05512552a235.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/files/2ff51993-841a-4992-98f1-ea88ce645051.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/files/315b4ed4-4d24-48bf-a64b-28ba0dce3da5.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/files/3c6a4a31-e81f-4977-b028-40ec9b5dc04f.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/files/4863189f-25dd-4a61-b528-e3225a1f7492.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/files/667a4fc3-b1e3-4ffd-8592-6659a34eb7aa.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/files/8b467447-803e-4bb4-9182-b6fb1ff12f19.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/files/a400fa90-2c92-43e4-a3c3-1f0790022619.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/files/b00e0621-e97c-4e2d-8533-9f644ec77712.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/files/b7f830c5-e338-4a5e-a261-6d7d0ce829a9.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/files/d663ce38-aa53-4c61-92f8-cacbd575cefd.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/files/f06ee006-4c98-496c-bad3-310b54fd6fed.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/components/BookItem.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/BookItem.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/components/UI/MySelect.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/UI/MySelect.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/components/UserForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/UserForm.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/directives/directives.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/directives/directives.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/pages/Home.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/store/bookModule.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/store/bookModule.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,11 +73,23 @@
       <workItem from="1639829074177" duration="9462000" />
       <workItem from="1639859386121" duration="83000" />
       <workItem from="1639859486362" duration="627000" />
+      <workItem from="1639902968265" duration="10363000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <ignored-roots>

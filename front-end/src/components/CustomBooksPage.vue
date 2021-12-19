@@ -1,11 +1,6 @@
 <template>
   <div>
     <my-title><slot name="title"></slot></my-title>
-    <my-search
-        v-focus
-        :model-value="searchQuery"
-        @update:model-value="setSearchQuery"
-    />
     <div class="app__btns">
       <my-select
           :model-value="selectedSort"
@@ -14,7 +9,7 @@
       />
     </div>
     <book-list
-        :books="sortedAndSearchedBooks"
+        :books="sortedBooks"
         v-if="!isLoading"
         @remove="removeBook"
     />
@@ -69,7 +64,6 @@ export default {
     }),
     ...mapGetters({
       sortedBooks: 'book/sortedBooks',
-      sortedAndSearchedBooks: 'book/sortedAndSearchedBooks'
     }),
   },
 }

@@ -39,5 +39,10 @@ export default {
 <style scoped>
 .search{
   height: 30px;
+  color: #292a5c;
+}
+
+.search option{
+  color: #292a5c;
 }
 </style>

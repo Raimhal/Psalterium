@@ -16,7 +16,10 @@ export const bookModule = {
         },
         isLoading: false,
         selectedSort: 'name',
-        searchQuery: '',
+        searchQuery: {
+            value: "",
+            searched: false
+        },
         page: 0,
         limit: 10,
         defaultRoot: 'catalog/books',
@@ -30,10 +33,6 @@ export const bookModule = {
     getters: {
         sortedBooks(state){
             return [...state.books].sort((book1, book2) => book2[state.selectedSort]?.toString().localeCompare(book1[state.selectedSort]))
-        },
-        sortedAndSearchedBooks(state, getters){
-            return getters.sortedBooks.filter(e =>
-                e.name.toLowerCase().includes(state.searchQuery.toLowerCase()))
         },
     },
     mutations: {
@@ -79,6 +78,9 @@ export const bookModule = {
                 ISBN: ""
             }
         },
+        setSearchedMod(state, bool){
+            state.searchQuery.searched = bool
+        }
 
     },
     actions: {
@@ -101,14 +103,23 @@ export const bookModule = {
             if(state.books.length === 0)
                 commit('setLoading', true)
             state.page += 1
-            const path = `${state.defaultRoot}`
+
+            let path = `${state.defaultRoot}`
+            let params = {
+                skip: (state.page - 1) * state.limit,
+                take: state.limit
+            }
+
+            if(state.searchQuery.searched) {
+                path += '/search'
+                params.query = state.searchQuery.value
+            }
+
+            console.log(path)
+            console.log(params)
+
             await instance
-                .get(path, {
-                    params: {
-                        skip: (state.page - 1) * state.limit,
-                        take: state.limit
-                    },
-                })
+                .get(path, { params: params })
                 .then(res => {
                     console.log(res.data)
                     commit('addBooks', res.data)
@@ -159,7 +170,7 @@ export const bookModule = {
                     rootState.errors.push(error.response.data.error)
                 })
         },
-        async getBookImage({state}, image_name){
+        async getBookImage({state, rootState}, image_name){
             const path = `${state.defaultRoot}/image`
             return await instance
                 .get(path, {
@@ -176,7 +187,7 @@ export const bookModule = {
                 .catch(error => {
                     rootState.errors.push(error)
                 })
-        }
+        },
     },
     namespaced: true
 

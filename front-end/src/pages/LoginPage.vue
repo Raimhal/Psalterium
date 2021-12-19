@@ -1,7 +1,7 @@
 <template>
   <div class="user__page">
     <Form v-slot="{ handleSubmit }" :validation-schema="schema" as="div" class="user__form">
-      <h2 class="title">Log in</h2>
+      <my-title class="title">Log in</my-title>
       <my-error-list :errors="errors"></my-error-list>
       <form @submit="handleSubmit($event, login)" class="form">
         <MyField
@@ -39,10 +39,12 @@ import * as yup from 'yup'
 import MyField from "@/components/UI/MyField";
 import MyErrorMessage from "@/components/UI/MyErrorMessage";
 import MyErrorList from "@/components/UI/MyErrorList";
+import MyTitle from "../components/UI/MyTitle";
 
 export default {
   name: "LoginPage",
   components:{
+    MyTitle,
     MyErrorList,
     MyField,
     Form, MyErrorMessage

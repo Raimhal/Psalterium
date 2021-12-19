@@ -6,6 +6,8 @@
       Email : <my-field
         v-model="user.email"
         name="email"
+        :disabled="this.modified"
+
       />
       <my-error-message name="email" />
       Username : <my-field
@@ -85,8 +87,8 @@ export default {
       let schema = yup.object().shape({
         email: yup.string().email().max(50).required().label('Email'),
         username: yup.string().max(50).required().label('Username'),
-        firstname: yup.string().max(50).label('First name'),
-        lastname: yup.string().max(50).label('Last name'),
+        firstname: yup.string().max(50).nullable().label('First name'),
+        lastname: yup.string().max(50).nullable().label('Last name'),
       })
 
       let password

@@ -78,7 +78,7 @@ def change_image(db: Session, image: UploadFile, expression: Any):
     if image:
         print(book.image)
         fileService.delete_file(book.image)
-        book.image = fileService.save_file(image)
+        book.image = fileService.save_file(image, 300)
         db.commit()
 
 
