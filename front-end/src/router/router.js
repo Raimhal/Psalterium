@@ -4,6 +4,7 @@ import RegisterPage from "@/pages/RegisterPage";
 import AdminPage from "@/pages/AdminPage";
 import AccountPage from "@/pages/AccountPage";
 import StoreBooksPage from "@/pages/StoreBooksPage";
+import StoreBookPage from "@/pages/StoreBookPage";
 
 const routes = [
   {
@@ -20,6 +21,10 @@ const routes = [
   {
     path: "/",
     component: StoreBooksPage
+  },
+  {
+    path: "/books/:id",
+    component: StoreBookPage
   },
   {
     path: "/admin",

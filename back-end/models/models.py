@@ -18,6 +18,7 @@ class User(Base):
     role_id = Column(Integer, ForeignKey('roles.id'))
     role = relationship('Role', back_populates='users')
     books = relationship('Book', back_populates='owner')
+    basket = relationship('OrderBook', back_populates='consumer')
 
 class Role(Base):
     __tablename__ = 'roles'
@@ -58,6 +59,7 @@ class Order(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     deliver_date = Column(DateTime)
+    destination = Column(String)
 
     user_id = Column(Integer, ForeignKey('users.id'))
     books = relationship('OrderBook', back_populates='order')
@@ -67,6 +69,8 @@ class OrderBook(Base):
     id = Column(Integer, primary_key=True, index=True)
     count = Column(Integer)
 
+    consumer_id = Column(Integer, ForeignKey('users.id'))
+    consumer = relationship('User', back_populates='basket')
     order_id = Column(Integer, ForeignKey('orders.id'))
     order = relationship('Order', back_populates='books')
     book_id = Column(Integer, ForeignKey('books.id'))

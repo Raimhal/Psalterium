@@ -5,15 +5,7 @@ import router from "@/router/router";
 export const bookModule = {
     state: () => ({
         books: [],
-        book: {
-            name: "",
-            author: "",
-            content: "",
-            price: "",
-            count: 1,
-            publication_date: null,
-            ISBN: ""
-        },
+        book: {},
         isLoading: false,
         selectedSort: 'name',
         searchQuery: {
@@ -29,6 +21,10 @@ export const bookModule = {
             {value: 'price', name: 'By price'},
             {value: 'publication_date', name: 'By date'},
         ],
+        urlCreator: window.URL || window.webkitURL,
+        order: {
+            count: 1
+        }
     }),
     getters: {
         sortedBooks(state){
@@ -43,7 +39,7 @@ export const bookModule = {
             state.books = [...state.books, ...books];
         },
         setBook(state, book){
-            state.book = book;
+            state.book = book
         },
         pushBook(state, book){
             state.books.push(book);
@@ -68,15 +64,7 @@ export const bookModule = {
             state.page = 0
         },
         clearBook(state){
-            state.book = {
-                name: "",
-                author: "",
-                content: "",
-                price: "",
-                count: 1,
-                publication_date: null,
-                ISBN: ""
-            }
+            state.book = {}
         },
         setSearchedMod(state, bool){
             state.searchQuery.searched = bool
@@ -129,12 +117,11 @@ export const bookModule = {
                 })
                 .then(() => {
                     commit('setLoading', false)
-                    if(rootState.errors.length !== 0)
-                        router.push('/login')
                 })
         },
         async getBook({state, commit, rootState, rootGetters}, book_id){
             const path = `${state.defaultRoot}/${book_id}`
+            console.log(path)
             rootState.errors = []
             await instance
                 .get(path)
@@ -143,13 +130,7 @@ export const bookModule = {
                 })
                 .catch(error => {
                     console.log(error)
-                    if(error.headers.status === 401) {
-                        router.push('/login')
-                    }
-                    else
-                        router.back()
                 })
-            return state.book
         },
         async updateBook({state, rootState, rootGetters}) {
             rootState.errors = []
@@ -170,23 +151,31 @@ export const bookModule = {
                     rootState.errors.push(error.response.data.error)
                 })
         },
-        async getBookImage({state, rootState}, image_name){
+        async getBookImage({state, commit, rootState}, obj){
             const path = `${state.defaultRoot}/image`
-            return await instance
-                .get(path, {
-                    responseType: 'blob',
-                    params: {name: image_name}
-                })
-                .then(async response => {
-                    return await new Blob(
-                        [response.data],
-                        {
-                            type: response.headers['content-type']
-                        })
-                })
-                .catch(error => {
-                    rootState.errors.push(error)
-                })
+            const image_name = obj.image_name
+            const target = obj.target
+            console.log(obj)
+            if(obj.image_name !== undefined) {
+                await instance
+                    .get(path, {
+                        responseType: 'blob',
+                        params: {name: image_name}
+                    })
+                    .then(response => {
+                        const blob = new Blob(
+                            [response.data],
+                            {
+                                type: response.headers['content-type']
+                            })
+                        const url = state.urlCreator.createObjectURL(blob)
+                        target.setAttribute('src', url);
+                    })
+                    .catch(error => {
+                        console.log(error)
+                        rootState.errors.push(error)
+                    })
+            }
         },
     },
     namespaced: true

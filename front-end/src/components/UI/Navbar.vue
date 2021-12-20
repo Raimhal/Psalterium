@@ -65,8 +65,7 @@ export default {
   display: flex;
   align-items: center;
   flex-direction: row;
-  padding: 0 15px;
-  margin-top: 10px;
+  padding: 10px 15px;
 }
 
 .navbar__btns{

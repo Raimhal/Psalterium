@@ -32,10 +32,6 @@ export default {
   components: {
     BookList,
   },
-  mounted() {
-    if(!this.isAuth)
-      this.$router.push('/login')
-  },
   beforeUnmount() {
     this.clearBookStore()
     this.clearErrors()

@@ -6,7 +6,7 @@
             v-for="book in books"
             :key="book.id"
             :book="book"
-            class="m-2"
+            class="mb-3 m-2 text-center"
             @remove="$emit('remove', book.id)"
         />
       </transition-group>
@@ -48,6 +48,7 @@ export default {
   justify-content: center;
   align-items: center;
 }
+
 
 .book-list-item{
   display: inline-block;

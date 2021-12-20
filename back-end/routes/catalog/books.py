@@ -8,6 +8,7 @@ from models import models
 from schemas import schemas
 from services import generalServices, bookServices
 from config.dependencies import get_db, get_current_user
+from Exceptions import CustomAccessForbiddenException
 
 router = APIRouter(prefix='/books', tags=['books'])
 
@@ -79,6 +80,7 @@ async def change_image(id: int, db: Session = Depends(get_db), file: UploadFile 
 @router.delete('/{id}/delete', status_code=status.HTTP_204_NO_CONTENT)
 async def delete_book(id: int, db: Session = Depends(get_db),
                             current_user: models.User = Depends(get_current_user)):
+
     bookServices.delete_book(db=db, id=id)
 
 

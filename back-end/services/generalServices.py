@@ -16,6 +16,7 @@ def get_all_without_limit(db: Session, model: Any, expression: Any) -> List[Any]
     return db.query(model).filter(expression).all()
 
 def get_by_expression(db: Session, model: Any, expression: Any) -> Any:
+    print(model)
     entity = db.query(model).filter(expression).first()
     if not entity:
         key = expression.left.key

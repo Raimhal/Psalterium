@@ -6,10 +6,10 @@ export default {
             rootMargin: '0px',
             threshold: 1.0
         }
+        const name = binding.arg
         const callback = (entries) =>{
-            if(entries[0].isIntersecting && el.src === ""){
-                console.log('rise')
-                binding.value(el, binding.arg)
+            if(el.src === ""){
+                binding.value({target: el, image_name: name})
             }
         }
 

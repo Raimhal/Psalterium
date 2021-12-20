@@ -13,12 +13,21 @@ from config.dependencies import get_db, get_current_user
 
 router = APIRouter(prefix='/orders', tags=['orders'])
 _model = models.Order
+_admin_role_name = 'Admin'
 
 
 @router.get('', response_model=List[schemas.Order])
+@raise_403_if_not_admin
 async def get_orders(skip: int=0, limit: int=10, db: Session = Depends(get_db),
                     current_user: models.User = Depends(get_current_user)):
     return generalServices.get_all(db=db, model=_model, skip=skip, limit=limit)
+
+
+@router.get('/my', response_model=List[schemas.Order])
+async def get_orders(skip: int=0, limit: int=10, db: Session = Depends(get_db),
+                    current_user: models.User = Depends(get_current_user)):
+    expression = _model.user_id == current_user.id
+    return generalServices.get_all_with_expression(db=db, model=_model, skip=skip, limit=limit, expression=expression)
 
 
 @router.get('/{id:int}', response_model=schemas.Order)
@@ -34,7 +43,7 @@ async def create_order(orderCreate: schemas.OrderCreate, db: Session = Depends(g
     return orderServices.create_order(db=db, model=orderCreate, current_user=current_user)
 
 
-@router.delete('/{id}/delete', status_code=status.HTTP_204_NO_CONTENT)
+@router.delete('/{id:int}/delete', status_code=status.HTTP_204_NO_CONTENT)
 async def delete_order(id: int, db: Session = Depends(get_db),
                             current_user: models.User = Depends(get_current_user)):
     orderServices.delete_order(db=db, id=id)

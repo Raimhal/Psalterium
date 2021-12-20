@@ -32,12 +32,14 @@ class OrderBookBase(BaseModel):
     count: int
     book_id: int
 
+
 class OrderBookCreate(OrderBookBase):
     pass
 
 class OrderBook(OrderBookBase):
     id: int
     order_id: int
+    consumer_id: int
 
     class Config:
         orm_mode = True
@@ -105,10 +107,11 @@ class TokenData(BaseModel):
 # orders
 class OrderBase(BaseModel):
     deliver_date: datetime
+    destination: str
 
 
 class OrderCreate(OrderBase):
-    books: List[OrderBookBase] = []
+    pass
 
 
 class Order(OrderBase):

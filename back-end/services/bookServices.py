@@ -33,7 +33,7 @@ def create_book(db: Session, model: schemas.BookCreate, current_user: models.Use
 
 def update_book(db: Session, model: schemas.BookCreate, expression: Any):
 
-    book = generalServices.get_by_expression(db=db, model=model, expression=expression)
+    book = generalServices.get_by_expression(db=db, model=_model, expression=expression)
 
     book.name = model.name
     book.author = model.author
@@ -41,12 +41,11 @@ def update_book(db: Session, model: schemas.BookCreate, expression: Any):
     book.price = model.price
     book.count = model.count
     book.update_date = datetime.utcnow()
+    print(book.__dict__)
     if not book.ISBN == model.ISBN:
         expression = _model.ISBN == model.ISBN
         generalServices.check_in_use_expression(db=db, model=_model, expression=expression)
         book.ISBN = model.ISBN
-
-
     db.commit()
 
 

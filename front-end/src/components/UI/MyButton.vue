@@ -18,7 +18,6 @@ export default {
   background-color: #7072F7;
   border: none;
   color: #ffffff;
-  transition: 0.5s;
 }
 .out-btn:hover {
   background-color: white;
@@ -26,7 +25,8 @@ export default {
   transition: 0.5s ease;
 }
 .out-btn:active {
-  background-color: black !important;
+  background-color: inherit !important;
+  color: white;
 
 }
 

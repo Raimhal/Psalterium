@@ -1,7 +1,9 @@
 <template>
-  <navbar></navbar>
-  <div class="app">
-    <router-view></router-view>
+  <div class="body">
+    <navbar></navbar>
+    <div class="app">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 <script>
@@ -36,7 +38,9 @@ export default {
 .app{
   padding: 20px;
 }
-body{
+
+.body{
+  min-height: 100vh;
   background-color: rgb(23, 28, 33);
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
@@ -83,4 +87,5 @@ body{
   color: #7072F7;
   text-decoration: none;
 }
+
 </style>

@@ -1,6 +1,6 @@
 <template>
-  <div class="card item text-center">
-    <img class="card-img-top image" v-image-observer:[book.image]="getUrl" alt="Card image cap">
+  <div class="card item gray">
+    <img class="image" v-image-observer:[book.image]="getImage" alt="Card image cap" @click="$router.push(`/books/${book.id}`)">
     <div class="card-body">
       <h5 class="card-title">{{book.name}}</h5>
       <p class="card-text text">
@@ -23,23 +23,10 @@ export default {
       required: true,
     },
   },
-  data(){
-    return {
-      urlCreator: window.URL || window.webkitURL
-    }
-  },
   methods: {
     ...mapActions({
       getImage: 'book/getBookImage'
     }),
-    async getUrl(target, image_name){
-      console.log('back')
-      const blob = await this.getImage(image_name)
-      console.log(blob)
-      const url = this.urlCreator.createObjectURL(blob)
-      console.log(JSON.stringify(url))
-      target.setAttribute('src', url);
-    },
   }
 
 }
@@ -55,7 +42,7 @@ export default {
   color: #909090;
 }
 .image{
-  height: 65%;
+  height: 15rem;
 }
 .text{
   display: flex;
