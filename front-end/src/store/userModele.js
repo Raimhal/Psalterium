@@ -139,7 +139,7 @@ export const userModule = {
         async decodeRoleFromJWT({rootState}){
             const payload = jwt_decode(rootState.accessToken)
             console.log(payload)
-            rootState.isAdmin = payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] === 'Admin';
+            rootState.isAdmin = payload.role === 'Admin';
             rootState.tokenExp = payload.exp
         },
         async GetCurrentUser({state, commit, rootState, rootGetters}){

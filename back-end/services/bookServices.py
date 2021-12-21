@@ -13,7 +13,7 @@ from . import generalServices, fileService
 
 _model = models.Book
 
-def create_book(db: Session, model: schemas.BookCreate, current_user: models.User) -> int:
+def create_book(db: Session, model: schemas.BookCreate, current_user: models.User) -> Any:
     expression = _model.ISBN == model.ISBN
     generalServices.check_in_use_expression(db=db, model=_model, expression=expression)
     book = _model(
@@ -86,11 +86,17 @@ def delete_book(db: Session, id: int):
     expression = models.OrderBook.book_id == book.id
     orders = generalServices.get_all_without_limit(db=db, model=models.OrderBook, expression=expression)
     for order in orders:
-        expression = models.Order.id == order.order_id
-        _order = generalServices.get_by_expression(db=db, model=models.Order, expression=expression)
-        db.delete(order)
-        if len(_order.books) == 1:
-            db.delete(_order)
+        if(order.order_id == 0):
+            db.delete(order)
+        else:
+            expression = models.Order.id == order.order_id
+            _order = generalServices.get_by_expression(db=db, model=models.Order, expression=expression)
+            print(_order.books)
+            _order.books.remove(order)
+            print(_order.books)
+            db.delete(order)
+            if not _order.books:
+                db.delete(_order)
     db.delete(book)
     db.commit()
 

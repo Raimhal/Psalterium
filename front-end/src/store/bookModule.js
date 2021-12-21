@@ -63,8 +63,8 @@ export const bookModule = {
             state.books = []
             state.page = 0
         },
-        clearBook(state){
-            state.book = {}
+        clearBook(state) {
+            state.book = null
         },
         setSearchedMod(state, bool){
             state.searchQuery.searched = bool
@@ -74,20 +74,20 @@ export const bookModule = {
     actions: {
         async createBook({state, commit, rootState, rootGetters}) {
             rootState.errors = []
+            const book = state.book
+            book.publication_date = new Date(book.publication_date.toLocaleString()).toISOString()
             await instance
-                .post(`${state.defaultRoot}`, state.book, {headers: rootGetters.getHeaders})
-                .then(response => {
-                    state.event.id = response.data
-                    commit('pushBook', state.event)
+                .post(`${state.defaultRoot}`, book, {headers: rootGetters.getHeaders})
+                .then(()=> {
                     commit('clearBook')
-                    rootState.errors = []
+                    router.go()
                 })
                 .catch(error => {
-                    rootState.errors.push(error.response.data.error)
-                    router.push('/login')
+                    console.log(error)
+                    rootState.errors.push(error.response.data.detail)
                 })
         },
-        async getBookList({state, commit, rootState}) {
+        async getBookList({state, commit, rootState, rootGetters}, owner) {
             if(state.books.length === 0)
                 commit('setLoading', true)
             state.page += 1
@@ -103,42 +103,56 @@ export const bookModule = {
                 params.query = state.searchQuery.value
             }
 
-            console.log(path)
-            console.log(params)
+            const config = { params: params }
+            if(owner === true) {
+                path += '/my'
+                config.headers = rootGetters.getHeaders
+            }
+
+            console.log(config)
 
             await instance
-                .get(path, { params: params })
+                .get(path, config)
                 .then(res => {
                     console.log(res.data)
                     commit('addBooks', res.data)
                 })
                 .catch(error => {
                     rootState.errors.push(error.response.data.error)
+                    rootState.errors.push(error.response.data.detail)
                 })
                 .then(() => {
                     commit('setLoading', false)
                 })
         },
-        async getBook({state, commit, rootState, rootGetters}, book_id){
+        async getBook({state, commit, rootState}, book_id){
             const path = `${state.defaultRoot}/${book_id}`
             console.log(path)
             rootState.errors = []
+
             await instance
                 .get(path)
                 .then(res => {
+                    res.data.publication_date = new Date(res.data.publication_date).toISOString().split('T')[0]
+                    res.data.update_date = new Date(res.data.update_date).toISOString().split('T')[0]
                     commit('setBook', res.data)
+
                 })
                 .catch(error => {
                     console.log(error)
+                    rootState.errors.push(error.response.data.detail)
                 })
         },
         async updateBook({state, rootState, rootGetters}) {
             rootState.errors = []
+            const book = state.book
+            book.publication_date = new Date(book.publication_date.toLocaleString()).toISOString()
             const path = `${state.defaultRoot}/${state.book.id}/update`
             await instance
-                .put(path, state.book, {headers: rootGetters.getHeaders})
+                .put(path, book, {headers: rootGetters.getHeaders})
+                .then(() => router.go())
                 .catch(error => {
-                    rootState.errors.push(error.response.data.error)
+                    rootState.errors.push(error.response.data.detail)
                 })
         },
         async removeBook({state, commit, rootState, rootGetters}, book_id){
@@ -177,6 +191,26 @@ export const bookModule = {
                     })
             }
         },
+        async addToBasket({state, rootState, rootGetters} ){
+            const path = 'catalog/basket'
+            const order = {
+                count: state.order.count,
+                book_id: state.book.id
+            }
+            if(state.book.count > 0) {
+                await instance
+                    .post(path, order, {headers: rootGetters.getHeaders})
+                    .then(response => {
+                        console.log(response)
+                        state.book.count -= order.count
+                    })
+                    .catch(error => {
+                        console.log(error)
+                        rootState.errors.push(error)
+                    })
+            }
+        }
+
     },
     namespaced: true
 

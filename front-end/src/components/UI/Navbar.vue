@@ -1,10 +1,10 @@
 <template>
   <div class="navbar">
-    <div @click="$router.push('/')"><div class="logo">PSALT<span>ERIUM</span></div></div>
+    <div @click="goToHome"><div class="logo">PSALT<span>ERIUM</span></div></div>
     <div class="navbar__btns">
       <div>
 <!--        <my-button @click="this.$store.commit('book/setSearchedMod', false)"/>-->
-        <my-search/>
+        <my-search v-show="$router.currentRoute.value.fullPath === '/'"/>
       </div>
       <div v-if="!isAuth">
         <router-link to="/login"><my-button>Log in</my-button></router-link>
@@ -27,6 +27,7 @@
 <script>
 import {mapActions, mapMutations, mapState} from "vuex";
 import MyButton from "./MyButton";
+import router from "../../router/router";
 
 export default {
   name: "Navbar",
@@ -37,7 +38,13 @@ export default {
     }),
     isAuth(){
       return JSON.parse(this.$store.state.isAuth)
-    }
+    },
+    goToHome(){
+      if(this.$router.currentRoute.value.fullPath == '/')
+        this.$router.go()
+      else
+        this.$router.push('/')
+    },
   },
   methods: {
     ...mapActions({
@@ -46,7 +53,8 @@ export default {
     ...mapMutations({
       setSearchQuery: 'book/setSearchQuery'
     })
-  }
+  },
+
 }
 </script>
 

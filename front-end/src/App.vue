@@ -49,6 +49,7 @@ export default {
 .form{
   display: flex;
   flex-direction: column;
+  background-color: inherit;
 }
 
 .input {
@@ -86,6 +87,10 @@ export default {
 .link{
   color: #7072F7;
   text-decoration: none;
+}
+
+.error{
+  color: 	#FFF587;
 }
 
 </style>

@@ -2,6 +2,7 @@
   <div>
     <my-title><slot name="title"></slot></my-title>
     <div class="app__btns">
+      <slot name="create"></slot>
       <my-select
           :model-value="selectedSort"
           @update:model-value="setSelectedSort"
@@ -17,7 +18,7 @@
       Loading...
     </div>
     <div
-        v-intersection="getBookList"
+        v-intersection:[owner]="getBookList"
         class="observer"
     >
     </div>
@@ -31,6 +32,12 @@ export default {
   name: "BooksPage",
   components: {
     BookList,
+  },
+  props: {
+    owner: {
+      type: Boolean,
+      default: false
+    }
   },
   beforeUnmount() {
     this.clearBookStore()

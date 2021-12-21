@@ -5,6 +5,7 @@ import AdminPage from "@/pages/AdminPage";
 import AccountPage from "@/pages/AccountPage";
 import StoreBooksPage from "@/pages/StoreBooksPage";
 import StoreBookPage from "@/pages/StoreBookPage";
+import MyBooksPage from "@/pages/MyBooksPage";
 
 const routes = [
   {
@@ -21,6 +22,10 @@ const routes = [
   {
     path: "/",
     component: StoreBooksPage
+  },
+  {
+    path: "/my/books",
+    component: MyBooksPage
   },
   {
     path: "/books/:id",

@@ -1,22 +1,25 @@
 <template>
   <div class="card item gray">
-    <img class="image" v-image-observer:[book.image]="getImage" alt="Card image cap" @click="$router.push(`/books/${book.id}`)">
+    <img class="image" v-image-observer:[book.image]="getImage" alt="Book image" @click="$router.push(`/books/${book.id}`)">
     <div class="card-body">
       <h5 class="card-title">{{book.name}}</h5>
       <p class="card-text text">
         <span>{{book.author}}</span>
-        <span>{{book.price}}</span>
+        <span>${{book.price}}</span>
         <span id="ISBN">#{{book.ISBN}}</span>
       </p>
+      <my-button @click="$emit('remove', book.id)">Delete</my-button>
     </div>
   </div>
 </template>
 
 <script>
 import {mapActions} from "vuex";
+import MyButton from "./UI/MyButton";
 
 export default {
   name: "BookItem",
+  components: {MyButton},
   props:{
     book: {
       type: Object,
@@ -43,6 +46,7 @@ export default {
 }
 .image{
   height: 15rem;
+  border-radius: 3px;
 }
 .text{
   display: flex;

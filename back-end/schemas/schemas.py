@@ -7,7 +7,7 @@ from pydantic import BaseModel
 class BookBase(BaseModel):
     name: str
     author: str
-    content: str
+    content: Optional[str] = None
     price: float
     count: int
     publication_date: datetime

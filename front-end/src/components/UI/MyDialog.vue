@@ -22,7 +22,7 @@ export default {
   right: 0;
   left: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.7);
   position: fixed;
   display: flex;
   z-index: 100;
@@ -30,7 +30,6 @@ export default {
 
 .dialog__content{
   margin: auto;
-  background: white;
   border-radius: 5px;
 }
 </style>
