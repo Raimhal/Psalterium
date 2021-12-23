@@ -17,6 +17,7 @@ _model = models.Genre
 
 @router.get('', response_model=List[schemas.GenreDto])
 async def get_genres(skip: int=0, limit: int=10, db: Session = Depends(get_db)):
+    print(skip, limit)
     return generalServices.get_all(db=db, model=_model, skip=skip, limit=limit)
 
 

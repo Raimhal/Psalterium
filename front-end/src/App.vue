@@ -9,8 +9,6 @@
 <script>
 export default {
   mounted() {
-    console.log('show')
-    console.log()
     if (Date.now() >= localStorage.getItem('tokenExp') * 1000) {
       this.$store.dispatch('logout')
       this.$store.errors.push('Token expired')

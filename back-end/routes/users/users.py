@@ -37,7 +37,7 @@ async def get_user_by_email(email: str, db: Session = Depends(get_db),
     expression = _model.email == email
     return generalServices.get_by_expression(db=db, model=_model, expression=expression)
 
-@router.get("/me", response_model=schemas.User)
+@router.get("/me", response_model=schemas.UserDto)
 async def get_current_user(current_user: models.User = Depends(get_current_user)):
     return current_user
 

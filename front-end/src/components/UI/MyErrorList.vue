@@ -1,8 +1,8 @@
 <template>
   <template  v-if="errors.length">
-    <ol>
+    <ul class="m-1">
       <li v-for="message in errors" :key="message" class="error">{{ message }}</li>
-    </ol>
+    </ul>
   </template>
 </template>
 

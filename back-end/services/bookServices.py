@@ -72,13 +72,15 @@ def get_image_by_name(name: str) -> FileResponse:
     return fileService.get_file(name)
 
 
-def change_image(db: Session, image: UploadFile, expression: Any):
+def change_image(db: Session, image: UploadFile, expression: Any) -> str:
     book = generalServices.get_by_expression(db=db, model=_model, expression=expression)
-    if image:
-        print(book.image)
-        fileService.delete_file(book.image)
-        book.image = fileService.save_file(image, 300)
-        db.commit()
+    print(book.image)
+    fileService.delete_file(book.image)
+    book.image = fileService.save_file(image, 300)
+    db.commit()
+    print(book.image)
+    return book.image
+
 
 
 def delete_book(db: Session, id: int):

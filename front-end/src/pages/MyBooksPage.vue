@@ -21,6 +21,7 @@
 <script>
 import CustomBooksPage from "@/components/CustomBooksPage";
 import BookForm from "@/components/BookForm";
+import {mapState} from "vuex";
 
 export default {
   name: "StoreBooksPage",
@@ -33,11 +34,27 @@ export default {
       dialogVisible: false
     }
   },
+
+  beforeRouteEnter(to, from, next){
+   next(vm => {
+     if(!vm.isAuth) {
+       vm.errors.push('You are not authorized')
+       vm.$router.push('/login')
+     }
+   })
+  },
   methods: {
     async showDialog() {
       this.dialogVisible = true
     },
   },
+  computed: {
+    ...mapState({
+      isAuth: state => state.isAuth,
+      isAdmin: state => state.isAdmin,
+      errors: state => state.errors
+    })
+  }
 }
 </script>
 

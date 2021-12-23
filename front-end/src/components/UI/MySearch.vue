@@ -1,9 +1,8 @@
 <template>
-  <form @submit.prevent="Search" class="search-bar" >
+  <form @submit.prevent="Search" class="search-bar">
     <input
         type="search"
         name="search"
-        pattern=".*\S.*"
         v-model="query.value"
         required>
     <button class="search-btn" type="submit">

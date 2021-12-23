@@ -8,6 +8,9 @@ export const bookModule = {
         book: {},
         isLoading: false,
         selectedSort: 'name',
+        reverseSort: {
+            value: false
+        },
         searchQuery: {
             value: "",
             searched: false
@@ -19,6 +22,7 @@ export const bookModule = {
             {value: 'name', name: 'By name'},
             {value: 'author', name: 'By author'},
             {value: 'price', name: 'By price'},
+            {value: 'count', name: 'By count'},
             {value: 'publication_date', name: 'By date'},
         ],
         urlCreator: window.URL || window.webkitURL,
@@ -28,7 +32,17 @@ export const bookModule = {
     }),
     getters: {
         sortedBooks(state){
-            return [...state.books].sort((book1, book2) => book2[state.selectedSort]?.toString().localeCompare(book1[state.selectedSort]))
+            const query = state.selectedSort
+
+            let books
+            if(query === 'count' || query === 'price')
+                books = [...state.books].sort((book1, book2) => book1[state.selectedSort] - book2[state.selectedSort])
+            else
+                books = [...state.books].sort((book1, book2) => book2[query]?.toString().localeCompare(book1[query]))
+
+            if(state.reverseSort.value)
+                books.reverse()
+            return books
         },
     },
     mutations: {
@@ -64,10 +78,19 @@ export const bookModule = {
             state.page = 0
         },
         clearBook(state) {
-            state.book = null
+            state.book = {}
         },
         setSearchedMod(state, bool){
             state.searchQuery.searched = bool
+        },
+        setImage(state, image){
+            state.book.image = image
+        },
+        setGenres(state, genres){
+            state.book.genres = genres
+        },
+        setReverseSort(state, bool){
+            state.reverseSort = bool
         }
 
     },
@@ -83,7 +106,6 @@ export const bookModule = {
                     router.go()
                 })
                 .catch(error => {
-                    console.log(error)
                     rootState.errors.push(error.response.data.detail)
                 })
         },
@@ -118,7 +140,6 @@ export const bookModule = {
                     commit('addBooks', res.data)
                 })
                 .catch(error => {
-                    rootState.errors.push(error.response.data.error)
                     rootState.errors.push(error.response.data.detail)
                 })
                 .then(() => {
@@ -191,6 +212,27 @@ export const bookModule = {
                     })
             }
         },
+        async changeBookImage({state, commit, rootState}){
+            await commit('setLoading', true)
+            rootState.errors = []
+            const form = new FormData(document.querySelector('#uploadForm'))
+            const path = `${state.defaultRoot}/${state.book.id}/change_image`
+
+            await instance
+                .patch(path, form, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: `Bearer ${rootState.accessToken}`,
+                    }})
+                .then(response => {
+                    console.log(response)
+                    commit('setImage', response.data)
+                })
+                .catch(error => {
+                    rootState.errors.push(error.response.data.detail)
+                })
+            await commit('setLoading', false)
+        },
         async addToBasket({state, rootState, rootGetters} ){
             const path = 'catalog/basket'
             const order = {
@@ -209,6 +251,18 @@ export const bookModule = {
                         rootState.errors.push(error)
                     })
             }
+        },
+        async changeGenres({state, commit, rootGetters}, genres){
+            const path = `${state.defaultRoot}/${state.book.id}/set_genres`
+
+            const entity = []
+            genres.forEach(genre => { entity.push({name: genre}) })
+            await instance
+                .patch(path, entity, {headers: rootGetters.getHeaders})
+                .then(() => commit('setGenres', entity))
+                .catch(error => {
+                    console.log(error)
+                })
         }
 
     },

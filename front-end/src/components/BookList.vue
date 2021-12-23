@@ -6,6 +6,7 @@
             v-for="book in books"
             :key="book.id"
             :book="book"
+            :is-creator="isCreator"
             class="mb-3 m-2 text-center"
             @remove="$emit('remove', book.id)"
         />
@@ -30,6 +31,10 @@ export default {
       type: Array,
       required: true
     },
+    isCreator: {
+      type: Boolean,
+      default: false
+    }
   },
 }
 </script>
@@ -47,7 +52,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 70vh;
+
 }
 
 

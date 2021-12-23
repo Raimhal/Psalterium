@@ -18,11 +18,11 @@ export default {
   background-color: #7072F7;
   border: none;
   color: #ffffff;
+  transition: all 0.3s ease-in-out;
 }
 .out-btn:hover {
   background-color: white;
   color: #7072F7;
-  transition: 0.5s ease;
 }
 .out-btn:active {
   background-color: inherit !important;

@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import {mapActions, mapState} from "vuex";
+import {mapActions, mapMutations, mapState} from "vuex";
 import {Form} from 'vee-validate'
 
 import * as yup from 'yup'
@@ -69,7 +69,13 @@ export default {
       default: false
     },
   },
+  mounted() {
+    this.clearErrors()
+  },
   methods: {
+    ...mapMutations({
+      clearErrors: 'clearErrors'
+    }),
     ...mapActions({
       createBook: 'book/createBook',
       updateBook: 'book/updateBook'
@@ -89,13 +95,13 @@ export default {
     }),
     schema() {
       return  yup.object().shape({
-        name: yup.string().max(50).required().label('Title'),
+        name: yup.string().max(100).required().label('Title'),
         author: yup.string().max(50).required().label('Author'),
         count: yup.number().typeError("Count is a number field").integer('Invalid decimal').min(1).required().label('Count'),
         price: yup.number().typeError("Count is a number field").min(1).required().label('Price'),
         ISBN: yup.string().length(13).required().label('ISBN'),
         publication: yup.date().min(new Date(1), 'Start date is a required field').required().label('Date of publication'),
-        content: yup.string().max(2000).label('Description'),
+        content: yup.string().max(5000).label('Description'),
       })
     },
   },

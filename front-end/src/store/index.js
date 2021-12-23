@@ -1,7 +1,8 @@
 import {createStore} from 'vuex'
 import {userModule} from "./userModele"
 import {fileModule} from "./fileModule"
-import {bookModule} from "./bookModule";
+import {bookModule} from "./bookModule"
+import {genreModule} from "./genreModule"
 
 export default createStore({
   state: {
@@ -30,7 +31,6 @@ export default createStore({
   },
   getters: {
     getHeaders(state){
-      console.log(state.accessToken)
       return {
         Authorization: `Bearer ${state.accessToken}`,
       }
@@ -48,12 +48,14 @@ export default createStore({
       localStorage.isAuth = state.isAuth
       localStorage.isAdmin = state.isAdmin
       localStorage.tokenExp = state.tokenExp
+      localStorage.user_id = null
     },
   },
 
   modules: {
     user: userModule,
     file: fileModule,
-    book: bookModule
+    book: bookModule,
+    genre: genreModule
   }
 })

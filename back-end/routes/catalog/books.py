@@ -11,7 +11,7 @@ from config.dependencies import get_db, get_current_user
 from Exceptions import CustomAccessForbiddenException
 
 router = APIRouter(prefix='/books', tags=['books'])
-
+_admin_role_name = 'Admin'
 _model = models.Book
 
 
@@ -30,6 +30,8 @@ async def get_books(query: str, skip: int=0, limit: int=10, db: Session = Depend
 async def get_books(skip: int=0, limit: int=10, db: Session = Depends(get_db),
                     current_user: models.User = Depends(get_current_user)):
     expression = _model.owner == current_user
+    if current_user.role.name == _admin_role_name:
+        expression = True
     return generalServices.get_all_with_expression(db=db, model=_model, skip=skip, limit=limit, expression=expression)
 
 
@@ -41,7 +43,6 @@ async def get_book(id: int, db: Session = Depends(get_db)):
 
 @router.get("/{id:int}/image", status_code=status.HTTP_200_OK)
 async def get_image(id: int, db: Session = Depends(get_db)):
-    print('ok')
     return bookServices.get_image(db=db, id=id)
 
 
@@ -70,11 +71,11 @@ async def set_genres(id: int, genres: List[schemas.GenreBase], db: Session = Dep
     bookServices.set_genres(db=db, genres=genres, expression=expression)
 
 
-@router.patch('/{id:int}/change_image', status_code=status.HTTP_204_NO_CONTENT)
+@router.patch('/{id:int}/change_image', response_model=str)
 async def change_image(id: int, db: Session = Depends(get_db), file: UploadFile = File(...),
                        current_user: models.User = Depends(get_current_user)):
     expression = _model.id == id
-    bookServices.change_image(db=db, image=file, expression=expression)
+    return bookServices.change_image(db=db, image=file, expression=expression)
 
 
 @router.delete('/{id}/delete', status_code=status.HTTP_204_NO_CONTENT)

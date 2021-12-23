@@ -6,13 +6,7 @@ import {Form} from "vee-validate";
 export const userModule = {
     state: () => ({
         users: [],
-        user: {
-            first_name: "",
-            last_name: "",
-            username: "",
-            email: "",
-            password: ""
-        },
+        user: {},
         defaultRoot: 'users',
         isLoading: false
     }),
@@ -24,13 +18,7 @@ export const userModule = {
             state.users = []
         },
         clearUser(state){
-            state.user = {
-                first_name: "",
-                last_name: "",
-                username: "",
-                email: "",
-                password: ""
-            }
+            state.user = {}
         },
         setUser(state, user){
             state.user = user
@@ -72,12 +60,10 @@ export const userModule = {
             const data = new FormData()
             data.append('username', state.user.email)
             data.append('password', state.user.password)
-            console.log(data)
             rootState.errors = []
             await instance
                 .post(path, data)
                 .then(response =>{
-                    console.log(response)
                     rootState.accessToken = response.data.access_token
                     rootState.isAuth = true
                 })
@@ -138,16 +124,17 @@ export const userModule = {
         },
         async decodeRoleFromJWT({rootState}){
             const payload = jwt_decode(rootState.accessToken)
-            console.log(payload)
             rootState.isAdmin = payload.role === 'Admin';
             rootState.tokenExp = payload.exp
         },
         async GetCurrentUser({state, commit, rootState, rootGetters}){
+            await commit('clearUser')
             const path = `${state.defaultRoot}/me`
-            console.log(rootGetters.getHeaders)
             await instance
                 .get(path, {headers: rootGetters.getHeaders})
-                .then(response => commit('setUser', response.data))
+                .then(response => {
+                    commit('setUser', response.data)
+                })
                 .catch(error => {
                     rootState.errors.push(error.response.data.error)
                 })
@@ -155,7 +142,6 @@ export const userModule = {
         async updateUser({state, rootState, rootGetters}){
             const path = `${state.defaultRoot}/${state.user.id}/update`
             rootState.errors = []
-            console.log(state.user)
             await instance
                 .put(path, state.user, {headers: rootGetters.getHeaders})
                 .catch(error => {

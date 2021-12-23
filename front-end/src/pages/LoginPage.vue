@@ -49,13 +49,15 @@ export default {
     MyField,
     Form, MyErrorMessage
   },
-  beforeUnmount() {
+  async beforeUnmount() {
     if(this.isAuth) {
+      await this.getCurrentUser()
       localStorage.accessToken = this.accessToken
       localStorage.refreshToken = this.refreshToken
       localStorage.isAuth = this.isAuth
       localStorage.isAdmin = this.isAdmin
       localStorage.tokenExp = this.tokenExp
+      localStorage.user_id = this.user.id
     }
     this.clearErrors()
   },
@@ -78,7 +80,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      login: 'user/login'
+      login: 'user/login',
+      getCurrentUser: 'user/GetCurrentUser'
     }),
     ...mapMutations({
       clearErrors: 'clearErrors'

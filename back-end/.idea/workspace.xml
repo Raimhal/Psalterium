@@ -4,16 +4,14 @@
     <list default="true" id="017aacaf-aca6-46c5-a5ef-0b10e42e24de" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database.config" beforeDir="false" afterPath="$PROJECT_DIR$/database.config" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/security.py" beforeDir="false" afterPath="$PROJECT_DIR$/routes/security.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schemas/schemas.py" beforeDir="false" afterPath="$PROJECT_DIR$/schemas/schemas.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/catalog/books.py" beforeDir="false" afterPath="$PROJECT_DIR$/routes/catalog/books.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/catalog/genres.py" beforeDir="false" afterPath="$PROJECT_DIR$/routes/catalog/genres.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/users/users.py" beforeDir="false" afterPath="$PROJECT_DIR$/routes/users/users.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/bookServices.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/bookServices.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../front-end/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/App.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../front-end/src/components/BookItem.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/BookItem.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../front-end/src/components/BookList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/BookList.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../front-end/src/components/CustomBooksPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/CustomBooksPage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/components/UI/Navbar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/UI/Navbar.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/router/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/router/router.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../front-end/src/store/bookModule.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/store/bookModule.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -70,6 +68,7 @@
       <workItem from="1639902968265" duration="10363000" />
       <workItem from="1639991818283" duration="14307000" />
       <workItem from="1640074709521" duration="10634000" />
+      <workItem from="1640163903275" duration="11110000" />
     </task>
     <servers />
   </component>

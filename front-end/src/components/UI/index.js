@@ -19,6 +19,5 @@ export default [
     Navbar,
     MyField,
     MyErrorMessage,
-    MyErrorList
-
+    MyErrorList,
 ]
