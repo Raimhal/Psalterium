@@ -102,6 +102,10 @@ export const userModule = {
             await instance
                 .get(state.defaultRoot, {headers: rootGetters.getHeaders})
                 .then(response => {
+                    console.log(response.data)
+                    response.data.forEach(user => {
+                        user.role = user.role_id === 1
+                    })
                     commit('setUsers', response.data)
                 })
                 .catch(error => {
@@ -120,6 +124,21 @@ export const userModule = {
                 )
                 .catch(error => {
                     rootState.errors.push(error.response.data.error)
+                })
+        },
+        async changeRole({state, rootState, rootGetters}, obj){
+            let path = `${state.defaultRoot}/${obj.id}/change_role`
+            let role = 'Admin'
+            console.log(obj.role)
+            if(obj.role === false)
+                role = 'User'
+            path += `?role_name=${role}`
+            await instance
+                .patch(path)
+                .then(() => console.log('ok'))
+                .catch(error => {
+                    console.log(error)
+                    rootState.errors.push(error.response.data.detail)
                 })
         },
         async decodeRoleFromJWT({rootState}){
@@ -145,13 +164,8 @@ export const userModule = {
             await instance
                 .put(path, state.user, {headers: rootGetters.getHeaders})
                 .catch(error => {
-                    rootState.errors.push(error.response.data.error)
+                    rootState.errors.push(error.response.data.detail)
                 })
-        },
-        async i(){
-            await instance
-                .get('/')
-                .then(res => console.log(res))
         },
     },
     namespaced: true

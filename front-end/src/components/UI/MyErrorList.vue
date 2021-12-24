@@ -1,8 +1,6 @@
 <template>
   <template  v-if="errors.length">
-    <ul class="m-1">
       <li v-for="message in errors" :key="message" class="error">{{ message }}</li>
-    </ul>
   </template>
 </template>
 
@@ -22,5 +20,6 @@ export default {
 <style scoped>
 li {
   list-style-type: none;
+  overflow-wrap: break-word;
 }
 </style>

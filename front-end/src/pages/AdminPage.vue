@@ -1,76 +1,70 @@
 <template>
-  <div class="page">
-    <div class="users">
+  <div class="d-flex flex-column gap-5 w-75 m-auto">
+    <div>
       <user-list :users="users">
       </user-list>
     </div>
-    <div class="types">
-      <allowed-extension-list :file-types="fileTypes"></allowed-extension-list>
+    <div class="d-flex justify-content-center">
+      <genre-list :genres="genres">
+      </genre-list>
     </div>
-    <div class="btns">
+    <div class="btns d-flex justify-content-between">
       <my-button @click="$router.back()"> Back </my-button>
+      <my-button @click="showGenreDialog"> Add genre </my-button>
     </div>
-    <my-dialog v-model:show="fileTypeDialogVisible">
-      <file-type-form>
+    <my-dialog v-model:show="genreDialogVisible">
+      <create-genre-form>
         <template v-slot:submit__name>
           Add
         </template>
-      </file-type-form>
+      </create-genre-form>
     </my-dialog>
   </div>
 </template>
 <script>
 import UserList from "../components/UserList";
 import {mapActions, mapMutations, mapState} from "vuex";
-import AllowedExtensionList from "@/components/AllowedExtensionList";
-import FileTypeForm from "../components/FileTypeForm";
-import MyButton from "../components/UI/MyButton";
+import GenreList from "@/components/GenreList";
+import CreateGenreForm from "../components/CreateGenreForm";
 
 export default {
   name: "AdminPage",
-  components: {MyButton, FileTypeForm, AllowedExtensionList, UserList},
+  components: {CreateGenreForm, GenreList, UserList},
   data(){
     return{
-      fileTypeDialogVisible: false,
-      fileTypeUpdateDialogVisible: false,
-      modified: false,
-      length: 1,
-      id: null,
-      root: 'books'
+      genreDialogVisible: false,
     }
+  },
+  beforeRouteEnter(to, from, next){
+    next(vm => {
+      console.log(!(vm.isAdmin && vm.isAuth))
+      if(!(vm.isAdmin && vm.isAuth)){
+        vm.$store.state.errors.push('You are not an admin')
+        vm.$router.push('/login')
+      }
+    })
   },
   mounted() {
     if(this.isAdmin && this.isAuth) {
-        this.getUsers()
-        this.getFileTypes()
-    }
-    else {
-      this.$store.state.errors.push('You are not an admin')
-      this.$router.push('/login')
+      this.getUsers()
+      this.getGenres()
     }
   },
   beforeUnmount() {
-    if(this.isAdmin)
-      this.clearErrors()
     this.clearUsers()
   },
   methods: {
     ...mapMutations({
-      clearFileType: 'file/clearFileType',
       clearErrors: 'clearErrors',
       clearUsers: 'user/clearUsers',
-      clearFileTypes: 'file/clearFileTypes'
     }),
     ...mapActions({
       getUsers: 'user/getUsers',
-      getFileTypes: 'file/getAllowedFileTypes',
-      addFileType: 'file/addFileType',
-
+      getGenres: 'genre/getGenres'
     }),
-    async showFileTypeDialog(){
-      this.clearFileType()
-      this.fileTypeDialogVisible = true
-    }
+    showGenreDialog(){
+      this.genreDialogVisible = true
+    },
 
   },
   computed: {
@@ -78,14 +72,12 @@ export default {
       isAdmin: state => state.isAdmin,
       isAuth: state => state.isAuth,
       users: state => state.user.users,
-      fileTypes: state => state.file.fileTypes,
-      file: state => state.file.file,
-
+      genres: state => state.genre.genres,
+      genre: state => state.genre.genre,
     }),
   },
 }
 </script>
 
 <style scoped>
-
 </style>

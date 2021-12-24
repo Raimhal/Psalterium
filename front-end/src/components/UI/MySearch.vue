@@ -4,7 +4,7 @@
         type="search"
         name="search"
         v-model="query.value"
-        required>
+    >
     <button class="search-btn" type="submit">
       <span>Search</span>
     </button>
@@ -84,10 +84,6 @@ body {
 .search-bar input:focus,
 .search-bar input:valid  {
   width: 100%;
-}
-.search-bar input:focus,
-.search-bar input:not(:focus) + .search-btn:focus {
-  outline: transparent;
 }
 .search-bar {
   margin: auto;

@@ -3,7 +3,6 @@
     <div @click="goToHome"><div class="logo">PSALT<span>ERIUM</span></div></div>
     <div class="navbar__btns">
       <div>
-<!--        <my-button @click="this.$store.commit('book/setSearchedMod', false)"/>-->
         <my-search v-show="$router.currentRoute.value.fullPath === '/'"/>
       </div>
       <div v-if="!isAuth">
@@ -11,6 +10,11 @@
         <router-link to="/register"><my-button>Register</my-button></router-link>
       </div>
       <div v-else>
+        <router-link to="/admin" v-if="isAdmin"><my-button>Admin</my-button></router-link>
+        <router-link to=""><my-button>Orders</my-button></router-link>
+        <router-link to=""><my-button>Basket</my-button></router-link>
+        <router-link to="/"><my-button>Shop</my-button></router-link>
+        <router-link to="/my/books"><my-button>Books</my-button></router-link>
         <router-link to="/account"><my-button>Account</my-button></router-link>
         <router-link to="/">
           <my-button
@@ -26,21 +30,19 @@
 
 <script>
 import {mapActions, mapMutations, mapState} from "vuex";
-import MyButton from "./MyButton";
-import router from "../../router/router";
 
 export default {
   name: "Navbar",
-  components: {MyButton},
   computed: {
     ...mapState({
-      searchQuery: state => state.book.searchQuery
+      searchQuery: state => state.book.searchQuery,
+      isAdmin: state => state.isAdmin
     }),
     isAuth(){
       return JSON.parse(this.$store.state.isAuth)
     },
     goToHome(){
-      if(this.$router.currentRoute.value.fullPath == '/')
+      if(this.$router.currentRoute.value.fullPath === '/')
         this.$router.go()
       else
         this.$router.push('/')

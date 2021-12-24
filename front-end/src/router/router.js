@@ -10,34 +10,41 @@ import MyBooksPage from "@/pages/MyBooksPage";
 const routes = [
   {
     path: "/login",
-    component: LoginPage
+    component: LoginPage,
+    meta: { title: 'Log in' }
   },
   {
     path: "/register",
-    component: RegisterPage
+    component: RegisterPage,
+    meta: { title: 'Register' }
   },
   {
     path: "/logout",
   },
   {
     path: "/",
-    component: StoreBooksPage
+    component: StoreBooksPage,
+    meta: { title: 'Shop' }
   },
   {
     path: "/my/books",
-    component: MyBooksPage
+    component: MyBooksPage,
+    meta: { title: 'Books' }
   },
   {
     path: "/books/:id",
-    component: StoreBookPage
+    component: StoreBookPage,
+    meta: { title: 'Book' }
   },
   {
     path: "/admin",
-    component: AdminPage
+    component: AdminPage,
+    meta: { title: 'Admin' }
   },
   {
     path: "/account",
-    component: AccountPage
+    component: AccountPage,
+    meta: { title: 'Account' }
   }
 ]
 
@@ -46,7 +53,10 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL)
 })
 
-
+router.beforeEach((to, from, next) => {
+  document.title = to.meta.title
+  next()
+});
 
 
 export default router

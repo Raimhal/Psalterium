@@ -122,7 +122,7 @@ input {
 }
 .form {
   max-width: 550px;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
   max-height: 75vh;
 

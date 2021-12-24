@@ -40,8 +40,3 @@ app.add_middleware(SimpleASGIMiddleware)
 dependencies.create_database()
 app.include_router(router)
 
-@app.get("/api/")
-def i():
-    return 'i'
-
-

@@ -69,13 +69,13 @@ async def update_user_by_email(email: str, userUpdate: schemas.UserCreate, db: S
     else:
         userServices.update_user(db=db, model=userUpdate, expression=expression)
 
-@router.patch('/{id}/change_role', status_code=status.HTTP_204_NO_CONTENT)
-@raise_403_if_not_admin
-async def update_user_role(id: int, role_name: str, db: Session = Depends(get_db),
-                           current_user: models.User = Depends(get_current_user)):
+
+@router.patch('/{id:int}/change_role', status_code=status.HTTP_204_NO_CONTENT)
+async def change_role(id: int, role_name: str, db: Session = Depends(get_db)):
     userServices.change_user_role(db=db, user_id=id, role_name=role_name)
 
-@router.delete('/{id}/delete', status_code=status.HTTP_204_NO_CONTENT)
+
+@router.delete('/{id:int}/delete', status_code=status.HTTP_204_NO_CONTENT)
 @raise_403_if_not_admin
 async def delete_user_by_id(id: int, db: Session = Depends(get_db),
                             current_user: models.User = Depends(get_current_user)):

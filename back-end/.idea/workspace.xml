@@ -4,15 +4,18 @@
     <list default="true" id="017aacaf-aca6-46c5-a5ef-0b10e42e24de" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database.config" beforeDir="false" afterPath="$PROJECT_DIR$/database.config" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/catalog/books.py" beforeDir="false" afterPath="$PROJECT_DIR$/routes/catalog/books.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/catalog/genres.py" beforeDir="false" afterPath="$PROJECT_DIR$/routes/catalog/genres.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/users/users.py" beforeDir="false" afterPath="$PROJECT_DIR$/routes/users/users.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/bookServices.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/bookServices.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/genreServices.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/genreServices.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/files/ac59c328-6dc9-45be-818f-6d519e469a40.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../front-end/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/components/BookItem.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/BookItem.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/components/BookList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/BookList.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/components/CustomBooksPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/CustomBooksPage.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/store/bookModule.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/store/bookModule.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/components/AllowedExtensionList.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/components/FileTypeForm.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/components/UserList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/UserList.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/pages/AdminPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/pages/AdminPage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/store/genreModule.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/store/genreModule.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/store/userModele.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/store/userModele.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,6 +72,7 @@
       <workItem from="1639991818283" duration="14307000" />
       <workItem from="1640074709521" duration="10634000" />
       <workItem from="1640163903275" duration="11110000" />
+      <workItem from="1640333062949" duration="11457000" />
     </task>
     <servers />
   </component>

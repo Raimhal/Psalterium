@@ -22,5 +22,7 @@ def create_genre(db: Session, model: schemas.GenreCreate) -> int:
 
 def update_genre(db: Session, model: schemas.GenreCreate, expression: bool):
     genre = generalServices.get_by_expression(db=db, model=_model, expression=expression)
-    genre.name = model.name
-    db.commit()
+    if not model.name == genre.name:
+        check_in_use_expression(db=db, model=_model, expression=_model.name == model.name)
+        genre.name = model.name
+        db.commit()

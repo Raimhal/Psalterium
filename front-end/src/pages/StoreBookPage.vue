@@ -1,13 +1,13 @@
 <template>
   <div class="item" :key="book.id" >
-    <header class="mb-3 d-flex justify-content-center w-100">
+    <div class="mb-3 d-flex justify-content-center w-100 top-content">
       <img class="image" v-image-observer:[book.image]="getImage" :key="book.id" alt="Card image cap" @click="$router.push(`/books/${book.id}`)">
       <div class="p-4 short__info">
         <div>
           <h5 class="text-center mb-4 title">{{book.name}}</h5>
           <p>Author : {{book.author}}</p>
           <p>Price : ${{book.price}}</p>
-          <div v-if="isAuth">
+          <div>
             <p v-if="book.count > 0">Available : {{book.count}} pcs.</p>
             <p v-else class="error">Not available</p>
           </div>
@@ -21,7 +21,7 @@
           </div>
         </div>
       </div>
-    </header>
+    </div>
     <div>
       <p>Publication : {{ new Date(book.publication_date).toLocaleDateString()}}</p>
       <p>Last update date : {{new Date(book.update_date).toLocaleDateString()}}</p>
@@ -182,7 +182,7 @@ export default {
   object-fit: contain;
   border-radius: 15px;
 }
-header{
+.top-content{
   display: grid;
   grid-template-columns: 25vw 10vw;
 }

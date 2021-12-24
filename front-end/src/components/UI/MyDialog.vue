@@ -12,7 +12,7 @@ import toggleDialogMixin from "@/mixins/toggleDialogMixin";
 
 export default {
   name: "MyDialog",
-  mixins: [toggleDialogMixin]
+  mixins: [toggleDialogMixin],
 }
 </script>
 

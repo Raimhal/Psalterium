@@ -45,6 +45,7 @@ async def create_genre(genreCreate: schemas.GenreCreate, db: Session = Depends(g
 async def update_genre(id: int, genreUpdate: schemas.GenreCreate, db: Session = Depends(get_db),
                             current_user: models.User = Depends(get_current_user)):
     expression = _model.id == id
+    print(genreUpdate.__dict__)
     genreServices.update_genre(db=db, model=genreUpdate, expression=expression)
 
 

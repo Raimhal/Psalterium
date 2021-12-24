@@ -6,7 +6,9 @@
     </div>
   </div>
 </template>
+
 <script>
+import { Slide } from 'vue-burger-menu'
 export default {
   mounted() {
     if (Date.now() >= localStorage.getItem('tokenExp') * 1000) {
@@ -76,12 +78,6 @@ export default {
   justify-content:space-between;
 
 }
-
-.page{
-  margin: auto;
-  width: 70vw;
-}
-
 .link{
   color: #7072F7;
   text-decoration: none;
