@@ -4,6 +4,7 @@
         type="search"
         name="search"
         v-model="query.value"
+        placeholder="Search"
     >
     <button class="search-btn" type="submit">
       <span>Search</span>

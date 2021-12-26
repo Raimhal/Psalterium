@@ -1,50 +1,56 @@
 <template>
   <Form v-slot="{ handleSubmit }" :validation-schema="schema" as="div"  class="dialog">
     <my-error-list :errors="errors"></my-error-list>
-    <form @submit="handleSubmit($event, action)" method="post" class="d-flex flex-column">
-      Title : <my-field
-        v-model="book.name"
-        name="name"
-        v-focus
-    />
-      <my-error-message name="name" />
-      Author : <my-field
-        v-model="book.author"
-        name="author"
-    />
-      <my-error-message name="author" />
-      Count : <my-field
-        v-model="book.count"
-        name="count"
-    />
-      <my-error-message name="count" />
-      Price : <my-field
-        v-model="book.price"
-        name="price"
-    />
-      <my-error-message name="price" />
-      ISBN : <my-field
-        v-model="book.ISBN"
-        name="ISBN"
-    />
-      <my-error-message name="ISBN" />
-      Date of publication : <my-field
-        v-model="book.publication_date"
-        type="date"
-        name="publication"
-    />
-      <my-error-message name="publication" />
-      Description : <my-field
-        v-model="book.content"
-        name="content"
-    />
-      <my-error-message name="content" />
-      <my-button
-          type="submit"
-          class="btn"
-      >
-        <slot name="submit__name"></slot>
-      </my-button>
+    <form @submit="handleSubmit($event, action)" method="post" class="d-flex flex-column" name="book_form">
+      <div class="scroll d-flex flex-column justify-content-between" >
+        Title : <my-field
+          v-model="book.name"
+          name="name"
+          v-focus
+      />
+        <my-error-message name="name" />
+        Author : <my-field
+          v-model="book.author"
+          name="author"
+      />
+        <my-error-message name="author" />
+        Count : <my-field
+          v-model="book.count"
+          name="count"
+      />
+        <my-error-message name="count" />
+        Price : <my-field
+          v-model="book.price"
+          name="price"
+      />
+        <my-error-message name="price" />
+        ISBN : <my-field
+          v-model="book.ISBN"
+          name="ISBN"
+      />
+        <my-error-message name="ISBN" />
+        Date of publication : <my-field
+          v-model="book.publication_date"
+          type="date"
+          name="publication"
+      />
+        <my-error-message name="publication" />
+        Description : <my-field
+          v-model="book.content"
+          name="content"
+      />
+        <my-error-message name="content" />
+      </div>
+      <div class="mt-2 d-flex justify-content-center">
+        <div v-if="isLoading" class="spinner-border align-self-center m-2"></div>
+        <my-button
+            v-else
+            type="submit"
+            class="w-100"
+        >
+          <slot name="submit__name"></slot>
+        </my-button>
+      </div>
     </form>
   </Form>
 </template>
@@ -86,12 +92,16 @@ export default {
       else {
         await this.createBook()
       }
+
+      console.log(document.querySelectorAll('.error'))
+
     },
   },
   computed: {
     ...mapState({
       book: state => state.book.book,
-      errors: state => state.errors
+      errors: state => state.errors,
+      isLoading: state => state.book.isFormLoading,
     }),
     schema() {
       return  yup.object().shape({
@@ -99,8 +109,8 @@ export default {
         author: yup.string().max(50).required().label('Author'),
         count: yup.number().typeError("Count is a number field").integer('Invalid decimal').min(1).required().label('Count'),
         price: yup.number().typeError("Count is a number field").min(1).required().label('Price'),
-        ISBN: yup.string().length(13).required().label('ISBN'),
-        publication: yup.date().min(new Date(1), 'Start date is a required field').required().label('Date of publication'),
+        ISBN: yup.string().matches('^(?=(?:\\D*\\d){10}(?:(?:\\D*\\d){3})?$)[\\d-]+$', 'Enter the correct ISBN').required().label('ISBN'),
+        publication: yup.date().min(new Date(1)).required().label('Date of publication'),
         content: yup.string().max(5000).label('Description'),
       })
     },
@@ -112,5 +122,13 @@ export default {
 .dialog{
   width: 50vw;
   max-width: 500px;
+  min-width: 200px;
+}
+
+.scroll{
+  height: 85vh;
+  min-height: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 </style>

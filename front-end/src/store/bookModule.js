@@ -7,6 +7,7 @@ export const bookModule = {
         books: [],
         book: {},
         isLoading: false,
+        isFormLoading: false,
         selectedSort: 'name',
         reverseSort: {
             value: false
@@ -26,9 +27,6 @@ export const bookModule = {
             {value: 'publication_date', name: 'By date'},
         ],
         urlCreator: window.URL || window.webkitURL,
-        order: {
-            count: 1
-        }
     }),
     getters: {
         sortedBooks(state){
@@ -61,6 +59,9 @@ export const bookModule = {
         setLoading(state, bool){
             state.isLoading = bool;
         },
+        setFormLoading(state, bool){
+            state.isFormLoading = bool;
+        },
         setSelectedSort(state, selectedSort){
             state.selectedSort = selectedSort;
         },
@@ -76,6 +77,7 @@ export const bookModule = {
         clearBookStore(state){
             state.books = []
             state.page = 0
+            state.searchQuery.searched = false
         },
         clearBook(state) {
             state.book = {}
@@ -91,27 +93,35 @@ export const bookModule = {
         },
         setReverseSort(state, bool){
             state.reverseSort = bool
+        },
+        setBookCount(state, count){
+            state.book.count = count
         }
 
     },
     actions: {
         async createBook({state, commit, rootState, rootGetters}) {
+            await commit('setFormLoading', true)
             rootState.errors = []
             const book = state.book
             book.publication_date = new Date(book.publication_date.toLocaleString()).toISOString()
             await instance
                 .post(`${state.defaultRoot}`, book, {headers: rootGetters.getHeaders})
-                .then(()=> {
+                .then(response => {
+                    book.id = response.data
+                    book.image = 'default.png'
+                    commit('pushBook', book)
                     commit('clearBook')
-                    router.go()
                 })
                 .catch(error => {
                     rootState.errors.push(error.response.data.detail)
                 })
+            await commit('setFormLoading', false)
         },
         async getBookList({state, commit, rootState, rootGetters}, owner) {
-            if(state.books.length === 0)
+            if(state.books.length === 0) {
                 commit('setLoading', true)
+            }
             state.page += 1
 
             let path = `${state.defaultRoot}`
@@ -130,21 +140,18 @@ export const bookModule = {
                 path += '/my'
                 config.headers = rootGetters.getHeaders
             }
-
-            console.log(config)
-
             await instance
                 .get(path, config)
-                .then(res => {
-                    console.log(res.data)
-                    commit('addBooks', res.data)
+                .then(async response => {
+                    await response.data.forEach(async book => {
+                        if(state.books.filter(b => b.id === book.id).length === 0)
+                            commit('pushBook', book)
+                    })
                 })
                 .catch(error => {
                     rootState.errors.push(error.response.data.detail)
                 })
-                .then(() => {
-                    commit('setLoading', false)
-                })
+            await commit('setLoading', false)
         },
         async getBook({state, commit, rootState}, book_id){
             const path = `${state.defaultRoot}/${book_id}`
@@ -164,17 +171,18 @@ export const bookModule = {
                     rootState.errors.push(error.response.data.detail)
                 })
         },
-        async updateBook({state, rootState, rootGetters}) {
+        async updateBook({state, commit, rootState, rootGetters}) {
+            await commit('setFormLoading', true)
             rootState.errors = []
             const book = state.book
             book.publication_date = new Date(book.publication_date.toLocaleString()).toISOString()
             const path = `${state.defaultRoot}/${state.book.id}/update`
             await instance
                 .put(path, book, {headers: rootGetters.getHeaders})
-                .then(() => router.go())
                 .catch(error => {
                     rootState.errors.push(error.response.data.detail)
                 })
+            await commit('setFormLoading', false)
         },
         async removeBook({state, commit, rootState, rootGetters}, book_id){
             const path = `${state.defaultRoot}/${book_id}/delete`
@@ -190,7 +198,6 @@ export const bookModule = {
             const path = `${state.defaultRoot}/image`
             const image_name = obj.image_name
             const target = obj.target
-            console.log(obj)
             if(obj.image_name !== undefined) {
                 await instance
                     .get(path, {
@@ -232,25 +239,6 @@ export const bookModule = {
                     rootState.errors.push(error.response.data.detail)
                 })
             await commit('setLoading', false)
-        },
-        async addToBasket({state, rootState, rootGetters} ){
-            const path = 'catalog/basket'
-            const order = {
-                count: state.order.count,
-                book_id: state.book.id
-            }
-            if(state.book.count > 0) {
-                await instance
-                    .post(path, order, {headers: rootGetters.getHeaders})
-                    .then(response => {
-                        console.log(response)
-                        state.book.count -= order.count
-                    })
-                    .catch(error => {
-                        console.log(error)
-                        rootState.errors.push(error)
-                    })
-            }
         },
         async changeGenres({state, commit, rootGetters}, genres){
             const path = `${state.defaultRoot}/${state.book.id}/set_genres`

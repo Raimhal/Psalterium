@@ -1,6 +1,6 @@
 <template>
-  <div class="card item" :class="{ 'gray' : book.count === 0}">
-    <img class="image" v-image-observer:[book.image]="getImage" alt="Book image" @click="$router.push(`/books/${book.id}`)">
+  <div class="card item bg-gradient" :class="{ 'gray' : book.count === 0}" @click="$router.push(`/books/${book.id}`)">
+    <img class="image" v-image-observer:[book.image]="getImage" alt="Book image">
     <div class="card-body item-body">
       <h5 class="card-title">{{book.name}}</h5>
       <p class="card-text text">
@@ -8,18 +8,18 @@
         <span>${{book.price}}</span>
         <span id="ISBN">#{{book.ISBN}}</span>
       </p>
-      <my-button @click="$emit('remove', book.id)" v-if="isCreator" class="w-50 align-self-center">Delete</my-button>
+      <my-button @click.stop="$emit('remove', book.id)" v-if="isCreator" class="w-50 align-self-center">
+        Delete
+      </my-button>
     </div>
   </div>
 </template>
 
 <script>
 import {mapActions} from "vuex";
-import MyButton from "./UI/MyButton";
 
 export default {
   name: "BookItem",
-  components: {MyButton},
   props:{
     book: {
       type: Object,
@@ -42,8 +42,12 @@ export default {
 <style scoped>
 .item{
   width: 17rem;
-  background-color: rgba(149, 149, 149, 0.34);
+  background-color: rgba(149, 149, 149, 0.3);
+  border: none;
   position: relative;
+}
+.item:hover{
+  cursor: pointer;
 }
 .item-body{
   height: 100%;

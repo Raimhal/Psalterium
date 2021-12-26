@@ -1,7 +1,7 @@
 <template>
   <div v-if="books.length > 0">
     <div class="books">
-      <transition-group name="book-list">
+      <transition-group name="list">
         <book-item
             v-for="book in books"
             :key="book.id"
@@ -14,9 +14,10 @@
     </div>
   </div>
   <div  v-else class="empty__list">
-    <h3 style="color: #7072F7">
-      List is empty
-    </h3>
+    <img src="@/assets/wrong_negate.png" height="128" width="128"/>
+    <h4>
+      No books
+    </h4>
   </div>
 </template>
 
@@ -49,30 +50,11 @@ export default {
 }
 
 .empty__list{
+  min-height: 60vh;
   display: flex;
   justify-content: center;
+  flex-direction: column;
   align-items: center;
-
-}
-
-
-.book-list-item{
-  display: inline-block;
-  margin-right: 10px;
-}
-.book-list-enter-active,
-.book-list-leave-active{
-  transition: all 0.7s ease;
-}
-
-.book-list-enter-from,
-.book-list-leave-to{
-  opacity: 0;
-  transform: translateX(130px);
-}
-
-.book-list-move{
-  transition: transform 0.4s ease;
 }
 </style>
 

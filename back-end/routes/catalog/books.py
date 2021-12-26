@@ -40,6 +40,11 @@ async def get_book(id: int, db: Session = Depends(get_db)):
     expression = _model.id == id
     return generalServices.get_by_expression(db=db, model=_model, expression=expression)
 
+@router.get('/{id:int}/dto', response_model=schemas.BookDto)
+async def get_book_dto(id: int, db: Session = Depends(get_db)):
+    expression = _model.id == id
+    return generalServices.get_by_expression(db=db, model=_model, expression=expression)
+
 
 @router.get("/{id:int}/image", status_code=status.HTTP_200_OK)
 async def get_image(id: int, db: Session = Depends(get_db)):

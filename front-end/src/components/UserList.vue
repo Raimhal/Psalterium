@@ -13,7 +13,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="user in users" :key="user.id" class="user">
+      <transition-group name="list">
+        <tr v-for="user in users" :key="user.id">
           <td>{{user.username}}</td>
           <td>{{user.email}}</td>
           <td>{{user.first_name}}</td>
@@ -37,6 +38,7 @@
             </div>
           </td>
         </tr>
+      </transition-group>
       </tbody>
     </table>
     <my-dialog v-model:show="userUpdateDialogVisible">

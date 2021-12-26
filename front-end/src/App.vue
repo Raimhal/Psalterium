@@ -1,6 +1,6 @@
 <template>
   <div class="body">
-    <navbar></navbar>
+    <navbar class="position-fixed w-100"></navbar>
     <div class="app">
       <router-view></router-view>
     </div>
@@ -8,7 +8,6 @@
 </template>
 
 <script>
-import { Slide } from 'vue-burger-menu'
 export default {
   mounted() {
     if (Date.now() >= localStorage.getItem('tokenExp') * 1000) {
@@ -37,6 +36,7 @@ export default {
 }
 .app{
   padding: 20px;
+  padding-top: 72px;
 }
 
 .body{
@@ -45,6 +45,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
+
 
 .form{
   display: flex;
@@ -87,4 +88,24 @@ export default {
   color: 	#FFF587;
 }
 
+
+
+.list-item{
+  display: inline-block;
+  margin-right: 10px;
+}
+.list-enter-active,
+.list-leave-active{
+  transition: all 0.7s ease;
+}
+
+.list-enter-from,
+.list-leave-to{
+  opacity: 0;
+  transform: translateX(130px);
+}
+
+.list-move{
+  transition: transform 0.4s ease;
+}
 </style>

@@ -48,6 +48,10 @@ export default {
       createGenre: 'genre/createGenre',
       updateGenre: 'genre/updateGenre',
     }),
+    ...mapMutations({
+      clearGenre: 'genre/clearGenre',
+      clearErrors: 'clearErrors'
+    }),
     async action(){
       if(this.modified)
         this.updateGenre()
@@ -60,10 +64,6 @@ export default {
     ...mapState({
       genre: state => state.genre.genre,
       errors: state => state.errors
-    }),
-    ...mapMutations({
-      clearGenre: 'genre/clearGenre',
-      clearErrors: 'clearErrors'
     }),
     schema() {
       return yup.object().shape({

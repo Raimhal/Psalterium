@@ -3,6 +3,8 @@ import {userModule} from "./userModele"
 import {fileModule} from "./fileModule"
 import {bookModule} from "./bookModule"
 import {genreModule} from "./genreModule"
+import {basketModule} from "./basketModule";
+import {orderModule} from "./orderModule";
 
 export default createStore({
   state: {
@@ -56,6 +58,8 @@ export default createStore({
     user: userModule,
     file: fileModule,
     book: bookModule,
-    genre: genreModule
+    genre: genreModule,
+    basket: basketModule,
+    order: orderModule
   }
 })

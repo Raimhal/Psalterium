@@ -34,7 +34,6 @@ export default {
       dialogVisible: false
     }
   },
-
   beforeRouteEnter(to, from, next){
    next(vm => {
      if(!vm.isAuth) {

@@ -19,8 +19,7 @@
         :is-creator="owner"
         @remove="removeBook"
     />
-    <div v-else class="center">
-      Loading...
+    <div v-else class="spinner-border">
     </div>
     <div
         v-intersection:[owner]="getBookList"

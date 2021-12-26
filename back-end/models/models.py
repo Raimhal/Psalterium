@@ -59,7 +59,9 @@ class Order(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     deliver_date = Column(DateTime)
-    destination = Column(String)
+    country = Column(String)
+    city = Column(String)
+    address = Column(String)
 
     user_id = Column(Integer, ForeignKey('users.id'))
     books = relationship('OrderBook', back_populates='order')

@@ -6,6 +6,7 @@ import AccountPage from "@/pages/AccountPage";
 import StoreBooksPage from "@/pages/StoreBooksPage";
 import StoreBookPage from "@/pages/StoreBookPage";
 import MyBooksPage from "@/pages/MyBooksPage";
+import OrdersPage from "../pages/OrdersPage";
 
 const routes = [
   {
@@ -35,6 +36,11 @@ const routes = [
     path: "/books/:id",
     component: StoreBookPage,
     meta: { title: 'Book' }
+  },
+  {
+    path: "/orders",
+    component: OrdersPage,
+    meta: { title: 'Orders' }
   },
   {
     path: "/admin",

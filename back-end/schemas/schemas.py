@@ -4,6 +4,7 @@ from pydantic import BaseModel
 
 
 # books
+
 class BookBase(BaseModel):
     name: str
     author: str
@@ -107,7 +108,9 @@ class TokenData(BaseModel):
 # orders
 class OrderBase(BaseModel):
     deliver_date: datetime
-    destination: str
+    country: str
+    city: str
+    address: str
 
 
 class OrderCreate(OrderBase):

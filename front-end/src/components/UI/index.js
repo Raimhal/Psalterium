@@ -8,6 +8,7 @@ import Navbar from "./Navbar";
 import MyField from "./MyField"
 import MyErrorMessage from "./MyErrorMessage";
 import MyErrorList from "./MyErrorList";
+import Basket from "./Basket";
 
 
 export default [
@@ -21,5 +22,5 @@ export default [
     MyField,
     MyErrorMessage,
     MyErrorList,
-
+    Basket
 ]

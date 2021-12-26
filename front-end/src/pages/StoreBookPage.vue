@@ -1,9 +1,9 @@
 <template>
   <div class="item" :key="book.id" >
-    <div class="mb-3 d-flex justify-content-center w-100 top-content">
-      <img class="image" v-image-observer:[book.image]="getImage" :key="book.id" alt="Card image cap" @click="$router.push(`/books/${book.id}`)">
+    <div class="d-flex justify-content-center w-100 top-content">
+      <img class="image align" v-image-observer:[book.image]="getImage" :key="book.id" alt="Card image cap" @click="$router.push(`/books/${book.id}`)">
       <div class="p-4 short__info">
-        <div>
+        <div class="mb-2">
           <h5 class="text-center mb-4 title">{{book.name}}</h5>
           <p>Author : {{book.author}}</p>
           <p>Price : ${{book.price}}</p>
@@ -12,22 +12,26 @@
             <p v-else class="error">Not available</p>
           </div>
         </div>
-        <div>
-          <div v-if="book.count > 0 && isAuth">
-            <form @submit.prevent="action" method="post" class="order__form">
-              <my-input class="order" v-model="order.count" type="number" id="count"/>
-              <my-button class="order" type="submit">Add to card</my-button>
+      </div>
+    </div>
+    <div>
+      <div class="d-flex justify-content-between pe-lg-5 ps-lg-5 mt-3">
+        <div class="d-flex flex-column justify-content-evenly">
+          <span>Publication : {{ new Date(book.publication_date).toLocaleDateString()}}</span>
+          <span>Last update date : {{new Date(book.update_date).toLocaleDateString()}}</span>
+          <span id="ISBN">ISBN : #{{book.ISBN}}</span>
+        </div>
+        <div class="d-flex">
+          <div v-if="book.count > 0 && isAuth" class="d-flex justify-content-center">
+            <form @submit.prevent="action" method="post" class="order__form addToBasket gap-2 p-2">
+              <my-input v-model="order.count" type="number" id="count"/>
+              <my-button type="submit">Add to card</my-button>
             </form>
           </div>
         </div>
       </div>
-    </div>
-    <div>
-      <p>Publication : {{ new Date(book.publication_date).toLocaleDateString()}}</p>
-      <p>Last update date : {{new Date(book.update_date).toLocaleDateString()}}</p>
-      <p id="ISBN">ISBN : #{{book.ISBN}}</p>
       <div v-if="book.genres.length > 0" class="m-auto">
-        <p class="text-center mt-3 mb-2">
+        <p class="text-center mb-3">
         Genres
         </p>
         <p class="row justify-content-center">
@@ -56,8 +60,8 @@
           <label for="files" class="label text-break mb-2" id="file_label">Select image</label>
           <my-field type="file" name="file" id="files" v-focus class="file" @change="changeFileStatus" accept="image/*" required/>
           <my-error-message name="file"/>
-          <my-button type="submit">Submit</my-button>
-          <div v-if="isLoading">Loading...</div>
+          <div v-if="isLoading" class="spinner-border align-self-center m-2"></div>
+          <my-button v-else type="submit">Submit</my-button>
         </form>
       </Form>
     </my-dialog>
@@ -90,7 +94,7 @@ export default {
   components: {GenreForm, BookForm, BookItem, MyErrorList, MyField, MyErrorMessage, Form},
   async beforeMount() {
     await this.getBook(this.$router.currentRoute.value.params.id).then(() => {
-      if (this.book.count > 0)
+      if (this.book.count > 0 && this.isAuth)
         this.setBookLimits()
       this.isCreator = this.book.owner_id === JSON.parse(localStorage.user_id) || this.isAdmin
     })
@@ -108,7 +112,7 @@ export default {
       isAuth: state => state.isAuth,
       isAdmin: state => state.isAdmin,
       book: state => state.book.book,
-      order: state => state.book.order,
+      order: state => state.basket.order,
       errors: state => state.errors,
       isLoading: state => state.book.isLoading
     }),
@@ -120,7 +124,7 @@ export default {
     ...mapActions({
       getBook: 'book/getBook',
       getImage: 'book/getBookImage',
-      addToBasket: 'book/addToBasket',
+      addToBasket: 'basket/addToBasket',
       changeImage: 'book/changeBookImage'
     }),
     ...mapMutations({
@@ -130,7 +134,7 @@ export default {
       if(!this.isAuth)
         this.$router.push('/login')
       else {
-        await this.addToBasket()
+        await this.addToBasket(this.book)
         if(this.book.count > 0)
           this.setBookLimits()
       }
@@ -178,8 +182,9 @@ export default {
 }
 .image{
   width: 300px;
-  max-height: 400px;
-  object-fit: contain;
+  max-height: 300px;
+  /*object-fit: contain;*/
+  /*object-fit: cover;*/
   border-radius: 15px;
 }
 .top-content{
@@ -191,14 +196,15 @@ p{
   line-height: 27px;
 }
 
-.order{
+.order__form>*{
+  margin: 0;
   width: 100%;
-  max-width: 200px;
-  min-width: 120px;
 }
 
 .order__form{
-  width: 100%;
+  width: 15vw;
+  max-width: 200px;
+  min-width: 120px;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -248,5 +254,12 @@ p{
 
 .plot{
   text-align: justify;
+}
+
+.addToBasket{
+  background-color: rgba(112, 114, 247, 0.2);
+  border-radius: 5px;
+  border: solid 2px rgba(112, 114, 247, 0.4);
+  height: fit-content;
 }
 </style>
