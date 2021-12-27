@@ -81,7 +81,7 @@ export default {
   methods: {
     ...mapActions({
       login: 'user/login',
-      getCurrentUser: 'user/GetCurrentUser'
+      getCurrentUser: 'user/getCurrentUser'
     }),
     ...mapMutations({
       clearErrors: 'clearErrors'

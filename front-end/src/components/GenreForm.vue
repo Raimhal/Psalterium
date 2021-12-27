@@ -6,7 +6,10 @@
         <label :for="genre.id">{{genre.name}}</label>
       </div>
     </div>
-    <my-button class="mt-3 w-100" @click="changeGenres(genreList)">Save</my-button>
+    <div class="d-flex flex-column">
+      <div v-if="isLoading" class="spinner-grow align-self-center m-2"></div>
+      <my-button v-else class="mt-3 w-100" @click="action(genreList)">Save</my-button>
+    </div>
   </div>
 </template>
 
@@ -27,14 +30,27 @@ export default {
   computed: {
     ...mapState({
       genres: state => state.genre.genres,
-      book_genres: state => state.book.book.genres
+      book_genres: state => state.book.book.genres,
+      isLoading: state => state.book.isLoading
     })
   },
   methods: {
     ...mapActions({
       getGenres: 'genre/getGenres',
       changeGenres: 'book/changeGenres'
-    })
+    }),
+    async action(list){
+      const dialog = document.querySelector('.dialog')
+      await this.changeGenres(list)
+      this.$swal({
+        title: 'Success',
+        text: 'The genres have been successfully changed',
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 1000
+      })
+      dialog.click()
+    }
 
   }
 

@@ -12,7 +12,7 @@
       <div class="d-flex align-items-center">
         <div class="d-flex flex-column text-center price p-2 gap-2">
           <span>${{order.price * order.order_count}}</span>
-          <my-button class="h-25" @click="removeBook(order.id)">Remove</my-button>
+          <my-button class="h-25" @click.once="removeBook({id: order.id, count: order.order_count})">Remove</my-button>
         </div>
       </div>
 
@@ -31,9 +31,6 @@ export default {
       type: Object,
       required: true
     }
-  },
-  beforeMount() {
-    console.log(this.order)
   },
   data(){
     return {

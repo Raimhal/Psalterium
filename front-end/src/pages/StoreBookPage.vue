@@ -1,5 +1,5 @@
 <template>
-  <div class="item" :key="book.id" >
+  <div class="item" >
     <div class="d-flex justify-content-center w-100 top-content">
       <img class="image align" v-image-observer:[book.image]="getImage" :key="book.id" alt="Card image cap" @click="$router.push(`/books/${book.id}`)">
       <div class="p-4 short__info">
@@ -25,7 +25,8 @@
           <div v-if="book.count > 0 && isAuth" class="d-flex justify-content-center">
             <form @submit.prevent="action" method="post" class="order__form addToBasket gap-2 p-2">
               <my-input v-model="order.count" type="number" id="count"/>
-              <my-button type="submit">Add to card</my-button>
+              <div v-if="isCartLoading" class="spinner-grow align-self-center m-2"></div>
+              <my-button v-else type="submit">Add to card</my-button>
             </form>
           </div>
         </div>
@@ -60,7 +61,7 @@
           <label for="files" class="label text-break mb-2" id="file_label">Select image</label>
           <my-field type="file" name="file" id="files" v-focus class="file" @change="changeFileStatus" accept="image/*" required/>
           <my-error-message name="file"/>
-          <div v-if="isLoading" class="spinner-border align-self-center m-2"></div>
+          <div v-if="isLoading" class="spinner-grow align-self-center m-2"></div>
           <my-button v-else type="submit">Submit</my-button>
         </form>
       </Form>
@@ -93,11 +94,11 @@ export default {
   name: "StoreBookPage",
   components: {GenreForm, BookForm, BookItem, MyErrorList, MyField, MyErrorMessage, Form},
   async beforeMount() {
-    await this.getBook(this.$router.currentRoute.value.params.id).then(() => {
-      if (this.book.count > 0 && this.isAuth)
-        this.setBookLimits()
-      this.isCreator = this.book.owner_id === JSON.parse(localStorage.user_id) || this.isAdmin
-    })
+    await this.getBook(this.$router.currentRoute.value.params.id)
+    if(this.book.count > 0 && this.isAuth) {
+      this.setBookLimits()
+    }
+    this.isCreator = this.book.owner_id === JSON.parse(localStorage.user_id) || this.isAdmin
   },
   data(){
     return{
@@ -114,7 +115,8 @@ export default {
       book: state => state.book.book,
       order: state => state.basket.order,
       errors: state => state.errors,
-      isLoading: state => state.book.isLoading
+      isLoading: state => state.book.isLoading,
+      isCartLoading: state => state.basket.isLoading
     }),
   },
   async beforeUnmount() {
@@ -134,6 +136,13 @@ export default {
       if(!this.isAuth)
         this.$router.push('/login')
       else {
+        this.$swal({
+          title: 'Success',
+          text: 'The book has been successfully added to your cart',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 1500
+        })
         await this.addToBasket(this.book)
         if(this.book.count > 0)
           this.setBookLimits()
@@ -162,9 +171,20 @@ export default {
         label.innerHTML = `${image.files[0].name}`
     },
     async changeBookImage(){
+      const dialog = document.querySelector('.dialog')
       const image = document.querySelector('.image')
       await this.changeImage()
       await this.getImage({target: image, image_name: this.book.image})
+      if(this.errors.length === 0){
+        this.$swal({
+          title: 'Success',
+          text: 'The image has been successfully changed',
+          icon: 'success',
+          showConfirmButton: false,
+          timer: 1000
+        })
+        dialog.click()
+      }
     }
   },
 
@@ -196,7 +216,7 @@ p{
   line-height: 27px;
 }
 
-.order__form>*{
+.order__form>button, .order__form>input {
   margin: 0;
   width: 100%;
 }

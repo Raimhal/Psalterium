@@ -71,10 +71,23 @@ export default {
       updateUser: 'user/updateUser'
     }),
     async action(){
-      if(this.modified)
+      const dialog = document.querySelector('.dialog')
+      if(this.modified) {
         this.updateUser()
-      else
+        if(this.errors.length === 0) {
+          this.$swal({
+            title: 'Success',
+            text: 'Account updated successfully',
+            icon: 'success',
+            showConfirmButton: false,
+            timer: 1000
+          })
+          dialog.click()
+        }
+      }
+      else {
         this.register()
+      }
     }
 
   },

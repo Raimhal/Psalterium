@@ -5,18 +5,20 @@
         <div class="basket">
           <div class="d-flex justify-content-between ps-3 pe-3 p-2 ">
             <h3 class="align-items-center text-center m-0 p-1">
-              Basket
+              <slot name="image"></slot>
+              Cart
             </h3>
             <button @click="this.$store.commit('basket/setVisibility', false)" class="close">X</button>
           </div>
           <hr/>
-          <div class="basket-body d-flex flex-column" :class="{'justify-content-center' : books.length === 0}">
-            <transition-group name="list" v-if="books.length > 0">
+          <div class="basket-body d-flex flex-column" :class="{'justify-content-center' : books.length === 0 || isLoading}">
+            <div v-if="isLoading" class="spinner-grow align-self-center jus"></div>
+            <transition-group name="list" v-else>
               <basket-book v-for="book in books" :key="book.id" :order="book" class="p-2"></basket-book>
             </transition-group>
-            <div v-else class="d-flex flex-column justify-content-center align-items-center">
-              <img src="@/assets/bankrupt_negate.png" height="100" width="100"/>
-              <span>Your basket is empty</span>
+            <div v-if="books.length === 0 && !isLoading" class="d-flex flex-column justify-content-center align-items-center">
+              <img src="@/assets/box_negate.png" height="100" width="100"/>
+              <span>Your cart is empty</span>
             </div>
             <div v-intersection="getBooks"></div>
           </div>
@@ -67,6 +69,7 @@ export default {
     ...mapState({
       isAuth: state => state.isAuth,
       visible: state => state.basket.visible,
+      isLoading: state => state.basket.isLoading,
       books: state => state.basket.books
     }),
     ...mapGetters({

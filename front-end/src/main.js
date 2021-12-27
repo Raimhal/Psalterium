@@ -7,6 +7,8 @@ import store from '@/store'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 const app = createApp(App)
 
@@ -17,9 +19,16 @@ components.forEach(component =>{
 directives.forEach(directive =>
     app.directive(directive.name, directive))
 
+const options = {
+    confirmButtonColor: '#7072F7',
+    cancelButtonColor: '#ff7674',
+
+};
+
 app
     .use(router)
     .use(store)
+    .use(VueSweetalert2, options)
     .mount('#app')
 
 // app.config.errorHandler = function(err, vm, info) {

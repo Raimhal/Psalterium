@@ -8,7 +8,10 @@ export const userModule = {
         users: [],
         user: {},
         defaultRoot: 'users',
-        isLoading: false
+        isLoading: false,
+        page: 0,
+        limit: 10,
+        isAll: false
     }),
     mutations: {
         setUsers(state, users){
@@ -16,6 +19,8 @@ export const userModule = {
         },
         clearUsers(state){
             state.users = []
+            state.page = 0
+            state.isAll = false
         },
         clearUser(state){
             state.user = {}
@@ -34,6 +39,9 @@ export const userModule = {
         },
         setLoading(state, bool) {
             state.isLoading = bool
+        },
+        setAll(state, bool){
+            state.isAll = bool
         }
     },
     actions: {
@@ -85,7 +93,7 @@ export const userModule = {
                     commit('setUser', response.data)
                 })
                 .catch(error => {
-                    rootState.errors.push(error.response.data.error)
+                    rootState.errors.push(error.response.data.detail)
                 })
         },
         async getUserByEmail({state, rootState, rootGetters}, email){
@@ -94,23 +102,33 @@ export const userModule = {
                 .get(path, {headers: rootGetters.getHeaders})
                 .then(response => response.data)
                 .catch(error => {
-                    rootState.errors.push(error.response.data.error)
+                    rootState.errors.push(error.response.data.detail)
                 })
         },
         async getUsers({state, commit, rootState, rootGetters}){
-            rootState.errors = []
-            await instance
-                .get(state.defaultRoot, {headers: rootGetters.getHeaders})
-                .then(response => {
-                    console.log(response.data)
-                    response.data.forEach(user => {
-                        user.role = user.role_id === 1
+            if(!state.isAll) {
+                rootState.errors = []
+                state.page += 1
+                await instance
+                    .get(state.defaultRoot, {
+                        params: {
+                            skip: (state.page - 1) * state.limit,
+                            limit: state.limit
+                        },
+                        headers: rootGetters.getHeaders
                     })
-                    commit('setUsers', response.data)
-                })
-                .catch(error => {
-                    rootState.errors.push(error.response.data.error)
-                })
+                    .then(response => {
+                        if(response.data.length === 0)
+                            commit('setAll', true)
+                        response.data.forEach(user => {
+                            user.role = user.role_id === 1
+                            commit('pushUser', user)
+                        })
+                    })
+                    .catch(error => {
+                        rootState.errors.push(error.response.data.detail)
+                    })
+            }
         },
         async removeUser({state, commit, rootState, rootGetters}, user_id){
             const path = `${state.defaultRoot}/${user_id}/delete`
@@ -123,19 +141,17 @@ export const userModule = {
                     ),
                 )
                 .catch(error => {
-                    rootState.errors.push(error.response.data.error)
+                    rootState.errors.push(error.response.data.detail)
                 })
         },
         async changeRole({state, rootState, rootGetters}, obj){
             let path = `${state.defaultRoot}/${obj.id}/change_role`
             let role = 'Admin'
-            console.log(obj.role)
             if(obj.role === false)
                 role = 'User'
             path += `?role_name=${role}`
             await instance
                 .patch(path)
-                .then(() => console.log('ok'))
                 .catch(error => {
                     console.log(error)
                     rootState.errors.push(error.response.data.detail)
@@ -146,7 +162,7 @@ export const userModule = {
             rootState.isAdmin = payload.role === 'Admin';
             rootState.tokenExp = payload.exp
         },
-        async GetCurrentUser({state, commit, rootState, rootGetters}){
+        async getCurrentUser({state, commit, rootState, rootGetters}){
             await commit('clearUser')
             const path = `${state.defaultRoot}/me`
             await instance
@@ -155,7 +171,7 @@ export const userModule = {
                     commit('setUser', response.data)
                 })
                 .catch(error => {
-                    rootState.errors.push(error.response.data.error)
+                    rootState.errors.push(error.response.data.detail)
                 })
         },
         async updateUser({state, rootState, rootGetters}){

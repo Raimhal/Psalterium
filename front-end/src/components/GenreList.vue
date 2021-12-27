@@ -15,11 +15,20 @@
           <td>
             <div class="d-flex  justify-content-center gap-3">
               <my-button @click="showGenreUpdateDialog(genre)">Edit</my-button>
-              <my-button @click="removeGenre(genre.id)"> Delete </my-button>
+              <my-button @click.once="removeGenre(genre.id)"> Delete </my-button>
             </div>
           </td>
         </tr>
       </transition-group>
+      <tr>
+        <td>
+          <div
+              v-intersection="getGenres"
+              class="observer"
+          >
+          </div>
+        </td>
+      </tr>
       </tbody>
     </table>
     <my-dialog v-model:show="genreUpdateDialogVisible">
@@ -30,6 +39,7 @@
       </create-genre-form>
     </my-dialog>
   </div>
+
 </template>
 
 <script>
@@ -42,12 +52,6 @@ import MyDialog from "./UI/MyDialog";
 export default {
   name: "GenreList",
   components: {CreateGenreForm, MyButton, MyDialog},
-  props: {
-    genres: {
-      type: Array,
-      required: true
-    }
-  },
   data(){
     return{
       genreUpdateDialogVisible: false
@@ -55,12 +59,14 @@ export default {
   },
   computed:{
     ...mapState({
-      user: state => state.user.user
+      user: state => state.user.user,
+      genres: state => state.genre.genres
     }),
   },
   methods: {
     ...mapActions({
       removeGenre: 'genre/removeGenre',
+      getGenres: 'genre/getGenres'
     }),
     showGenreUpdateDialog(genre){
       this.genreUpdateDialogVisible = true

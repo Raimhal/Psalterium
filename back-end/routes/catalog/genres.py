@@ -17,7 +17,6 @@ _model = models.Genre
 
 @router.get('', response_model=List[schemas.GenreDto])
 async def get_genres(skip: int=0, limit: int=10, db: Session = Depends(get_db)):
-    print(skip, limit)
     return generalServices.get_all(db=db, model=_model, skip=skip, limit=limit)
 
 
@@ -45,7 +44,6 @@ async def create_genre(genreCreate: schemas.GenreCreate, db: Session = Depends(g
 async def update_genre(id: int, genreUpdate: schemas.GenreCreate, db: Session = Depends(get_db),
                             current_user: models.User = Depends(get_current_user)):
     expression = _model.id == id
-    print(genreUpdate.__dict__)
     genreServices.update_genre(db=db, model=genreUpdate, expression=expression)
 
 

@@ -2,6 +2,7 @@
   <div class="user__page">
     <user-form :modified="modified">
       <template v-slot:header>
+        <img src="@/assets/user_negate.png" height="32" width="32" class="mb-2"/>
         Account
       </template>
       <template v-slot:password>
@@ -43,7 +44,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      getCurrentUser: 'user/GetCurrentUser',
+      getCurrentUser: 'user/getCurrentUser',
       updateUser: 'user/updateUser',
     }),
     ...mapMutations({

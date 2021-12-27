@@ -7,9 +7,10 @@ export const basketModule = {
         visible: false,
         isLoading: false,
         page: 0,
-        limit: 50,
+        limit: 10,
         defaultRoot: 'catalog/basket',
-        order: {count: 1}
+        order: {count: 1},
+        isAll: false
     }),
     getters: {
         getTotalSum(state){
@@ -38,70 +39,69 @@ export const basketModule = {
         },
         clearBasket(state) {
             state.books = []
-        }
+            state.isAll = false
+            state.page = 0
+        },
+        setLoading(state, bool){
+            state.isLoading = bool
+        },
+        setAll(state, bool){
+            state.isAll = bool
+        },
 
 
     },
     actions: {
         async addToBasket({state, commit, rootState, rootGetters}, book){
-            console.log(state.order.count)
+            commit('setLoading', true)
             const order = {
                 count: state.order.count,
                 book_id: book.id
             }
             if(book.count > 0) {
-                book.count -= order.count
+                const count = {...book}.count - order.count
                 await instance
                     .post(state.defaultRoot, order, {headers: rootGetters.getHeaders})
-                    .then(response => {
-                        commit('book/setBookCount', book.count, {root: true})
-                        const _book = {...book}
-                        _book.id = response.data
-                        _book.book_id = book.id
-                        if(state.books.filter(b => b.book_id === _book.book_id).length === 0) {
-                            _book.order_count = order.count
-                            commit('pushBook', _book)
-                        }
-                        else {
-                            const index = state.books.findIndex(b => b.book_id === _book.book_id)
-                            state.books[index].order_count = +state.books[index].order_count + +order.count
-                        }
+                    .then(() => {
+                        rootState.book.book.count = count
                     })
                     .catch(error => {
                         console.log(error)
                         rootState.errors.push(error)
                     })
             }
+            commit('setLoading', false)
         },
         async getBasketBooks({state, commit, dispatch, rootState, rootGetters}){
-            rootState.errors = []
-            state.page += 1
-            let params = {
-                skip: (state.page - 1) * state.limit,
-                limit: state.limit
-            }
-            const config = { params: params }
-            config.headers = rootGetters.getHeaders
-            await instance
-                .get(state.defaultRoot, config)
-                .then(async response => {
-                    await response.data.forEach(async orderBook => {
-                        const book = await dispatch('getBook', orderBook.book_id)
-                        book.id = orderBook.id
-                        book.book_id = orderBook.book_id
-                        book.order_count = orderBook.count
-                        if(state.books.filter(b => b.book_id === book.book_id).length === 0) {
+            if(!state.isAll) {
+                if(state.books.length === 0)
+                    await commit('setLoading', true)
+                rootState.errors = []
+                state.page += 1
+                let params = {
+                    skip: (state.page - 1) * state.limit,
+                    limit: state.limit
+                }
+                const config = {params: params}
+                config.headers = rootGetters.getHeaders
+                await instance
+                    .get(state.defaultRoot, config)
+                    .then(async response => {
+                        if(response.data.length === 0)
+                            commit('setAll', true)
+                        await response.data.forEach(async orderBook => {
+                            const book = await dispatch('getBook', orderBook.book_id)
+                            book.id = orderBook.id
+                            book.book_id = orderBook.book_id
+                            book.order_count = orderBook.count
                             commit('pushBook', book)
-                        }
-                        else {
-                            const index = state.books.findIndex(b => b.book_id === book.book_id)
-                            state.books[index].order_count += book.order_count
-                        }
+                        })
                     })
-                })
-                .catch(error => {
-                    rootState.errors.push(error.response.data.detail)
-                })
+                    .catch(error => {
+                        rootState.errors.push(error.response.data.detail)
+                    })
+                await commit('setLoading', false)
+            }
         },
         async getBook({state, commit, rootState}, book_id){
             const path = `catalog/books/${book_id}/dto`
@@ -115,11 +115,12 @@ export const basketModule = {
                     rootState.errors.push(error.response.data.detail)
                 })
         },
-        async removeFromBasket({state, commit, rootState, rootGetters}, book_id){
-            const path = `${state.defaultRoot}/${book_id}/delete`
+        async removeFromBasket({state, commit, rootState, rootGetters}, obj){
+            const path = `${state.defaultRoot}/${obj.id}/delete`
             await instance.delete(path, {headers: rootGetters.getHeaders})
                 .then(() => {
-                    commit('setBooks', state.books.filter(x => x.id !== book_id ))
+                    rootState.book.book.count = +rootState.book.book.count + +obj.count
+                        commit('setBooks', state.books.filter(x => x.id !== obj.id ))
                 })
                 .catch(error => {
                     rootState.errors.push(error.response.data.detail)

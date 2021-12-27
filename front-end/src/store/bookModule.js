@@ -27,6 +27,7 @@ export const bookModule = {
             {value: 'publication_date', name: 'By date'},
         ],
         urlCreator: window.URL || window.webkitURL,
+        isAll: false
     }),
     getters: {
         sortedBooks(state){
@@ -78,6 +79,7 @@ export const bookModule = {
             state.books = []
             state.page = 0
             state.searchQuery.searched = false
+            state.isAll = false
         },
         clearBook(state) {
             state.book = {}
@@ -96,6 +98,9 @@ export const bookModule = {
         },
         setBookCount(state, count){
             state.book.count = count
+        },
+        setAll(state, bool){
+            state.isAll = bool
         }
 
     },
@@ -119,52 +124,54 @@ export const bookModule = {
             await commit('setFormLoading', false)
         },
         async getBookList({state, commit, rootState, rootGetters}, owner) {
-            if(state.books.length === 0) {
-                commit('setLoading', true)
-            }
-            state.page += 1
+            if(!state.isAll) {
+                if (state.books.length === 0) {
+                    commit('setLoading', true)
+                }
+                state.page += 1
 
-            let path = `${state.defaultRoot}`
-            let params = {
-                skip: (state.page - 1) * state.limit,
-                take: state.limit
-            }
+                let path = `${state.defaultRoot}`
+                let params = {
+                    skip: (state.page - 1) * state.limit,
+                    limit: state.limit
+                }
 
-            if(state.searchQuery.searched) {
-                path += '/search'
-                params.query = state.searchQuery.value
-            }
+                if (state.searchQuery.searched) {
+                    path += '/search'
+                    params.query = state.searchQuery.value
+                }
 
-            const config = { params: params }
-            if(owner === true) {
-                path += '/my'
-                config.headers = rootGetters.getHeaders
-            }
-            await instance
-                .get(path, config)
-                .then(async response => {
-                    await response.data.forEach(async book => {
-                        if(state.books.filter(b => b.id === book.id).length === 0)
-                            commit('pushBook', book)
+                const config = {params: params}
+                if (owner === true) {
+                    path += '/my'
+                    config.headers = rootGetters.getHeaders
+                }
+                await instance
+                    .get(path, config)
+                    .then(async response => {
+                        if(response.data.length === 0)
+                            commit('setAll', true)
+                        await response.data.forEach(async book => {
+                            if (state.books.filter(b => b.id === book.id).length === 0)
+                                commit('pushBook', book)
+                        })
                     })
-                })
-                .catch(error => {
-                    rootState.errors.push(error.response.data.detail)
-                })
-            await commit('setLoading', false)
+                    .catch(error => {
+                        rootState.errors.push(error.response.data.detail)
+                    })
+                await commit('setLoading', false)
+            }
         },
         async getBook({state, commit, rootState}, book_id){
             const path = `${state.defaultRoot}/${book_id}`
-            console.log(path)
             rootState.errors = []
 
             await instance
                 .get(path)
-                .then(res => {
-                    res.data.publication_date = new Date(res.data.publication_date).toISOString().split('T')[0]
-                    res.data.update_date = new Date(res.data.update_date).toISOString().split('T')[0]
-                    commit('setBook', res.data)
-
+                .then(response => {
+                    response.data.publication_date = new Date(response.data.publication_date).toISOString().split('T')[0]
+                    response.data.update_date = new Date(response.data.update_date).toISOString().split('T')[0]
+                    commit('setBook', response.data)
                 })
                 .catch(error => {
                     console.log(error)
@@ -174,9 +181,9 @@ export const bookModule = {
         async updateBook({state, commit, rootState, rootGetters}) {
             await commit('setFormLoading', true)
             rootState.errors = []
-            const book = state.book
+            const book = {...state.book}
             book.publication_date = new Date(book.publication_date.toLocaleString()).toISOString()
-            const path = `${state.defaultRoot}/${state.book.id}/update`
+            const path = `${state.defaultRoot}/${book.id}/update`
             await instance
                 .put(path, book, {headers: rootGetters.getHeaders})
                 .catch(error => {
@@ -191,7 +198,7 @@ export const bookModule = {
                     commit('setBooks', state.books.filter(x => x.id !== book_id ))
                 })
                 .catch(error => {
-                    rootState.errors.push(error.response.data.error)
+                    rootState.errors.push(error.response.data.detail)
                 })
         },
         async getBookImage({state, commit, rootState}, obj){
@@ -232,7 +239,6 @@ export const bookModule = {
                         Authorization: `Bearer ${rootState.accessToken}`,
                     }})
                 .then(response => {
-                    console.log(response)
                     commit('setImage', response.data)
                 })
                 .catch(error => {
@@ -241,6 +247,7 @@ export const bookModule = {
             await commit('setLoading', false)
         },
         async changeGenres({state, commit, rootGetters}, genres){
+            await commit('setLoading', true)
             const path = `${state.defaultRoot}/${state.book.id}/set_genres`
 
             const entity = []
@@ -251,6 +258,7 @@ export const bookModule = {
                 .catch(error => {
                     console.log(error)
                 })
+            await commit('setLoading', false)
         }
 
     },

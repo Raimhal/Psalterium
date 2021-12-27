@@ -3,7 +3,7 @@
     <my-title><slot name="title"></slot></my-title>
     <div class="app__btns">
       <slot name="create"></slot>
-      <div class="d-flex gap-2 align-items-center">
+      <div class="d-flex gap-2 align-items-center" :class="{'flex-row-reverse' : owner}" >
         <my-select
             :model-value="selectedSort"
             @update:model-value="setSelectedSort"
@@ -19,7 +19,7 @@
         :is-creator="owner"
         @remove="removeBook"
     />
-    <div v-else class="spinner-border">
+    <div v-else class="spinner-grow">
     </div>
     <div
         v-intersection:[owner]="getBookList"

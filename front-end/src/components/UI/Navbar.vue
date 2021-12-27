@@ -2,43 +2,47 @@
   <div class="navbar">
     <div @click="goToHome"><div class="logo">PSALT<span>ERIUM</span></div></div>
     <div class="navbar__btns">
-      <div v-show="this.$router.currentRoute.value.fullPath === '/'">
+      <div v-show="this.currentRoute() === '/'">
         <my-search />
       </div>
       <div v-if="!isAuth">
-        <router-link to="/login"><my-button>Log in</my-button></router-link>
-        <router-link to="/register"><my-button>Register</my-button></router-link>
+        <router-link to="/login"><my-button :class="{'target':this.currentRoute() === '/login'}">Log in</my-button></router-link>
+        <router-link to="/register" ><my-button>Register</my-button></router-link>
       </div>
       <div v-else>
-        <router-link to="/admin" v-if="isAdmin"><my-button class="p-2">
+        <router-link to="/admin" v-show="isAdmin"><my-button class="p-2" :class="{'target':this.currentRoute() === '/admin'}">
           <img src="@/assets/settings.png" height="32" width="32" />
         </my-button></router-link>
-        <router-link to="/orders"><my-button class="p-2">
-          <img src="@/assets/sent.png" height="32" width="32" />
-        </my-button></router-link>
-        <router-link to=""><my-button class="p-2" @click="this.$store.commit('basket/setVisibility', true)">
-          <img src="@/assets/cart.png" height="32" width="32" />
-        </my-button></router-link>
-        <router-link to="/"><my-button class="p-2">
+        <router-link to="/"><my-button class="p-2" :class="{'target':this.currentRoute() === '/'}">
           <img src="@/assets/shop.png" height="32" width="32" />
         </my-button></router-link>
-        <router-link to="/my/books"><my-button class="p-2">
+        <router-link to="/my/books"><my-button class="p-2" :class="{'target':this.currentRoute() === '/my/books'}">
           <img src="@/assets/book.png" height="32" width="32" />
         </my-button></router-link>
-        <router-link to="/account"><my-button class="p-2">
+        <router-link to="/orders"><my-button class="p-2" :class="{'target':this.currentRoute() === '/orders'}">
+          <img src="@/assets/sent.png" height="32" width="32" />
+        </my-button></router-link>
+        <my-button class="p-2" @click="this.$store.commit('basket/setVisibility', true)">
+          <img src="@/assets/cart.png" height="32" width="32" />
+        </my-button>
+        <router-link to="/account"><my-button class="p-2" :class="{'target':this.currentRoute() === '/account'}">
           <img src="@/assets/user.png" height="32" width="32" />
         </my-button></router-link>
         <router-link to="/">
           <my-button
-            @click="this.$store.dispatch('logout')"
-            class="p-2"
+              @click="this.$store.dispatch('logout')"
+              class="p-2"
           >
             <img src="@/assets/logout.png" height="32" width="32" />
           </my-button>
         </router-link>
       </div>
     </div>
-    <basket></basket>
+    <basket>
+      <template v-slot:image>
+        <img src="@/assets/cart_negate.png" height="32" width="32" class="mb-2"/>
+      </template>
+    </basket>
   </div>
 </template>
 
@@ -57,7 +61,7 @@ export default {
       return JSON.parse(this.$store.state.isAuth)
     },
     goToHome(){
-      if(this.$router.currentRoute.value.fullPath === '/')
+      if(this.currentRoute() === '/')
         this.$router.go()
       else
         this.$router.push('/')
@@ -70,6 +74,7 @@ export default {
     ...mapMutations({
       setSearchQuery: 'book/setSearchQuery'
     }),
+    currentRoute(){return this.$router.currentRoute.value.fullPath}
   },
 
 }
@@ -105,5 +110,10 @@ export default {
 }
 my-button{
   background-color: inherit;
+}
+
+button.target{
+  background-color: white;
+  color: #292a5c;
 }
 </style>

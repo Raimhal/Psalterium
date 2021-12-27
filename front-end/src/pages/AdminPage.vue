@@ -1,11 +1,11 @@
 <template>
   <div class="d-flex flex-column gap-5 w-75 m-auto">
     <div>
-      <user-list :users="users">
+      <user-list>
       </user-list>
     </div>
     <div class="d-flex justify-content-center">
-      <genre-list :genres="genres">
+      <genre-list>
       </genre-list>
     </div>
     <div class="btns d-flex justify-content-between">
@@ -37,30 +37,21 @@ export default {
   },
   beforeRouteEnter(to, from, next){
     next(vm => {
-      console.log(!(vm.isAdmin && vm.isAuth))
       if(!(vm.isAdmin && vm.isAuth)){
         vm.$store.state.errors.push('You are not an admin')
         vm.$router.push('/login')
       }
     })
   },
-  mounted() {
-    if(this.isAdmin && this.isAuth) {
-      this.getUsers()
-      this.getGenres()
-    }
-  },
   beforeUnmount() {
     this.clearUsers()
+    this.clearGenres()
   },
   methods: {
     ...mapMutations({
       clearErrors: 'clearErrors',
+      clearGenres:'genre/clearGenreStore',
       clearUsers: 'user/clearUsers',
-    }),
-    ...mapActions({
-      getUsers: 'user/getUsers',
-      getGenres: 'genre/getGenres'
     }),
     showGenreDialog(){
       this.genreDialogVisible = true

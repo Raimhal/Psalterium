@@ -34,11 +34,20 @@
           <td>
             <div class="btns">
               <my-button @click="showUserUpdateDialog(user)">Edit</my-button>
-              <my-button @click="removeUser(user.id)"> Delete </my-button>
+              <my-button @click.once="removeUser(user.id)"> Delete </my-button>
             </div>
           </td>
         </tr>
       </transition-group>
+      <tr>
+        <td>
+          <div
+              v-intersection="getUsers"
+              class="observer"
+          >
+          </div>
+        </td>
+      </tr>
       </tbody>
     </table>
     <my-dialog v-model:show="userUpdateDialogVisible">
@@ -64,12 +73,6 @@ import MyDialog from "./UI/MyDialog";
 export default {
   name: "UserList",
   components: {UserForm, MyButton, MyDialog},
-  props: {
-    users: {
-      type: Array,
-      required: true
-    }
-  },
   data(){
     return{
       userUpdateDialogVisible: false,
@@ -77,14 +80,16 @@ export default {
   },
   computed:{
     ...mapState({
-      user: state => state.user.user
+      user: state => state.user.user,
+      users: state => state.user.users
     }),
 
   },
   methods: {
     ...mapActions({
       removeUser: 'user/removeUser',
-      changeRole: 'user/changeRole'
+      changeRole: 'user/changeRole',
+      getUsers: 'user/getUsers'
     }),
     showUserUpdateDialog(user){
       this.userUpdateDialogVisible = true

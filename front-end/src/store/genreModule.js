@@ -7,12 +7,16 @@ export const genreModule = {
         genres: [],
         genre: {},
         page: 0,
-        limit: 100,
+        limit: 10,
         defaultRoot: 'catalog/genres',
+        isAll: false
     }),
     mutations: {
         setGenres(state, genres){
             state.genres = genres;
+        },
+        addGenres(state, genres){
+            state.genres = [...state.genres, ...genres];
         },
         setGenre(state, genre){
             state.genre = genre;
@@ -28,24 +32,37 @@ export const genreModule = {
         },
         clearGenre(state){
             state.genre = {}
+        },
+        setAll(state, bool){
+            state.isAll = bool
+        },
+        clearGenreStore(state){
+            state.genres = []
+            state.page = 0
+            state.isAll = false
         }
     },
     actions: {
         async getGenres({state, commit, rootState}){
-            rootState.errors = []
-            let params = {
-                skip: 0,
-                limit: state.limit
+            if(!state.isAll) {
+                rootState.errors = []
+                state.page += 1
+                let params = {
+                    skip: (state.page - 1) * state.limit,
+                    limit: state.limit
+                }
+                const config = {params: params}
+                await instance
+                    .get(state.defaultRoot, config)
+                    .then(response => {
+                        if(response.data.length === 0)
+                            commit('setAll', true)
+                        commit('addGenres', response.data)
+                    })
+                    .catch(error => {
+                        rootState.errors.push(error.response.data.detail)
+                    })
             }
-            const config = { params: params }
-            await instance
-                .get(state.defaultRoot, config)
-                .then(response => {
-                    commit('setGenres', response.data)
-                })
-                .catch(error => {
-                    rootState.errors.push(error.response.data.detail)
-                })
         },
         async createGenre({state, commit, rootState, rootGetters}){
             rootState.errors = []

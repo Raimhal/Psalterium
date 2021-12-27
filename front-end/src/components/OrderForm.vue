@@ -23,7 +23,7 @@
         name="deliver"
     />
       <my-error-message name="deliver" />
-      <div v-if="isLoading" class="spinner-border align-self-center m-2"></div>
+      <div v-if="isLoading" class="spinner-grow align-self-center m-2"></div>
       <my-button
           v-else
           type="submit"
@@ -65,7 +65,16 @@ export default {
       createOrder: 'order/createOrder',
     }),
     async action(){
-        await this.createOrder()
+      const dialog = document.querySelector('.dialog')
+      await this.createOrder()
+      this.$swal({
+        title: 'Success',
+        text: 'Order successfully created',
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 1000
+      })
+      dialog.click()
     },
   },
   computed: {

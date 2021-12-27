@@ -30,7 +30,6 @@ def save_file(file: UploadFile, height: int) -> str:
 
 def get_file(path: str) -> FileResponse:
     full_path = get_full_path(static=static_files_path, path=path)
-    print(os.path.exists(full_path))
     if not os.path.exists(full_path):
         full_path = get_full_path(static=static_assets_path, path='default.png')
     return FileResponse(full_path)

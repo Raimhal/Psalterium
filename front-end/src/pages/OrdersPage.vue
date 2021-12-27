@@ -1,13 +1,16 @@
 <template>
   <div>
-    <order-list :orders="orders">
+    <order-list :is-admin="isAdmin">
+      <template v-slot:image>
+        <img src="@/assets/sent_negate.png" height="32" width="32" class="mb-2"/>
+      </template>
     </order-list>
   </div>
 </template>
 
 <script>
 import OrderList from "@/components/OrderList";
-import {mapActions, mapState} from "vuex";
+import {mapActions, mapMutations, mapState} from "vuex";
 export default {
   name: "OrdersPage",
   components: {OrderList},
@@ -19,19 +22,23 @@ export default {
       }
     })
   },
-  mounted() {
-    if(this.isAuth)
-      this.getOrders()
+  beforeUnmount() {
+    this.clearOrders()
   },
   computed: {
     ...mapState({
       isAuth: state => state.isAuth,
-      orders: state => state.order.orders
+      isAdmin: state => state.isAdmin,
+      orders: state => state.order.orders,
+      errors: state => state.errors
     })
   },
   methods: {
     ...mapActions({
       getOrders: 'order/getOrders'
+    }),
+    ...mapMutations({
+      clearOrders: 'order/clearOrderStore'
     })
   }
 }

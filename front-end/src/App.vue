@@ -12,7 +12,11 @@ export default {
   mounted() {
     if (Date.now() >= localStorage.getItem('tokenExp') * 1000) {
       this.$store.dispatch('logout')
-      this.$store.errors.push('Token expired')
+      this.$swal({
+        title: "Oops...",
+        text: 'Token expired',
+        icon: 'error'
+      })
     }
     else if(JSON.parse(localStorage.getItem('isAuth'))){
       this.$store.commit('setToken', localStorage.getItem('accessToken'))
@@ -34,6 +38,12 @@ export default {
   font-weight: 300;
   color: white;
 }
+
+::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+
 .app{
   padding: 20px;
   padding-top: 72px;
@@ -108,4 +118,5 @@ export default {
 .list-move{
   transition: transform 0.4s ease;
 }
+
 </style>

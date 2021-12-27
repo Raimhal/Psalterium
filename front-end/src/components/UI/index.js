@@ -9,6 +9,7 @@ import MyField from "./MyField"
 import MyErrorMessage from "./MyErrorMessage";
 import MyErrorList from "./MyErrorList";
 import Basket from "./Basket";
+import EmptyList from "./EmptyList";
 
 
 export default [
@@ -22,5 +23,6 @@ export default [
     MyField,
     MyErrorMessage,
     MyErrorList,
-    Basket
+    Basket,
+    EmptyList
 ]

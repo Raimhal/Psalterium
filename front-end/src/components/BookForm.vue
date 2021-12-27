@@ -42,7 +42,7 @@
         <my-error-message name="content" />
       </div>
       <div class="mt-2 d-flex justify-content-center">
-        <div v-if="isLoading" class="spinner-border align-self-center m-2"></div>
+        <div v-if="isLoading" class="spinner-grow align-self-center m-2"></div>
         <my-button
             v-else
             type="submit"
@@ -87,14 +87,32 @@ export default {
       updateBook: 'book/updateBook'
     }),
     async action(){
-      if(this.modified)
+      const dialog = document.querySelector('.dialog')
+      if(this.modified) {
         await this.updateBook(this.book.id)
+        if(this.errors.length === 0)
+          this.$swal({
+            title: 'Success',
+            text: 'The book has been successfully updated',
+            icon: 'success',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        dialog.click()
+
+      }
       else {
         await this.createBook()
+        if(this.errors.length === 0)
+          this.$swal({
+            title: 'Success',
+            text: 'The book has been successfully created',
+            icon: 'success',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        dialog.click()
       }
-
-      console.log(document.querySelectorAll('.error'))
-
     },
   },
   computed: {

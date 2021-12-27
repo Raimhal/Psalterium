@@ -6,7 +6,10 @@ export const orderModule = {
         orders: [],
         order: {},
         defaultRoot: 'catalog/orders',
-        isLoading: false
+        isLoading: false,
+        page: 0,
+        limit: 10,
+        isAll: false
     }),
     getters: {
 
@@ -29,6 +32,14 @@ export const orderModule = {
         },
         clearOrder(state){
             state.order = {}
+        },
+        setAll(state, bool){
+            state.isAll = bool
+        },
+        clearOrderStore(state){
+            state.orders = []
+            state.isAll = false
+            state.page = 0
         }
 
     },
@@ -51,18 +62,38 @@ export const orderModule = {
                 })
             await commit('setLoading', false)
         },
-        async getOrders({state, commit, rootState, rootGetters}){
-            await commit('setLoading', true)
-            rootState.errors = []
-            await instance
-                .get(`${state.defaultRoot}/my`, {headers: rootGetters.getHeaders})
-                .then(response => {
-                    commit('setOrders', response.data)
-                })
-                .catch(error => {
-                    rootState.errors.push(error.response.data.detail)
-                })
-            await commit('setLoading', false)
+        async getOrders({state, commit, rootState, rootGetters}, isAdmin){
+            if(!state.isAll) {
+                await commit('setLoading', true)
+                let path = state.defaultRoot
+                state.page += 1
+                const params =
+                    {
+                        skip: (state.page - 1) * state.limit,
+                        limit: state.limit
+                    }
+
+                if (!isAdmin)
+                    path += '/my'
+                rootState.errors = []
+                await instance
+                    .get(path, {
+                        params: params,
+                        headers: rootGetters.getHeaders
+                    })
+                    .then(response => {
+                        if(response.data.length === 0)
+                            commit('setAll', true)
+                        response.data.forEach(order => {
+                            if (state.orders.filter(o => o.id === order.id).length === 0)
+                                commit('pushOrder', order)
+                        })
+                    })
+                    .catch(error => {
+                        rootState.errors.push(error.response.data.detail)
+                    })
+                await commit('setLoading', false)
+            }
         },
         async removeOrder({state, commit, rootState, rootGetters}, order_id){
             const path = `${state.defaultRoot}/${order_id}/delete`

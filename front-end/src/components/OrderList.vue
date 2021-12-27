@@ -1,9 +1,13 @@
 <template>
   <div>
     <table class="order__table">
-      <caption>Orders : </caption>
+      <caption>
+        <slot name="image"></slot>
+        Orders :
+      </caption>
       <thead>
       <tr>
+        <th v-if="isAdmin">User</th>
         <th>Delivery date</th>
         <th>Destination</th>
         <th>Books</th>
@@ -13,6 +17,7 @@
       <tbody>
       <transition-group name="list">
         <tr v-for="order in orders" :key="order.id" >
+          <td v-if="isAdmin">{{order.user_id}}</td>
           <td>{{new Date(order.deliver_date).toLocaleDateString()}}</td>
           <td>{{order.country}},  {{order.city}}, {{order.address}}</td>
           <td class="d-flex flex-wrap gap-2">
@@ -22,13 +27,23 @@
           </td>
           <td>
             <div class="btns">
-              <my-button @click="removeOrder(order.id)"> Delete </my-button>
+              <my-button @click.once="removeOrder(order.id)"> Delete </my-button>
             </div>
           </td>
         </tr>
       </transition-group>
+      <tr>
+        <td>
+          <div
+              v-intersection:[isAdmin]="getOrders"
+              class="observer"
+          >
+          </div>
+        </td>
+      </tr>
       </tbody>
     </table>
+
   </div>
 </template>
 
@@ -43,25 +58,23 @@ export default {
   name: "OrderList",
   components: {MyButton, MyDialog},
   props: {
-    orders: {
-      type: Array,
-      required: true
-    }
-  },
-  data(){
-    return{
-
+    isAdmin: {
+      type: Boolean,
+      default: false
     }
   },
   computed:{
     ...mapState({
-      order: state => state.order.order
+      order: state => state.order.order,
+      orders: state => state.order.orders,
+      email: state => state.user.user.email,
     }),
 
   },
   methods: {
     ...mapActions({
       removeOrder: 'order/removeOrder',
+      getOrders: 'order/getOrders'
     }),
   },
 }

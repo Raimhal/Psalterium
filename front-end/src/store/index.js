@@ -1,6 +1,5 @@
 import {createStore} from 'vuex'
 import {userModule} from "./userModele"
-import {fileModule} from "./fileModule"
 import {bookModule} from "./bookModule"
 import {genreModule} from "./genreModule"
 import {basketModule} from "./basketModule";
@@ -56,7 +55,6 @@ export default createStore({
 
   modules: {
     user: userModule,
-    file: fileModule,
     book: bookModule,
     genre: genreModule,
     basket: basketModule,

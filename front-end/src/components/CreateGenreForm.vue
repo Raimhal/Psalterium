@@ -9,6 +9,7 @@
       <my-error-message name="title" />
       <my-button
           type="submit"
+          @click.once
       >
         <slot name="submit__name"></slot>
       </my-button>
@@ -53,10 +54,33 @@ export default {
       clearErrors: 'clearErrors'
     }),
     async action(){
-      if(this.modified)
-        this.updateGenre()
-      else
-        this.createGenre()
+      const dialog = document.querySelector('.dialog')
+      if(this.modified) {
+        await this.updateGenre()
+        if(this.errors.length === 0) {
+          this.$swal({
+            title: 'Success',
+            text: 'The genre has been successfully updated',
+            icon: 'success',
+            showConfirmButton: false,
+            timer: 1000
+          })
+          dialog.click()
+        }
+      }
+      else {
+        await this.createGenre()
+        if(this.errors.length === 0) {
+          this.$swal({
+            title: 'Success',
+            text: 'The genre has been successfully created',
+            icon: 'success',
+            showConfirmButton: false,
+            timer: 1000
+          })
+          dialog.click()
+        }
+      }
     }
 
   },
@@ -77,6 +101,7 @@ export default {
 <style scoped>
 .genre__form{
   width: 25vw;
+  min-width: 200px;
 }
 
 </style>
