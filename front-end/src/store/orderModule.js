@@ -50,9 +50,10 @@ export const orderModule = {
             await instance
                 .post(state.defaultRoot, state.order, {headers: rootGetters.getHeaders})
                 .then(response => {
-                    state.order.id = response.data
-                    state.order.books = [...rootState.basket.books]
-                    commit('pushOrder', state.order)
+                    const order = {...state.order}
+                    order.id = response.data
+                    order.books = [...rootState.basket.books]
+                    commit('pushOrder', order)
                     commit('clearOrder')
                     rootState.basket.books = []
                 })
@@ -84,9 +85,12 @@ export const orderModule = {
                     .then(response => {
                         if(response.data.length === 0)
                             commit('setAll', true)
+                        console.log(response.data)
                         response.data.forEach(order => {
-                            if (state.orders.filter(o => o.id === order.id).length === 0)
+                            if (state.orders.filter(o => o.id === order.id).length === 0) {
+                                order.books.forEach(book => book.order_count = book.count)
                                 commit('pushOrder', order)
+                            }
                         })
                     })
                     .catch(error => {

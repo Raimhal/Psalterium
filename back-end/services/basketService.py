@@ -26,7 +26,7 @@ def add_to_basket(db: Session, model: schemas.OrderBookCreate, current_user: mod
         )
         db.add(_book)
         db.commit()
-        return order_book.id
+        return _book.id
 
 
 def delete_from_basket(db: Session, id: int):

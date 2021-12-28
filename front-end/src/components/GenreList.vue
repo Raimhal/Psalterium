@@ -87,7 +87,7 @@ caption {
   color: azure;
   padding: 10px;
   text-align: left;
-  font-size: 20px;
+  font-size: 14px;
   caption-side: top;
 }
 th {

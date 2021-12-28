@@ -21,7 +21,7 @@
           <span>Last update date : {{new Date(book.update_date).toLocaleDateString()}}</span>
           <span id="ISBN">ISBN : #{{book.ISBN}}</span>
         </div>
-        <div class="d-flex">
+        <div class="d-flex content">
           <div v-if="book.count > 0 && isAuth" class="d-flex justify-content-center">
             <form @submit.prevent="action" method="post" class="order__form addToBasket gap-2 p-2">
               <my-input v-model="order.count" type="number" id="count"/>
@@ -224,7 +224,7 @@ p{
 .order__form{
   width: 15vw;
   max-width: 200px;
-  min-width: 120px;
+  min-width: 150px;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -281,5 +281,53 @@ p{
   border-radius: 5px;
   border: solid 2px rgba(112, 114, 247, 0.4);
   height: fit-content;
+}
+
+@media screen and (max-width: 900px){
+  .item>div{
+    flex-direction: column;
+    align-items: center;
+  }
+  .image{
+    justify-self: center;
+  }
+  .short__info{
+    max-width: 100vw;
+    width: 100%;
+    padding: 0 !important;
+  }
+  .item>div:last-child{
+    gap: 0.5rem;
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+  .item>div:last-child>div{
+    gap: 0.5rem !important;
+    width: 100%;
+    flex-direction: column;
+  }
+  .item>div:last-child button{
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .item>div:nth-child(2)>div:first-child{
+    display: flex;
+    flex-direction: column;
+    margin: 0 !important;
+    gap: 0.6rem;
+  }
+
+  .order__form{
+    width: 60vw;
+    max-width: 60vw;
+  }
+
+  .content{
+    justify-content: center;
+  }
+
+
 }
 </style>

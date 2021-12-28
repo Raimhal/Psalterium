@@ -7,13 +7,13 @@ from varname import nameof
 from config.db import Session
 
 def get_all(db: Session, model: Any, skip: int, limit: int) -> List[Any]:
-    return db.query(model).offset(skip).limit(limit).all()
+    return db.query(model).order_by(model.id).offset(skip).limit(limit).all()
 
 def get_all_with_expression(db: Session, model: Any, skip: int, limit: int, expression: bool) -> List[Any]:
-    return db.query(model).filter(expression).offset(skip).limit(limit).all()
+    return db.query(model).filter(expression).order_by(model.id).offset(skip).limit(limit).all()
 
 def get_all_without_limit(db: Session, model: Any, expression: Any) -> List[Any]:
-    return db.query(model).filter(expression).all()
+    return db.query(model).order_by(model.id).order_by(model.id).filter(expression).all()
 
 def get_by_expression(db: Session, model: Any, expression: Any) -> Any:
     entity = db.query(model).filter(expression).first()

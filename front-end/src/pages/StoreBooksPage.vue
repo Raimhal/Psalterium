@@ -3,7 +3,7 @@
     <custom-books-page>
       <template v-slot:title>
         <img src="@/assets/shop_negate.png" height="32" width="32" class="mb-2"/>
-        Books
+        Shop
       </template>
     </custom-books-page>
   </div>

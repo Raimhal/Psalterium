@@ -10,6 +10,7 @@ export default {
         const owner = binding.arg
         const callback = (entries) =>{
           if(entries[0].isIntersecting){
+              console.log(entries)
             binding.value(owner)
           }
         }

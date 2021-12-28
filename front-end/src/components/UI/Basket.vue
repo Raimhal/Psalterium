@@ -16,11 +16,11 @@
             <transition-group name="list" v-else>
               <basket-book v-for="book in books" :key="book.id" :order="book" class="p-2"></basket-book>
             </transition-group>
+            <div v-intersection="getBooks" class="observer"></div>
             <div v-if="books.length === 0 && !isLoading" class="d-flex flex-column justify-content-center align-items-center">
               <img src="@/assets/box_negate.png" height="100" width="100"/>
               <span>Your cart is empty</span>
             </div>
-            <div v-intersection="getBooks"></div>
           </div>
           <div v-if="books.length > 0" class="basket-btns">
             <hr/>
@@ -92,9 +92,9 @@ export default {
 
 <style scoped>
 .basket{
-  width: fit-content;
+  width: 50vw;
   max-width: 50vw;
-  min-width: 400px;
+  min-width: 350px;
   background-color: rgba(149, 149, 149, 0.3);
   border-radius: 5px;
   color: #292a5c;
@@ -127,5 +127,18 @@ hr{
   background-color: rgba(112, 114, 247, 0.2);
   border-radius: 5px;
   border: solid 2px rgba(112, 114, 247, 0.4);
+}
+
+@media screen  and (max-width: 1400px){
+  .basket-btns>div{
+    flex-direction: column-reverse;
+    gap: 0.5rem
+  }
+  .basket-btns button{
+    width: 100%;
+  }
+  .buy-btn{
+    flex-direction: column;
+  }
 }
 </style>

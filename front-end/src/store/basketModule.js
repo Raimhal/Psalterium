@@ -62,20 +62,23 @@ export const basketModule = {
                 const count = {...book}.count - order.count
                 await instance
                     .post(state.defaultRoot, order, {headers: rootGetters.getHeaders})
-                    .then(() => {
-                        rootState.book.book.count = count
-                    })
                     .catch(error => {
                         console.log(error)
                         rootState.errors.push(error)
                     })
+                    .then(() => {
+                        if(rootState.errors.length === 0)
+                            rootState.book.book.count = count
+                    })
             }
             commit('setLoading', false)
         },
-        async getBasketBooks({state, commit, dispatch, rootState, rootGetters}){
+        async getBasketBooks({state, commit, dispatch, rootState, rootGetters}, isAdmin=false){
             if(!state.isAll) {
-                if(state.books.length === 0)
+                if(state.books.length === 0) {
+                    state.page = 0
                     await commit('setLoading', true)
+                }
                 rootState.errors = []
                 state.page += 1
                 let params = {
@@ -86,15 +89,16 @@ export const basketModule = {
                 config.headers = rootGetters.getHeaders
                 await instance
                     .get(state.defaultRoot, config)
-                    .then(async response => {
-                        if(response.data.length === 0)
+                    .then(response => {
+                        if(response.data.length === 0 && state.page !== 1)
                             commit('setAll', true)
-                        await response.data.forEach(async orderBook => {
+                        console.log(response.data)
+                        response.data.forEach(async orderBook => {
                             const book = await dispatch('getBook', orderBook.book_id)
                             book.id = orderBook.id
                             book.book_id = orderBook.book_id
                             book.order_count = orderBook.count
-                            commit('pushBook', book)
+                            await commit('pushBook', book)
                         })
                     })
                     .catch(error => {

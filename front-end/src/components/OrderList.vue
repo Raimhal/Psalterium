@@ -22,7 +22,7 @@
           <td>{{order.country}},  {{order.city}}, {{order.address}}</td>
           <td class="d-flex flex-wrap gap-2">
               <router-link v-for="book in order.books" :key="book" class="text-decoration-none order p-1" :to="`/books/${book.book_id}`">
-                <span>Count : {{book.count}}</span>
+                <span>Count : {{book.order_count}}</span>
               </router-link>
           </td>
           <td>

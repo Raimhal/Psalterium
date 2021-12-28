@@ -6,8 +6,8 @@ import AccountPage from "@/pages/AccountPage";
 import StoreBooksPage from "@/pages/StoreBooksPage";
 import StoreBookPage from "@/pages/StoreBookPage";
 import MyBooksPage from "@/pages/MyBooksPage";
-import OrdersPage from "../pages/OrdersPage";
-import NotFoundPage from "../pages/NotFoundPage";
+import OrdersPage from "@/pages/OrdersPage";
+import NotFoundPage from "@/pages/NotFoundPage";
 
 const routes = [
   {
@@ -61,7 +61,6 @@ const routes = [
 ]
 
 const router = createRouter({
-  mode: 'history',
   routes,
   history: createWebHistory(process.env.BASE_URL)
 })
