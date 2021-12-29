@@ -13,7 +13,7 @@ def get_all_with_expression(db: Session, model: Any, skip: int, limit: int, expr
     return db.query(model).filter(expression).order_by(model.id).offset(skip).limit(limit).all()
 
 def get_all_without_limit(db: Session, model: Any, expression: Any) -> List[Any]:
-    return db.query(model).order_by(model.id).order_by(model.id).filter(expression).all()
+    return db.query(model).order_by(model.id).filter(expression).all()
 
 def get_by_expression(db: Session, model: Any, expression: Any) -> Any:
     entity = db.query(model).filter(expression).first()

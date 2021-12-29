@@ -1,7 +1,7 @@
 <template>
   <div class="item" >
     <div class="d-flex justify-content-center w-100 top-content">
-      <img class="image align" v-image-observer:[book.image]="getImage" :key="book.id" alt="Card image cap" @click="$router.push(`/books/${book.id}`)">
+      <img class="image align" v-image-observer:[book.image]="getImage" :key="book.id" alt="Card image cap" @click="showImageDialog">
       <div class="p-4 short__info">
         <div class="mb-2">
           <h5 class="text-center mb-4 title">{{book.name}}</h5>
@@ -329,5 +329,8 @@ p{
   }
 
 
+}
+img:hover{
+  cursor: pointer;
 }
 </style>

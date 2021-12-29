@@ -62,6 +62,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  margin-right: auto;
 }
 .title{
   text-align: justify;

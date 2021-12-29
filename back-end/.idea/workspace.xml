@@ -4,8 +4,14 @@
     <list default="true" id="017aacaf-aca6-46c5-a5ef-0b10e42e24de" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database.config" beforeDir="false" afterPath="$PROJECT_DIR$/database.config" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/basketService.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/basketService.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/users/users.py" beforeDir="false" afterPath="$PROJECT_DIR$/routes/users/users.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/generalServices.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/generalServices.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/services/userServices.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/userServices.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/components/BasketBook.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/BasketBook.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/components/BookForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/BookForm.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/components/GenreList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/GenreList.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/components/UI/Basket.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/UI/Basket.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/components/UI/Navbar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/UI/Navbar.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +75,9 @@
       <workItem from="1640595605766" duration="5046000" />
       <workItem from="1640628652681" duration="1572000" />
       <workItem from="1640636728721" duration="350000" />
-      <workItem from="1640686846150" duration="2253000" />
+      <workItem from="1640686846150" duration="5256000" />
+      <workItem from="1640724982697" duration="611000" />
+      <workItem from="1640768076510" duration="602000" />
     </task>
     <servers />
   </component>

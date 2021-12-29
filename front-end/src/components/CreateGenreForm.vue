@@ -7,7 +7,9 @@
         name="title"
       />
       <my-error-message name="title" />
+      <div v-if="isLoading" class="spinner-grow align-self-center m-2"></div>
       <my-button
+          v-else
           type="submit"
           @click.once
       >
@@ -87,7 +89,8 @@ export default {
   computed: {
     ...mapState({
       genre: state => state.genre.genre,
-      errors: state => state.errors
+      errors: state => state.errors,
+      isLoading: state => state.genre.isLoading
     }),
     schema() {
       return yup.object().shape({

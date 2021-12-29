@@ -35,10 +35,12 @@
           name="publication"
       />
         <my-error-message name="publication" />
-        Description : <my-field
+        Description : <textarea
           v-model="book.content"
           name="content"
-      />
+          maxlength="5000"
+
+      ></textarea>
         <my-error-message name="content" />
       </div>
       <div class="mt-2 d-flex justify-content-center">
@@ -148,5 +150,11 @@ export default {
   min-height: 300px;
   overflow-y: auto;
   overflow-x: hidden;
+}
+
+textarea{
+  color: #292a5c;
+  height: 20vh;
+  min-height: 100px;
 }
 </style>

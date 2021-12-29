@@ -79,5 +79,5 @@ async def change_role(id: int, role_name: str, db: Session = Depends(get_db)):
 @raise_403_if_not_admin
 async def delete_user_by_id(id: int, db: Session = Depends(get_db),
                             current_user: models.User = Depends(get_current_user)):
-    generalServices.delete(db=db, model=_model, id=id)
+    userServices.delete_user(db=db, id=id)
 

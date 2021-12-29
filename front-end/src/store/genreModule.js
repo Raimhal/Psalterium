@@ -9,7 +9,8 @@ export const genreModule = {
         page: 0,
         limit: 10,
         defaultRoot: 'catalog/genres',
-        isAll: false
+        isAll: false,
+        isLoading: false
     }),
     mutations: {
         setGenres(state, genres){
@@ -40,7 +41,7 @@ export const genreModule = {
             state.genres = []
             state.page = 0
             state.isAll = false
-        }
+        },
     },
     actions: {
         async getGenres({state, commit, rootState}){
@@ -65,6 +66,7 @@ export const genreModule = {
             }
         },
         async createGenre({state, commit, rootState, rootGetters}){
+            await commit('setLoading', true)
             rootState.errors = []
             await instance
                 .post(state.defaultRoot, state.genre, {headers: rootGetters.getHeaders})
@@ -76,6 +78,7 @@ export const genreModule = {
                 .catch(error => {
                     rootState.errors.push(error.response.data.detail)
                 })
+            await commit('setLoading', false)
         },
         async updateGenre({state, rootState, rootGetters}){
             rootState.errors = []

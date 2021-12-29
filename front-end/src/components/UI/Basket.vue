@@ -1,7 +1,7 @@
 <template>
   <div @click="this.$store.commit('basket/setVisibility', false)">
     <my-dialog v-model:show="visible" >
-      <div style="background-color: rgb(23, 28, 33); border-radius: 5px">
+      <div style="background-color: rgb(23, 28, 33); border-radius: 5px" class="basket-front">
         <div class="basket">
           <div class="d-flex justify-content-between ps-3 pe-3 p-2 ">
             <h3 class="align-items-center text-center m-0 p-1">
@@ -92,12 +92,14 @@ export default {
 
 <style scoped>
 .basket{
-  width: 50vw;
   max-width: 50vw;
   min-width: 350px;
   background-color: rgba(149, 149, 149, 0.3);
   border-radius: 5px;
   color: #292a5c;
+}
+.basket-front{
+  width: 105%;
 }
 .basket-body{
   overflow-y: auto;

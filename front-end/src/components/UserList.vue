@@ -34,7 +34,7 @@
           <td>
             <div class="btns">
               <my-button @click="showUserUpdateDialog(user)">Edit</my-button>
-              <my-button @click.once="removeUser(user.id)"> Delete </my-button>
+              <my-button @click.once="removeUser(user.id)" v-if="!current(user.id)"> Delete </my-button>
             </div>
           </td>
         </tr>

@@ -12,10 +12,26 @@
         <img src="@/assets/menu.png" height="20" width="20"/>
       </my-button>
       <my-dialog v-model:show="sidebarVisible">
-        <div class="sidebar bg-gradient p-3" @click="sidebarVisible = false">
+        <div class="sidebar bg-gradient p-3 gap-2 d-flex flex-column" @click="sidebarVisible = false">
+          <router-link to="/">
+            <my-button class="p-2" :class="{'target':this.currentRoute() === '/'}">
+              <img src="@/assets/shop.png" height="32" width="32" />
+            </my-button>
+            <span>Shop</span>
+          </router-link>
           <div v-if="!isAuth">
-            <router-link to="/login"><my-button :class="{'target':this.currentRoute() === '/login'}">Log in</my-button></router-link>
-            <router-link to="/register" ><my-button>Register</my-button></router-link>
+            <router-link to="/login">
+              <my-button class="p-2" :class="{'target':this.currentRoute() === '/login'}">
+                <img src="@/assets/login.png" height="32" width="32"/>
+              </my-button>
+              <span>Log in</span>
+            </router-link>
+            <router-link to="/register">
+              <my-button class="p-2" :class="{'target':this.currentRoute() === '/register'}">
+                <img src="@/assets/personal.png" height="32" width="32"/>
+              </my-button>
+              <span>Register</span>
+            </router-link>
           </div>
           <div v-else>
             <router-link to="/admin" v-show="isAdmin">
@@ -23,12 +39,6 @@
                 <img src="@/assets/settings.png" height="32" width="32" />
               </my-button>
               <span>Admin</span>
-            </router-link>
-            <router-link to="/">
-              <my-button class="p-2" :class="{'target':this.currentRoute() === '/'}">
-                <img src="@/assets/shop.png" height="32" width="32" />
-              </my-button>
-              <span>Shop</span>
             </router-link>
             <router-link to="/my/books">
               <my-button class="p-2" :class="{'target':this.currentRoute() === '/my/books'}">
@@ -54,9 +64,8 @@
               </my-button>
               <span>Account</span>
             </router-link>
-            <router-link to="/">
+            <router-link to="/login" @click="this.$store.dispatch('logout')">
               <my-button
-                  @click="this.$store.dispatch('logout')"
                   class="p-2"
               >
                 <img src="@/assets/logout.png" height="32" width="32" />
@@ -151,6 +160,7 @@ my-button{
 button.target{
   background-color: white;
   color: #292a5c;
+  padding: 8px;
 }
 
 .sidebar{
@@ -164,17 +174,19 @@ button.target{
 .sidebar>div{
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 0.5rem;
 
 }
 a{
   text-decoration: none;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 1rem;
 }
 
 span{
   font-size: 14px;
 }
+
+
 </style>

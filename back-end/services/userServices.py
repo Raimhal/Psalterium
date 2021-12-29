@@ -1,12 +1,10 @@
-
-
 from varname import nameof
 
 from Exceptions import CustomExistException
 from models import models
 from schemas import schemas
 from config.db import Session
-from . import generalServices, securityServices
+from . import generalServices, securityServices, bookServices
 
 _model = models.User
 _role_model = models.Role
@@ -53,3 +51,11 @@ def change_user_role(db: Session, user_id: int, role_name: str):
     )
     user.role = role
     db.commit()
+
+def delete_user(db: Session, id: int):
+    user = generalServices.get_by_expression(db=db, model=_model, expression=_model.id == id)
+    for book in user.books:
+        bookServices.delete_book(db=db, id=book.id)
+    generalServices.delete(db=db, model=_model, id=user.id)
+
+
