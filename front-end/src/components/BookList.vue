@@ -44,6 +44,11 @@ export default {
   align-items: stretch;
 }
 
+@media screen and (max-width: 500px) {
+  .books{
+    padding: 15px 0 !important;
+  }
+}
 </style>
 
 

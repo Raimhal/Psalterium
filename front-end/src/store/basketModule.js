@@ -92,7 +92,6 @@ export const basketModule = {
                     .then(response => {
                         if(response.data.length === 0 && state.page !== 1)
                             commit('setAll', true)
-                        console.log(response.data)
                         response.data.forEach(async orderBook => {
                             const book = await dispatch('getBook', orderBook.book_id)
                             book.id = orderBook.id

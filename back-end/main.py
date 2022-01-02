@@ -9,12 +9,7 @@ from starlette.types import ASGIApp, Scope, Receive, Send
 app = FastAPI()
 
 origins = [
-    "http://localhost",
-    "http://192.168.0.108",
-    "http://localhost:8060",
-    "http://192.168.0.108:8060",
-    "http://127.0.0.1:8060"
-
+    "*"
 ]
 
 app.add_middleware(

@@ -11,7 +11,7 @@
     </div>
     <div class="d-flex align-items-center">
       <div class="d-flex flex-column text-center price p-2 gap-2">
-        <span>${{order.price * order.order_count}}</span>
+        <span>${{ Number(order.price * order.order_count).toFixed(2)}}</span>
         <my-button class="h-25" @click.once="removeBook({id: order.id, count: order.order_count})">Remove</my-button>
       </div>
     </div>

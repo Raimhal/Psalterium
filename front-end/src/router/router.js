@@ -54,7 +54,8 @@ const routes = [
     meta: { title: 'Account' }
   },
   {
-    path: "/:pathMatch(.*)*",
+    path: "/:pathMatch(.*)*" ,
+    name: 'NotFound',
     component: NotFoundPage,
     meta: { title: '404 Not found' }
   }

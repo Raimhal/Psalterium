@@ -1,7 +1,7 @@
 <template>
   <div @click="this.$store.commit('basket/setVisibility', false)">
     <my-dialog v-model:show="visible" >
-      <div style="background-color: rgb(23, 28, 33); border-radius: 5px" class="basket-front">
+      <div style="background-color: rgb(23, 28, 33); border-radius: 5px; width: fit-content" class="basket-front">
         <div class="basket">
           <div class="d-flex justify-content-between ps-3 pe-3 p-2 ">
             <h3 class="align-items-center text-center m-0 p-1">
@@ -27,7 +27,7 @@
             <div class="d-flex justify-content-between p-3">
               <my-button @click="this.$store.commit('basket/setVisibility', false)" class="h-50 align-self-center">Back to shopping</my-button>
               <div class="d-flex align-items-center justify-content-end align-items-center gap-3 buy-btn p-2">
-                <span>${{getTotalSum}}</span>
+                <span>${{getTotalSum.toFixed(2)}}</span>
                 <my-button @click="showCreateOrderDialog">Checkout</my-button>
               </div>
             </div>

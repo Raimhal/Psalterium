@@ -139,7 +139,7 @@ body {
   background: white;
   border-radius: 0 0.25em 0.25em 0;
   top: 51%;
-  left: 51%;
+  left: 55%;
   width: 0.75em;
   height: 0.25em;
   transform: translate(0.2em,0) rotate(45deg);
@@ -194,4 +194,5 @@ body {
     background: #f1f1f1;
   }
 }
+
 </style>

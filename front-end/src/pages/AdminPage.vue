@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex flex-column gap-5 w-75 m-auto">
+  <div class="d-flex flex-column gap-5 m-auto">
     <div>
       <user-list>
       </user-list>

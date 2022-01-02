@@ -10,12 +10,13 @@
 <script>
 export default {
   mounted() {
+
     if (Date.now() >= localStorage.getItem('tokenExp') * 1000) {
       this.$store.dispatch('logout')
       this.$swal({
-        title: "Oops...",
-        text: 'Token expired',
-        icon: 'error'
+        title: "<span style='color: #ffffff'>Oops...</span>",
+        icon: 'warning',
+        html: "<span style='color: #ffffff'>Token expired</span>"
       })
     }
     else if(JSON.parse(localStorage.getItem('isAuth'))){
@@ -29,6 +30,9 @@ export default {
 </script>
 
 <style>
+html{
+  background-color: rgb(23, 28, 33);
+}
 
 * {
   margin: 0;
@@ -38,10 +42,21 @@ export default {
   font-weight: 300;
   color: white;
 }
+::-webkit-scrollbar-track
+{
+  border-radius: 50%;
+}
 
-::-webkit-scrollbar {
-  width: 0;
-  background: transparent;
+::-webkit-scrollbar
+{
+  width: 0.5em;
+  height: 0.5em;
+}
+
+::-webkit-scrollbar-thumb
+{
+  border-radius: 10px;
+  background-color: rgba(56, 58, 73, 0.9);
 }
 
 .app{
@@ -51,9 +66,16 @@ export default {
 
 .body{
   min-height: 100vh;
+  min-width: fit-content;
   background-color: rgb(23, 28, 33);
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+}
+
+._table {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 800px;
 }
 
 
@@ -76,7 +98,8 @@ export default {
 }
 
 .user__form{
-  width: 400px;
+  max-width: 400px;
+  width: 85vw;
 }
 
 .observer{
@@ -118,5 +141,7 @@ export default {
 .list-move{
   transition: transform 0.4s ease;
 }
+
+
 
 </style>

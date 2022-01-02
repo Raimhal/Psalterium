@@ -94,8 +94,8 @@ export default {
         await this.updateBook(this.book.id)
         if(this.errors.length === 0)
           this.$swal({
-            title: 'Success',
-            text: 'The book has been successfully updated',
+            title: "<span style='color: #ffffff'>Success</span>",
+            html: "<span style='color: #ffffff'>The book has been successfully updated</span>",
             icon: 'success',
             showConfirmButton: false,
             timer: 1500
@@ -107,8 +107,8 @@ export default {
         await this.createBook()
         if(this.errors.length === 0)
           this.$swal({
-            title: 'Success',
-            text: 'The book has been successfully created',
+            title: "<span style='color: #ffffff'>Success</span>",
+            html: "<span style='color: #ffffff'>The book has been successfully created</span>",
             icon: 'success',
             showConfirmButton: false,
             timer: 1500

@@ -4,14 +4,25 @@
     <list default="true" id="017aacaf-aca6-46c5-a5ef-0b10e42e24de" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database.config" beforeDir="false" afterPath="$PROJECT_DIR$/database.config" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/routes/users/users.py" beforeDir="false" afterPath="$PROJECT_DIR$/routes/users/users.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/generalServices.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/generalServices.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/userServices.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/userServices.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/setup.py" beforeDir="false" afterPath="$PROJECT_DIR$/setup.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/files/adc10a78-c609-43df-8eec-b6d329cd55a9.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/files/b7bae074-bc1c-4965-a04d-6113f0feb69a.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/App.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../front-end/src/components/BasketBook.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/BasketBook.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/components/BookForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/BookForm.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../front-end/src/components/GenreList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/GenreList.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/components/OrderList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/OrderList.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../front-end/src/components/UI/Basket.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/UI/Basket.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/components/UI/MyButton.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/UI/MyButton.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../front-end/src/components/UI/Navbar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/UI/Navbar.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/components/UserList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/UserList.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/directives/VIntersection.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/directives/VIntersection.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/pages/AdminPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/pages/AdminPage.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/router/instance.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/router/instance.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/router/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/router/router.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/store/basketModule.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/store/basketModule.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../front-end/src/store/bookModule.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/store/bookModule.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,6 +89,11 @@
       <workItem from="1640686846150" duration="5256000" />
       <workItem from="1640724982697" duration="611000" />
       <workItem from="1640768076510" duration="602000" />
+      <workItem from="1640880150705" duration="2310000" />
+      <workItem from="1640887136310" duration="642000" />
+      <workItem from="1640898267728" duration="2427000" />
+      <workItem from="1640944910491" duration="1219000" />
+      <workItem from="1641116440866" duration="851000" />
     </task>
     <servers />
   </component>

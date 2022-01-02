@@ -43,8 +43,8 @@ export default {
       const dialog = document.querySelector('.dialog')
       await this.changeGenres(list)
       this.$swal({
-        title: 'Success',
-        text: 'The genres have been successfully changed',
+        html: "<span style='color: #ffffff'>The genres have been successfully changed</span>",
+        title: '<span style=\'color: #ffffff\'>Success</span>',
         icon: 'success',
         showConfirmButton: false,
         timer: 1000

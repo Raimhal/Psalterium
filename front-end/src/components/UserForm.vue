@@ -76,8 +76,8 @@ export default {
         this.updateUser()
         if(this.errors.length === 0) {
           this.$swal({
-            title: 'Success',
-            text: 'Account updated successfully',
+            title: "<span style='color: #ffffff'>Success</span>",
+            html: "<span style='color: #ffffff'>Account updated successfully</span>",
             icon: 'success',
             showConfirmButton: false,
             timer: 1000

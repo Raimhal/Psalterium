@@ -1,5 +1,5 @@
 <template>
-  <button type="button" class="out-btn">
+  <button type="button" class="out-btn p-3">
     <slot></slot>
   </button>
 </template>
@@ -14,7 +14,6 @@ export default {
 .out-btn{
   font-size: 12px !important;
   border-radius: 5px;
-  padding: 15px 25px;
   background-color: #7072F7;
   border: none;
   color: #ffffff;

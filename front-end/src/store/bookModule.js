@@ -174,7 +174,8 @@ export const bookModule = {
                     commit('setBook', response.data)
                 })
                 .catch(error => {
-                    console.log(error)
+                    if (error.response.status === 404)
+                        router.push({name: 'NotFound'})
                     rootState.errors.push(error.response.data.detail)
                 })
         },

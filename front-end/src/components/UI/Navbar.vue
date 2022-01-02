@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar">
+  <div class="navbar flex-nowrap d-flex gap-2">
     <div @click="goToHome">
       <div class="logo">PSALT<span>ERIUM</span>
       </div>
@@ -12,7 +12,7 @@
         <img src="@/assets/menu.png" height="20" width="20"/>
       </my-button>
       <my-dialog v-model:show="sidebarVisible">
-        <div class="sidebar bg-gradient p-3 gap-2 d-flex flex-column" @click="sidebarVisible = false">
+        <div class="sidebar bg-gradient p-3 gap-2 d-flex flex-column h-100" @click="sidebarVisible = false">
           <router-link to="/">
             <my-button class="p-2" :class="{'target':this.currentRoute() === '/'}">
               <img src="@/assets/shop.png" height="32" width="32" />

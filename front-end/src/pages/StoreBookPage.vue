@@ -1,5 +1,5 @@
 <template>
-  <div class="item" >
+  <div class="item">
     <div class="d-flex justify-content-center w-100 top-content">
       <img class="image align" v-image-observer:[book.image]="getImage" :key="book.id" alt="Card image cap" @click="showImageDialog">
       <div class="p-4 short__info">
@@ -137,8 +137,8 @@ export default {
         this.$router.push('/login')
       else {
         this.$swal({
-          title: 'Success',
-          text: 'The book has been successfully added to your cart',
+          title: "<span style='color: #ffffff'>Success</span>",
+          html: "<span style='color: #ffffff'>The book has been successfully added to your cart</span>",
           icon: 'success',
           showConfirmButton: false,
           timer: 1500
@@ -177,8 +177,8 @@ export default {
       await this.getImage({target: image, image_name: this.book.image})
       if(this.errors.length === 0){
         this.$swal({
-          title: 'Success',
-          text: 'The image has been successfully changed',
+          title: "<span style='color: #ffffff'>Success</span>",
+          html: "<span style='color: #ffffff'>The image has been successfully changed</span>",
           icon: 'success',
           showConfirmButton: false,
           timer: 1000
@@ -311,7 +311,15 @@ p{
   }
 }
 
+@media  screen and (max-width: 750px){
+  .item{
+    margin: 0 !important;
+    width: 100%;
+  }
+}
+
 @media screen and (max-width: 650px) {
+
   .item>div:nth-child(2)>div:first-child{
     display: flex;
     flex-direction: column;

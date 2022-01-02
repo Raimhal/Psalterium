@@ -78,10 +78,6 @@ export default {
 </script>
 
 <style scoped>
-.genre__table {
-  border-collapse: collapse;
-  width: 100%;
-}
 caption {
   background: rgba(56, 58, 73, 0.9);
   color: azure;

@@ -68,8 +68,8 @@ export default {
       const dialog = document.querySelector('.dialog')
       await this.createOrder()
       this.$swal({
-        title: 'Success',
-        text: 'Order successfully created',
+        title: "<span style='color: #ffffff'>Success</span>",
+        html: "<span style='color: #ffffff'>Order successfully created</span>",
         icon: 'success',
         showConfirmButton: false,
         timer: 1000

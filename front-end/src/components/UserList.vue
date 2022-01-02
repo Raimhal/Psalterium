@@ -1,6 +1,6 @@
 <template>
   <div>
-    <table class="user__table">
+    <table class="_table">
       <caption>Users : </caption>
       <thead>
         <tr>
@@ -102,10 +102,7 @@ export default {
 </script>
 
 <style scoped>
-.user__table {
-  border-collapse: collapse;
-  width: 100%;
-}
+
 caption {
   background: rgba(56, 58, 73, 0.9);
   color: azure;
@@ -121,6 +118,7 @@ th {
 }
 td {
   padding: 10px;
+  word-break: break-word;
 }
 tr{
   min-width: 100%;
@@ -193,8 +191,8 @@ label:active:after {
   width: 70%;
 }
 
-.role{
-  width: 50px;
+@media(max-width: 1200px) {
+
 }
 
 </style>

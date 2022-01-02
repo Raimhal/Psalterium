@@ -61,8 +61,8 @@ export default {
         await this.updateGenre()
         if(this.errors.length === 0) {
           this.$swal({
-            title: 'Success',
-            text: 'The genre has been successfully updated',
+            title: "<span style='color: #ffffff'>Success</span>",
+            html: "<span style='color: #ffffff'>The genre has been successfully updated</span>",
             icon: 'success',
             showConfirmButton: false,
             timer: 1000
@@ -74,8 +74,8 @@ export default {
         await this.createGenre()
         if(this.errors.length === 0) {
           this.$swal({
-            title: 'Success',
-            text: 'The genre has been successfully created',
+            title: "<span style='color: #ffffff'>Success</span>",
+            html: "<span style='color: #ffffff'>The genre has been successfully created</span>",
             icon: 'success',
             showConfirmButton: false,
             timer: 1000

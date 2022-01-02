@@ -1,6 +1,6 @@
 <template>
   <div>
-    <table class="order__table">
+    <table class="_table">
       <caption>
         <slot name="image"></slot>
         Orders :
@@ -81,10 +81,6 @@ export default {
 </script>
 
 <style scoped>
-.order__table {
-  border-collapse: collapse;
-  width: 100%;
-}
 caption {
   background: rgba(56, 58, 73, 0.9);
   color: azure;
