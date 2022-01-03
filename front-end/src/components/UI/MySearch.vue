@@ -26,7 +26,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      getBookList: 'book/getBookList'
+      getBookList: 'book/getSortedBookList'
     }),
     ...mapMutations({
       clearBookStore: 'book/clearBookStore',

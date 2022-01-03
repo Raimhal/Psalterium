@@ -3,6 +3,7 @@ from typing import List, Any
 
 from fastapi import UploadFile
 from fastapi.responses import FileResponse
+from sqlalchemy.sql import text
 
 from models import models
 from schemas import schemas
@@ -12,6 +13,25 @@ from . import generalServices, fileService
 
 
 _model = models.Book
+
+def get_sorted_books(db: Session, skip: int, limit: int, query: str, reverse: bool, filter_expression: bool = True):
+    expression = _model.name
+    print(query)
+    if query == 'author':
+        expression = _model.author
+    elif query == 'price':
+        expression = _model.price
+    elif query == 'count':
+        expression = _model.count
+    elif query == 'date':
+        expression = _model.publication_date
+    elif query == 'name':
+        expression = _model.name
+
+    if reverse: expression = expression.desc()
+
+    return db.query(_model).filter(filter_expression).order_by(expression).offset(skip).limit(limit).all()
+
 
 def create_book(db: Session, model: schemas.BookCreate, current_user: models.User) -> Any:
     expression = _model.ISBN == model.ISBN

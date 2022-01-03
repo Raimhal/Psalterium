@@ -85,7 +85,7 @@ export const orderModule = {
                     .then(response => {
                         if(response.data.length === 0)
                             commit('setAll', true)
-                        console.log(response.data)
+
                         response.data.forEach(order => {
                             if (state.orders.filter(o => o.id === order.id).length === 0) {
                                 order.books.forEach(book => book.order_count = book.count)

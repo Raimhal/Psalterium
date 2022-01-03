@@ -32,6 +32,7 @@
         Date of publication : <my-field
           v-model="book.publication_date"
           type="date"
+          class="w-100"
           name="publication"
       />
         <my-error-message name="publication" />
@@ -142,7 +143,7 @@ export default {
 .dialog{
   width: 50vw;
   max-width: 500px;
-  min-width: 200px;
+  min-width: 350px;
 }
 
 .scroll{
@@ -157,4 +158,5 @@ textarea{
   height: 20vh;
   min-height: 100px;
 }
+
 </style>

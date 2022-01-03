@@ -8,8 +8,9 @@
             :model-value="selectedSort"
             @update:model-value="setSelectedSort"
             :options="sortOptions"
+            @change="getBookList(owner)"
         />
-        <input type="checkbox" id="switch" v-model="reverseSort.value"/>
+        <input type="checkbox" id="switch" v-model="reverseSort.value" :value="reverseSort.value" @change="reverseBooks" />
         <label for="switch"></label>
       </div>
     </div>
@@ -52,13 +53,18 @@ export default {
       setSelectedSort: 'book/setSelectedSort',
       clearBookStore: 'book/clearBookStore',
       clearErrors: 'clearErrors',
-      setReverseSort: 'book/setReverseSort'
+      setReverseSort: 'book/setReverseSort',
+      clearBooks: 'book/clearBooks'
+
     }),
     ...mapActions({
-      getBookList: 'book/getBookList',
+      getBookList: 'book/getSortedBookList',
       removeBook: 'book/removeBook'
     }),
-
+    reverseBooks(){
+      this.clearBooks()
+      this.getBookList()
+    }
   },
   computed: {
     ...mapState({

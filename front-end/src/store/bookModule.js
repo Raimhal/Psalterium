@@ -81,6 +81,11 @@ export const bookModule = {
             state.searchQuery.searched = false
             state.isAll = false
         },
+        clearBooks(state){
+            state.books = []
+            state.page = 0
+            state.isAll = false
+        },
         clearBook(state) {
             state.book = {}
         },
@@ -101,7 +106,7 @@ export const bookModule = {
         },
         setAll(state, bool){
             state.isAll = bool
-        }
+        },
 
     },
     actions: {
@@ -123,7 +128,7 @@ export const bookModule = {
                 })
             await commit('setFormLoading', false)
         },
-        async getBookList({state, commit, rootState, rootGetters}, owner) {
+        async getSortedBookList({state, commit, rootState, rootGetters}, owner) {
             if(!state.isAll) {
                 if (state.books.length === 0) {
                     commit('setLoading', true)
@@ -133,12 +138,14 @@ export const bookModule = {
                 let path = `${state.defaultRoot}`
                 let params = {
                     skip: (state.page - 1) * state.limit,
-                    limit: state.limit
+                    limit: state.limit,
+                    query: state.selectedSort,
+                    reverse: state.reverseSort.value
                 }
 
                 if (state.searchQuery.searched) {
                     path += '/search'
-                    params.query = state.searchQuery.value
+                    params.searchQuery = state.searchQuery.value
                 }
 
                 const config = {params: params}
@@ -146,6 +153,7 @@ export const bookModule = {
                     path += '/my'
                     config.headers = rootGetters.getHeaders
                 }
+
                 await instance
                     .get(path, config)
                     .then(async response => {
@@ -162,6 +170,7 @@ export const bookModule = {
                 await commit('setLoading', false)
             }
         },
+
         async getBook({state, commit, rootState}, book_id){
             const path = `${state.defaultRoot}/${book_id}`
             rootState.errors = []
@@ -260,7 +269,7 @@ export const bookModule = {
                     console.log(error)
                 })
             await commit('setLoading', false)
-        }
+        },
 
     },
     namespaced: true

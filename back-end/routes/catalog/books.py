@@ -15,24 +15,31 @@ _admin_role_name = 'Admin'
 _model = models.Book
 
 
-@router.get('', response_model=List[schemas.BookDto])
+@router.get('/unsorted', response_model=List[schemas.BookDto])
 async def get_books(skip: int=0, limit: int=10, db: Session = Depends(get_db)):
     return generalServices.get_all(db=db, model=_model, skip=skip, limit=limit)
 
 
+@router.get('', response_model=List[schemas.BookDto])
+async def get_books(query: str = 'name', reverse: bool = False, skip: int=0, limit: int=10,
+                    db: Session = Depends(get_db)):
+    return bookServices.get_sorted_books(db=db, skip=skip, limit=limit, query=query, reverse=reverse)
+
+
 @router.get('/search', response_model=List[schemas.BookDto])
-async def get_books(query: str, skip: int=0, limit: int=10, db: Session = Depends(get_db)):
-    expression = _model.name.contains(query.lower())
-    return generalServices.get_all_with_expression(db=db, model=_model, skip=skip, limit=limit, expression=expression)
+async def get_books(searchQuery: str, query: str = 'name', reverse: bool = False, skip: int=0,
+                    limit: int=10, db: Session = Depends(get_db)):
+    expression = _model.name.contains(searchQuery.lower())
+    return bookServices.get_sorted_books(db=db, skip=skip, limit=limit, query=query, reverse=reverse, filter_expression=expression)
 
 
 @router.get('/my', response_model=List[schemas.BookDto])
-async def get_books(skip: int=0, limit: int=10, db: Session = Depends(get_db),
+async def get_books(query: str = 'name', reverse: bool = False, skip: int=0, limit: int=10, db: Session = Depends(get_db),
                     current_user: models.User = Depends(get_current_user)):
     expression = _model.owner == current_user
-    if current_user.role.name == _admin_role_name:
-        expression = True
-    return generalServices.get_all_with_expression(db=db, model=_model, skip=skip, limit=limit, expression=expression)
+    if current_user.role.name == _admin_role_name: expression = True
+
+    return bookServices.get_sorted_books(db=db, skip=skip, limit=limit, query=query, reverse=reverse, filter_expression=expression)
 
 
 @router.get('/{id:int}', response_model=schemas.Book)

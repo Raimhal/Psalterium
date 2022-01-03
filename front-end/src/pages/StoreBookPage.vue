@@ -46,7 +46,7 @@
         <hr/>
       </div>
     </div>
-    <div class="d-flex justify-content-between mt-3">
+    <div class="d-flex justify-content-between mt-3 gap-3">
       <my-button @click="$router.back()">Back</my-button>
       <div class="d-flex gap-3" v-if="isCreator">
         <my-button @click="showChangeGenresDialog">Change genres</my-button>

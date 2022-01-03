@@ -150,7 +150,15 @@ code {
 }
 
 .container{
-  width: 30vw;
+  width: 50vw;
+  min-width: 340px;
+  max-width: max-content;
+}
+
+@media screen and (max-width: 800px){
+  .container{
+    width: 100%;
+  }
 }
 
 </style>
