@@ -152,7 +152,8 @@ export default {
       this.updateBookDialogVisible = true
     },
     async showImageDialog(){
-      this.imageDialogVisible = true
+      if(this.isCreator)
+        this.imageDialogVisible = true
     },
     async showChangeGenresDialog(){
       this.changeGenresDialogVisible = true
@@ -202,9 +203,7 @@ export default {
 }
 .image{
   width: 300px;
-  max-height: 300px;
-  /*object-fit: contain;*/
-  /*object-fit: cover;*/
+  max-height: 450px;
   border-radius: 15px;
 }
 .top-content{

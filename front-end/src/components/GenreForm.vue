@@ -5,6 +5,11 @@
         <input :id="genre.id" :value="genre.name" name="genre"  v-model="genreList" type="checkbox"/>
         <label :for="genre.id">{{genre.name}}</label>
       </div>
+      <div
+          v-intersection="getGenres"
+          class="observer"
+      >
+      </div>
     </div>
     <div class="d-flex flex-column">
       <div v-if="isLoading" class="spinner-grow align-self-center m-2"></div>
@@ -140,7 +145,7 @@ input {
   max-width: 550px;
   overflow-y: auto;
   overflow-x: hidden;
-  max-height: 75vh;
+  max-height: 500px;
 
 }
 

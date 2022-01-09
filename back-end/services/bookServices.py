@@ -33,7 +33,7 @@ def get_sorted_books(db: Session, skip: int, limit: int, query: str, reverse: bo
     return db.query(_model).filter(filter_expression).order_by(expression).offset(skip).limit(limit).all()
 
 
-def create_book(db: Session, model: schemas.BookCreate, current_user: models.User) -> Any:
+def create_book(db: Session, model: schemas.BookCreate, current_user: models.User) -> int:
     expression = _model.ISBN == model.ISBN
     generalServices.check_in_use_expression(db=db, model=_model, expression=expression)
     book = _model(
@@ -52,7 +52,6 @@ def create_book(db: Session, model: schemas.BookCreate, current_user: models.Use
 
 
 def update_book(db: Session, model: schemas.BookCreate, expression: Any):
-
     book = generalServices.get_by_expression(db=db, model=_model, expression=expression)
 
     book.name = model.name

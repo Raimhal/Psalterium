@@ -2,6 +2,7 @@
   <div class="user__page">
     <user-form>
       <template v-slot:header>
+        <img src="@/assets/personal_negate.png" height="32" width="32" class="mb-2"/>
         Register
       </template>
       <template v-slot:password>

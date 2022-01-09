@@ -16,10 +16,12 @@ export default {
 <style scoped>
 
 .empty__list{
-  min-height: 60vh;
+  width: 100%;
+  min-height: 80vh;
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  position: absolute;
 }
 </style>

@@ -8,16 +8,10 @@ from PIL import Image, ImageFile
 static_files_path = os.path.join(os.getcwd(), 'static\\files')
 static_assets_path = os.path.join(os.getcwd(), 'static\\assets')
 
-# def save_file(file: UploadFile) -> str:
-#     _, ext = file.filename.split('.')
-#     filename = f'{uuid4()}.{ext}'
-#     location = os.path.join(static_files_path, filename)
-#     with open(location, "wb+") as file_object:
-#         file_object.write(file.file.read())
-#     return filename
 
 def save_file(file: UploadFile, height: int) -> str:
-    _, ext = file.filename.split('.')
+    print(file.__dict__)
+    _, ext = file.filename.rsplit('.', 1)
     filename = f'{uuid4()}.{ext}'
     location = os.path.join(static_files_path, filename)
     img = Image.open(file.file)

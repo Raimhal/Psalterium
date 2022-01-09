@@ -1,7 +1,10 @@
 <template>
   <div class="user__page">
     <Form v-slot="{ handleSubmit }" :validation-schema="schema" as="div" class="user__form">
-      <my-title class="title">Log in</my-title>
+      <my-title class="title">
+        <img src="@/assets/login_negate.png" height="32" width="32" class="mb-2"/>
+        Log in
+      </my-title>
       <my-error-list :errors="errors"></my-error-list>
       <form @submit="handleSubmit($event, login)" class="form">
         <MyField

@@ -44,7 +44,7 @@ export const genreModule = {
         },
     },
     actions: {
-        async getGenres({state, commit, rootState}){
+        async getGenres({state, commit, rootState}, isAdmin = false){
             if(!state.isAll) {
                 rootState.errors = []
                 state.page += 1

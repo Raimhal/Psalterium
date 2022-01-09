@@ -8,7 +8,7 @@ _model = models.OrderBook
 
 
 
-def add_to_basket(db: Session, model: schemas.OrderBookCreate, current_user: models.User) -> id:
+def add_to_basket(db: Session, model: schemas.OrderBookCreate, current_user: models.User) -> int:
     generalServices.check_in_warehouse(db=db, model=models.Book,  id=model.book_id, count=model.count)
     book = generalServices.get_by_expression(db=db, model=models.Book, expression=models.Book.id == model.book_id)
     order_book = db.query(_model).filter(and_(_model.order_id == 0, _model.book_id == model.book_id)).first()

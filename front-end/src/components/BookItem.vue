@@ -1,6 +1,8 @@
 <template>
   <div class="card item bg-gradient" :class="{ 'gray' : book.count === 0}" @click="$router.push(`/books/${book.id}`)">
-    <img class="image" v-image-observer:[book.image]="getImage" alt="Book image">
+    <div>
+      <img class="image" v-image-observer:[book.image]="getImage" alt="Book image">
+    </div>
     <div class="card-body item-body">
       <h5 class="card-title">{{book.name}}</h5>
       <p class="card-text text">
@@ -44,7 +46,6 @@ export default {
   width: 17rem;
   background-color: rgba(149, 149, 149, 0.3);
   border: none;
-  position: relative;
 }
 .item:hover{
   cursor: pointer;
@@ -60,9 +61,11 @@ export default {
   color: #909090;
 }
 .image{
-  height: 15rem;
-  border-radius: 3px;
-  filter: saturate(107%) ;
+  width: 100%;
+  max-height: 380px;
+  min-height: 380px;
+  border-radius: 3px 3px 0 0;
+  filter: saturate(107%);
 }
 
 .image:hover{
@@ -75,8 +78,6 @@ export default {
 
 .gray{
   filter: opacity(.8) brightness(.5)  saturate(.2);
-
-
 }
 
 </style>

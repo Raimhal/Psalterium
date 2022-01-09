@@ -31,17 +31,8 @@ export const bookModule = {
     }),
     getters: {
         sortedBooks(state){
-            const query = state.selectedSort
-
-            let books
-            if(query === 'count' || query === 'price')
-                books = [...state.books].sort((book1, book2) => book1[state.selectedSort] - book2[state.selectedSort])
-            else
-                books = [...state.books].sort((book1, book2) => book2[query]?.toString().localeCompare(book1[query]))
-
-            if(state.reverseSort.value)
-                books.reverse()
-            return books
+            // state.books.reverse()
+            return state.books
         },
     },
     mutations: {
