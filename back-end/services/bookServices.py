@@ -1,6 +1,6 @@
 import datetime
 from typing import List, Any
-
+from sqlalchemy import and_
 from fastapi import UploadFile
 from fastapi.responses import FileResponse
 from sqlalchemy.sql import text
@@ -14,9 +14,9 @@ from . import generalServices, fileService
 
 _model = models.Book
 
-def get_sorted_books(db: Session, skip: int, limit: int, query: str, reverse: bool, filter_expression: bool = True):
+def get_sorted_books(db: Session, skip: int, limit: int, query: str, reverse: bool, genre: str, filter_expression: bool = True):
     expression = _model.name
-    print(query)
+
     if query == 'author':
         expression = _model.author
     elif query == 'price':
@@ -28,9 +28,19 @@ def get_sorted_books(db: Session, skip: int, limit: int, query: str, reverse: bo
     elif query == 'name':
         expression = _model.name
 
-    if reverse: expression = expression.desc()
+    if reverse:
+        expression = expression.desc()
 
-    return db.query(_model).filter(filter_expression).order_by(expression).offset(skip).limit(limit).all()
+    if genre == 'all':
+        genre_expression = True
+    else:
+        genre_entity = generalServices.get_by_expression(db=db, model=models.Genre, expression=models.Genre.name == genre)
+        print(genre_entity)
+        genre_expression = _model.genres.contains(genre_entity)
+
+    filter = and_(genre_expression, filter_expression)
+
+    return db.query(_model).filter(filter).order_by(expression).offset(skip).limit(limit).all()
 
 
 def create_book(db: Session, model: schemas.BookCreate, current_user: models.User) -> int:

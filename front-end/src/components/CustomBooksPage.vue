@@ -1,18 +1,26 @@
 <template>
   <div>
     <my-title><slot name="title"></slot></my-title>
-    <div class="app__btns">
-      <slot name="create"></slot>
-      <div class="d-flex gap-2 align-items-center" :class="{'flex-row-reverse' : owner}" >
+    <div class="app__btns d-flex flex-wrap">
+      <div class="sort">
         <my-select
             :model-value="selectedSort"
             @update:model-value="setSelectedSort"
             :options="sortOptions"
             @change="getBookList(owner)"
         />
-        <input type="checkbox" id="switch" v-model="reverseSort.value" :value="reverseSort.value" @change="reverseBooks" />
-        <label for="switch"></label>
+        <my-select
+            :model-value="selectedGenre"
+            @update:model-value="setSelectedGenresSort"
+            :options="genresOptions"
+            @change="getBookList(owner)"
+        />
+        <div class="d-flex align-content-center justify-content-center">
+          <input type="checkbox" id="switch" v-model="reverseSort.value" :value="reverseSort.value" @change="reverseBooks" />
+          <label for="switch"></label>
+        </div>
       </div>
+      <slot name="create"></slot>
     </div>
     <book-list
         :books="sortedBooks"
@@ -44,6 +52,9 @@ export default {
       default: false
     }
   },
+  beforeMount() {
+    this.getAllGenres()
+  },
   beforeUnmount() {
     this.clearBookStore()
   },
@@ -51,14 +62,15 @@ export default {
     ...mapMutations({
       setSearchQuery: 'book/setSearchQuery',
       setSelectedSort: 'book/setSelectedSort',
+      setSelectedGenresSort: 'genre/setSelectedSort',
       clearBookStore: 'book/clearBookStore',
       clearErrors: 'clearErrors',
       setReverseSort: 'book/setReverseSort',
-      clearBooks: 'book/clearBooks'
-
+      clearBooks: 'book/clearBooks',
     }),
     ...mapActions({
       getBookList: 'book/getSortedBookList',
+      getAllGenres: 'genre/getAllGenres',
       removeBook: 'book/removeBook'
     }),
     reverseBooks(){
@@ -72,8 +84,10 @@ export default {
       books: state => state.book.books,
       isLoading: state => state.book.isLoading,
       selectedSort: state => state.book.selectedSort,
+      selectedGenre: state => state.genre.selectedSort,
       searchQuery: state => state.book.searchQuery,
       sortOptions: state => state.book.sortOptions,
+      genresOptions: state => state.genre.sortOptions,
       reverseSort: state => state.book.reverseSort
     }),
     ...mapGetters({
@@ -124,6 +138,28 @@ input:checked + label:after {
 
 label:active:after {
   width: 70%;
+}
+
+.sort{
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+@media screen and (max-width: 450px){
+  .sort{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .sort>*{
+    width: inherit;
+  }
+  .app__btns>button{
+    width: 100%;
+  }
+
+
 }
 
 </style>

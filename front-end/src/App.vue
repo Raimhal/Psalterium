@@ -107,9 +107,9 @@ html{
 }
 
 .app__btns{
-  margin: 15px 0;
   display: flex;
   justify-content:space-between;
+  gap: 0.3rem
 
 }
 .link{

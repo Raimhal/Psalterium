@@ -2,19 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="017aacaf-aca6-46c5-a5ef-0b10e42e24de" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/database.config" beforeDir="false" afterPath="$PROJECT_DIR$/database.config" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/basketService.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/basketService.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/catalog/books.py" beforeDir="false" afterPath="$PROJECT_DIR$/routes/catalog/books.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/catalog/genres.py" beforeDir="false" afterPath="$PROJECT_DIR$/routes/catalog/genres.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/services/bookServices.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/bookServices.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/fileService.py" beforeDir="false" afterPath="$PROJECT_DIR$/services/fileService.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/public/feather (1).ico" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/components/BookItem.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/BookItem.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../front-end/src/components/GenreForm.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/GenreForm.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/components/UI/EmptyList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/UI/EmptyList.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/components/UI/MyDialog.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/components/UI/MyDialog.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../front-end/src/pages/StoreBookPage.vue" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/pages/StoreBookPage.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../front-end/src/store/bookModule.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/store/bookModule.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../front-end/src/store/genreModule.js" beforeDir="false" afterPath="$PROJECT_DIR$/../front-end/src/store/genreModule.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Курсова.docx" beforeDir="false" afterPath="$PROJECT_DIR$/../Курсова.docx" afterDir="false" />
@@ -96,6 +89,7 @@
       <workItem from="1641550164877" duration="1511000" />
       <workItem from="1641635485897" duration="199000" />
       <workItem from="1641721579889" duration="3556000" />
+      <workItem from="1641804717448" duration="6926000" />
     </task>
     <servers />
   </component>

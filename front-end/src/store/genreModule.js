@@ -10,7 +10,11 @@ export const genreModule = {
         limit: 10,
         defaultRoot: 'catalog/genres',
         isAll: false,
-        isLoading: false
+        isLoading: false,
+        selectedSort: 'all',
+        sortOptions: [
+            {value: 'all', name: 'All'},
+        ],
     }),
     mutations: {
         setGenres(state, genres){
@@ -42,6 +46,15 @@ export const genreModule = {
             state.page = 0
             state.isAll = false
         },
+        setSortedOptions(state, options){
+            state.sortOptions = [...state.sortOptions,...options]
+        },
+        pushOption(state, option){
+            state.sortOptions.push(option)
+        },
+        setSelectedSort(state, selectedSort){
+            state.selectedSort = selectedSort;
+        },
     },
     actions: {
         async getGenres({state, commit, rootState}, isAdmin = false){
@@ -64,6 +77,21 @@ export const genreModule = {
                         rootState.errors.push(error.response.data.detail)
                     })
             }
+        },
+        async getAllGenres({state, commit, rootState}){
+            rootState.errors = []
+            const path = `${state.defaultRoot}/all`
+            await instance
+                .get(path)
+                .then(response => {
+                    response.data.forEach(genre => {
+                        const option = {value: genre.name, name: genre.name}
+                        commit('pushOption', option)
+                    })
+                })
+                .catch(error => {
+                    rootState.errors.push(error.response.data.detail)
+                })
         },
         async createGenre({state, commit, rootState, rootGetters}){
             await commit('setLoading', true)

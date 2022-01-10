@@ -74,6 +74,7 @@ export default {
 label {
   padding: 12px 30px;
   width: 50vw;
+  min-width: 320px;
   text-align: left;
   color: #3C454C;
   cursor: pointer;
@@ -118,7 +119,7 @@ label:before {
 
 input:checked ~ label {
   color: #fff;
-  width: 100%;
+  /*width: 100%;*/
 }
 input:checked ~ label:after {
   transform: translate(-50%, -50%) scale3d(56, 56, 1);
@@ -155,14 +156,12 @@ code {
 }
 
 .container{
-  width: 50vw;
-  min-width: 340px;
-  max-width: max-content;
+  min-width: max-content;
 }
 
-@media screen and (max-width: 800px){
-  .container{
-    width: 100%;
+@media screen and (max-width: 750px){
+  label{
+    width: 90vw;
   }
 }
 

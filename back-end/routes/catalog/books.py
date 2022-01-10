@@ -21,25 +21,25 @@ async def get_books(skip: int=0, limit: int=10, db: Session = Depends(get_db)):
 
 
 @router.get('', response_model=List[schemas.BookDto])
-async def get_books(query: str = 'name', reverse: bool = False, skip: int=0, limit: int=10,
+async def get_books(query: str = 'name', reverse: bool = False, skip: int=0, limit: int=10, genre: str = 'all',
                     db: Session = Depends(get_db)):
-    return bookServices.get_sorted_books(db=db, skip=skip, limit=limit, query=query, reverse=reverse)
+    return bookServices.get_sorted_books(db=db, skip=skip, limit=limit, query=query, reverse=reverse, genre=genre)
 
 
 @router.get('/search', response_model=List[schemas.BookDto])
-async def get_books(searchQuery: str, query: str = 'name', reverse: bool = False, skip: int=0,
+async def get_books(searchQuery: str, query: str = 'name', reverse: bool = False, skip: int=0, genre: str = 'all',
                     limit: int=10, db: Session = Depends(get_db)):
     expression = _model.name.contains(searchQuery.lower())
-    return bookServices.get_sorted_books(db=db, skip=skip, limit=limit, query=query, reverse=reverse, filter_expression=expression)
+    return bookServices.get_sorted_books(db=db, skip=skip, limit=limit, query=query, reverse=reverse, genre=genre, filter_expression=expression)
 
 
 @router.get('/my', response_model=List[schemas.BookDto])
-async def get_books(query: str = 'name', reverse: bool = False, skip: int=0, limit: int=10, db: Session = Depends(get_db),
-                    current_user: models.User = Depends(get_current_user)):
+async def get_books(query: str = 'name', reverse: bool = False, skip: int=0, limit: int=10, genre: str = 'all',
+                    db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
     expression = _model.owner == current_user
-    if current_user.role.name == _admin_role_name: expression = True
-
-    return bookServices.get_sorted_books(db=db, skip=skip, limit=limit, query=query, reverse=reverse, filter_expression=expression)
+    if current_user.role.name == _admin_role_name:
+        expression = True
+    return bookServices.get_sorted_books(db=db, skip=skip, limit=limit, query=query, reverse=reverse, genre=genre, filter_expression=expression)
 
 
 @router.get('/{id:int}', response_model=schemas.Book)

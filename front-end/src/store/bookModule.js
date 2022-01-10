@@ -31,7 +31,6 @@ export const bookModule = {
     }),
     getters: {
         sortedBooks(state){
-            // state.books.reverse()
             return state.books
         },
     },
@@ -131,8 +130,10 @@ export const bookModule = {
                     skip: (state.page - 1) * state.limit,
                     limit: state.limit,
                     query: state.selectedSort,
-                    reverse: state.reverseSort.value
+                    reverse: state.reverseSort.value,
+                    genre: rootState.genre.selectedSort
                 }
+                console.log(params)
 
                 if (state.searchQuery.searched) {
                     path += '/search'
