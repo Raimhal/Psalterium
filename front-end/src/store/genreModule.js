@@ -79,19 +79,21 @@ export const genreModule = {
             }
         },
         async getAllGenres({state, commit, rootState}){
-            rootState.errors = []
-            const path = `${state.defaultRoot}/all`
-            await instance
-                .get(path)
-                .then(response => {
-                    response.data.forEach(genre => {
-                        const option = {value: genre.name, name: genre.name}
-                        commit('pushOption', option)
+            if(state.sortOptions.length === 1) {
+                rootState.errors = []
+                const path = `${state.defaultRoot}/all`
+                await instance
+                    .get(path)
+                    .then(response => {
+                        response.data.forEach(genre => {
+                            const option = {value: genre.name, name: genre.name}
+                            commit('pushOption', option)
+                        })
                     })
-                })
-                .catch(error => {
-                    rootState.errors.push(error.response.data.detail)
-                })
+                    .catch(error => {
+                        rootState.errors.push(error.response.data.detail)
+                    })
+            }
         },
         async createGenre({state, commit, rootState, rootGetters}){
             await commit('setLoading', true)

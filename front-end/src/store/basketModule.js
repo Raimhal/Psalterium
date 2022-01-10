@@ -7,7 +7,7 @@ export const basketModule = {
         visible: false,
         isLoading: false,
         page: 0,
-        limit: 10,
+        limit: 5,
         defaultRoot: 'catalog/basket',
         order: {count: 1},
         isAll: false
@@ -34,6 +34,7 @@ export const basketModule = {
             if(!bool) {
                 state.books = []
                 state.page = 0
+                state.isAll = false
             }
             state.visible = bool
         },

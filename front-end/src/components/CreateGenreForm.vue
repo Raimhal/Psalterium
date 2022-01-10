@@ -5,6 +5,7 @@
       Genre name : <my-field
         v-model="genre.name"
         name="title"
+        v-focus
       />
       <my-error-message name="title" />
       <div v-if="isLoading" class="spinner-grow align-self-center m-2"></div>
