@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="017aacaf-aca6-46c5-a5ef-0b10e42e24de" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/database.config" beforeDir="false" afterPath="$PROJECT_DIR$/database.config" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Курсова.docx" beforeDir="false" afterPath="$PROJECT_DIR$/../Курсова.docx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,6 +85,7 @@
       <workItem from="1641804717448" duration="6926000" />
       <workItem from="1641826087624" duration="3522000" />
       <workItem from="1641934841837" duration="345000" />
+      <workItem from="1641976507778" duration="652000" />
     </task>
     <servers />
   </component>

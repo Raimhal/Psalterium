@@ -120,6 +120,7 @@ export default {
     }),
   },
   async beforeUnmount() {
+
     await this.clearBook()
   },
   methods: {
