@@ -32,4 +32,4 @@ app
     .use(VueSweetalert2, options)
     .mount('#app')
 
-// app.config.errorHandler = function(err, vm, info) {}
+app.config.errorHandler = function(err, vm, info) {}

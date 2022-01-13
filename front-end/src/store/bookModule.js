@@ -133,7 +133,7 @@ export const bookModule = {
                     reverse: state.reverseSort.value,
                     genre: rootState.genre.selectedSort
                 }
-                console.log(params)
+
 
                 if (state.searchQuery.searched) {
                     path += '/search'

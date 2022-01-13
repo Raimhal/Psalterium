@@ -2,7 +2,7 @@ from typing import List, Optional
 
 from fastapi import APIRouter, Depends, UploadFile, File
 from starlette import status
-
+from sqlalchemy import or_
 from config.db import Session
 from models import models
 from schemas import schemas
@@ -29,7 +29,7 @@ async def get_books(query: str = 'name', reverse: bool = False, skip: int=0, lim
 @router.get('/search', response_model=List[schemas.BookDto])
 async def get_books(searchQuery: str, query: str = 'name', reverse: bool = False, skip: int=0, genre: str = 'all',
                     limit: int=10, db: Session = Depends(get_db)):
-    expression = _model.name.contains(searchQuery.lower())
+    expression = or_(_model.name.contains(searchQuery.lower()), _model.name.contains(searchQuery.lower().capitalize()))
     return bookServices.get_sorted_books(db=db, skip=skip, limit=limit, query=query, reverse=reverse, genre=genre, filter_expression=expression)
 
 
