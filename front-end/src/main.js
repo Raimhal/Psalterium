@@ -23,7 +23,6 @@ const options = {
     confirmButtonColor: '#7072F7',
     cancelButtonColor: '#ff7674',
     background: 'rgba(56, 58, 73)',
-
 };
 
 app
@@ -32,4 +31,4 @@ app
     .use(VueSweetalert2, options)
     .mount('#app')
 
-app.config.errorHandler = function(err, vm, info) {}
+// app.config.errorHandler = function(err, vm, info) {}
