@@ -1,6 +1,6 @@
 [submodule "frontend"]
 	path = frontend
-	url = https://github.com/Raimhal/psalterium-frontend
+	url = https://github.com/Raimhal/psalterium-frontend.git
 [submodule "backend"]
 	path = backend
-	url = https://github.com/Raimhal/psalterium-backend
+	url = https://github.com/Raimhal/psalterium-backend.git
